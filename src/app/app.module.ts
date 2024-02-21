@@ -7,6 +7,9 @@ import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 import {RouterOutlet} from "@angular/router";
+import {FormsModule} from "@angular/forms";
+import { AmigosComponent } from './amigos/amigos.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 
 @NgModule({
@@ -14,13 +17,16 @@ import {RouterOutlet} from "@angular/router";
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    AmigosComponent,
+    PerfilComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    RouterOutlet
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        RouterOutlet,
+        FormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

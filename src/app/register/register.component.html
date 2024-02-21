@@ -1,7 +1,36 @@
-<p>register works!</p>
-<button routerLinkActive="active" routerLink="">
-  GO Home
-</button>
-<button routerLinkActive="active" routerLink="/login">
-  GO Login
-</button>
+<div class="centered-container">
+  <div class="logo">
+    <img src="http://localhost:3000/logo" alt="Logo" class="logo">
+  </div>
+
+  <div class="movil">
+    <img src="http://localhost:3000/movil" alt="Movil" class="movil">
+  </div>
+
+  <div class="formulari">
+    <h2>Regístrate</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div>
+        <input type="password" id="nombre" name="nombre" [(ngModel)]="password" placeholder="Nombre" required>
+      </div>
+      <div>
+        <input type="text" id="username" name="username" [(ngModel)]="username" placeholder="Gmail" required>
+      </div>
+      <div>
+        <input type="password" id="password" name="password" [(ngModel)]="password" placeholder="Contraseña" required>
+      </div>
+
+      <div class="button-container">
+        <button routerLinkActive="active" routerLink="/home">Siguiente</button>
+      </div>
+    </form>
+
+  </div>
+
+
+</div>
+
+
+
+
+
