@@ -74,14 +74,14 @@
   margin-left: 35.5%;
   margin-top: 39%;
   font-size: 18px;
-  background-color: #8a2be2;
+  background-color: #1da1f2;
   color: white;
   border: none;
   border-radius: 4px;
 }
 
 #nuevoPost:hover {
-  background-color: #6a1b9a;
+  background-color: #3681F7;
 
 }
 
@@ -96,6 +96,44 @@
 }
 
 #formularioPost button {
-  margin-top: 10px;
+  margin-top: 1px;
 }
+
+#formularioPost {
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#texto {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#foto {
+  margin-bottom: 10px;
+  display: none;
+}
+
+#publicar {
+  background-color: #1da1f2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  float: right;
+}
+
+
+#publicar:hover {
+  background-color: #3681F7;
+}
+
 

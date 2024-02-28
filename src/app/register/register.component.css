@@ -51,7 +51,7 @@
   height: 50px;
   font-size: 18px;
   margin-bottom: 20px;
-  background-color: #8a2be2;
+  background-color: #1da1f2;
   color: white;
   border: none;
   cursor: pointer;
@@ -59,7 +59,7 @@
 }
 
 .formulari button:hover {
-  background-color: #6a1b9a;
+  background-color: #3681F7;
 
 }
 
@@ -72,5 +72,30 @@
 .formulari h2 {
   margin-right: 305px;
   font-family: "Brutalism", sans-serif;
+}
+
+.password-container {
+  position: relative;
+}
+
+
+
+.password-container button {
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+
+#lupa {
+  height: 0px;
+  width: 0px;
+  margin-right: 30px;
+  margin-top: -20px;
+  background-color: white;
 }
 

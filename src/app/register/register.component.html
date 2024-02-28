@@ -11,17 +11,22 @@
     <h2>Regístrate</h2>
     <form (ngSubmit)="onSubmit()">
       <div>
-        <input type="password" id="nombre" name="nombre" [(ngModel)]="password" placeholder="Nombre" required>
+        <input type="text" id="nombre" name="nombre" [(ngModel)]="username" placeholder="Nombre" required>
       </div>
       <div>
-        <input type="text" id="username" name="username" [(ngModel)]="username" placeholder="Gmail" required>
+        <input type="text" id="gmail" name="gmail" [(ngModel)]="gmail" placeholder="Gmail" required>
       </div>
-      <div>
+      <div class="password-container">
         <input type="password" id="password" name="password" [(ngModel)]="password" placeholder="Contraseña" required>
+        <button id="lupa" (click)="togglePasswordVisibility()">👁️‍🗨️</button>
       </div>
 
+
       <div class="button-container">
-        <button routerLinkActive="active" routerLink="/home">Siguiente</button>
+        <button>
+<!--          routerLinkActive="active" routerLink="/home"-->
+
+          Siguiente</button>
       </div>
     </form>
 
