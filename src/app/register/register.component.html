@@ -1,15 +1,15 @@
 <div class="centered-container">
   <div class="logo">
-    <img src="http://localhost:3000/logo" alt="Logo" class="logo">
+    <img src="assets/logo.png" alt="Logo" class="logo">
   </div>
 
   <div class="movil">
-    <img src="http://localhost:3000/movil" alt="Movil" class="movil">
+    <img src="assets/movil.png" alt="Movil" class="movil">
   </div>
 
   <div class="formulari">
     <h2>Regístrate</h2>
-    <form (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onSubmit()" #formulario="ngForm">
       <div>
         <input type="text" id="nombre" name="nombre" [(ngModel)]="username" placeholder="Nombre" required>
       </div>
@@ -21,14 +21,11 @@
         <button id="lupa" (click)="togglePasswordVisibility()">👁️‍🗨️</button>
       </div>
 
-
       <div class="button-container">
-        <button>
-<!--          routerLinkActive="active" routerLink="/home"-->
-
-          Siguiente</button>
+        <button [ngClass]="{ 'enabled': formulario.valid && username && gmail && password }" [disabled]="!formulario.valid || !username || !gmail || !password" [ngStyle]="{ 'background-color': (formulario.valid && username && gmail && password) ? '' : 'grey' }">Siguiente</button>
       </div>
     </form>
+
 
   </div>
 
