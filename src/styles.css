@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+.tweet {
+  display: flex;
+}
+
+.tweet_author_logo {
+  width: 49px;
+  height: 49px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.tweet_header {
+  display: flex;
+}
+
+.tweet_author_name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #14171a;
+  margin-right: 5px;
+}
+
+.tweet_author_slug {
+  color: #5b7083;
+  font-size: 15px;
+}
+
+.tweet_publish_time {
+  margin-left: 5px;
+  color: #657786;
+  font-size: 15px;
+}
