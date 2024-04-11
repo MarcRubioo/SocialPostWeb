@@ -13,6 +13,8 @@ export class RegisterComponent {
   password: string = '';
   phoneNumber: string = '';
 
+  hidePassword: boolean = true;
+
   constructor(private router: Router, private http: HttpClient) {
   }
 
@@ -52,8 +54,6 @@ export class RegisterComponent {
     );
   }
 
-
-  hidePassword: boolean = true;
 
   togglePasswordVisibility(): void {
     this.hidePassword = !this.hidePassword;
