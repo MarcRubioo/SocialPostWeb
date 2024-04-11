@@ -37,6 +37,7 @@
 
 .formulari input[type="text"],
 .formulari input[type="password"],
+.formulari input[type="phoneNumber"],
 .formulari button {
   width: 450px;
   height: 50px;

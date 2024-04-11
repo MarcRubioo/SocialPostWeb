@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {Router} from "@angular/router";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Component({
   selector: 'app-register',
@@ -8,30 +8,41 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  username: string = '';
-  gmail: string = '';
+  firstName: string = '';
+  email: string = '';
   password: string = '';
+  phoneNumber: string = '';
 
   constructor(private router: Router, private http: HttpClient) {
   }
 
   onSubmit() {
-    console.log('Usuario:', this.username);
+    console.log('Usuario:', this.firstName);
     console.log('Contraseña:', this.password);
-    console.log('Gmail:', this.gmail);
+    console.log('Email:', this.email);
+    console.log('Phone:', this.phoneNumber);
 
     const datos = {
-      email: this.gmail,
+      email: this.email,
       password: this.password,
-      username: this.username
+      firstName: this.firstName,
+      phoneNumber: this.phoneNumber
     };
 
-    this.http.post<any>('http://localhost:8080/api/users', datos).subscribe(
+    const headers = {
+      headers: new HttpHeaders({
+        'Content-Type': "application/json"
+      })
+    }
+
+    this.http.post<any>('http://localhost:8080/api/users', datos, headers).subscribe(
       response => {
         if (response) {
           console.log(response)
           alert("Registro realizado");
-          // this.router.navigate(['/login']);
+          if (response.responseNo == 200) {
+            this.router.navigate(['/login']);
+          }
         }
       },
       error => {

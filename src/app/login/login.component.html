@@ -11,14 +11,14 @@
     <h2>Inicia sesión</h2>
     <form (ngSubmit)="onSubmit()" #formulario="ngForm">
       <div>
-        <input type="text" id="username" name="username" [(ngModel)]="username" placeholder="Gmail" required>
+        <input type="text" id="username" name="username" [(ngModel)]="email" placeholder="Email" required>
       </div>
       <div class="password-container">
         <input type="password" id="password" name="password" [(ngModel)]="password" placeholder="Contraseña" required>
         <button id="lupa" (click)="togglePasswordVisibility()">👁️‍🗨️</button>
       </div>
 
-      <button type="submit" [ngClass]="{ 'enabled': formulario.valid && username && password }" [disabled]="!formulario.valid" [ngStyle]="{ 'background-color': (formulario.valid && username && password) ? '' : 'grey' }">Siguiente</button>
+      <button type="submit" [ngClass]="{ 'enabled': formulario.valid && email && password }" [disabled]="!formulario.valid" [ngStyle]="{ 'background-color': (formulario.valid && email && password) ? '' : 'grey' }">Siguiente</button>
     </form>
 
     <div class="inline-container">

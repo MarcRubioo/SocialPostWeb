@@ -11,18 +11,22 @@
     <h2>Regístrate</h2>
     <form (ngSubmit)="onSubmit()" #formulario="ngForm">
       <div>
-        <input type="text" id="nombre" name="nombre" [(ngModel)]="username" placeholder="Nombre" required>
+        <input type="text" id="nombre" name="nombre" [(ngModel)]="firstName" placeholder="Nombre" required>
       </div>
       <div>
-        <input type="text" id="gmail" name="gmail" [(ngModel)]="gmail" placeholder="Gmail" required>
+        <input type="text" id="email" name="email" [(ngModel)]="email" placeholder="Email" required>
       </div>
       <div class="password-container">
         <input type="password" id="password" name="password" [(ngModel)]="password" placeholder="Contraseña" required>
         <button id="lupa" (click)="togglePasswordVisibility()">👁️‍🗨️</button>
       </div>
+        <input type="text" id="phoneNumber" name="phoneNumber" [(ngModel)]="phoneNumber" placeholder="Número de teléfono" required>
+      <div>
+
+      </div>
 
       <div class="button-container">
-        <button [ngClass]="{ 'enabled': formulario.valid && username && gmail && password }" [disabled]="!formulario.valid || !username || !gmail || !password" [ngStyle]="{ 'background-color': (formulario.valid && username && gmail && password) ? '' : 'grey' }">Siguiente</button>
+        <button [ngClass]="{ 'enabled': formulario.valid && firstName && email && password && phoneNumber }" [disabled]="!formulario.valid || !firstName || !email || !password || (!phoneNumber && phoneNumber.length !== 11)" [ngStyle]="{ 'background-color': (formulario.valid && firstName && email && password && phoneNumber) ? '' : 'grey' }">Siguiente</button>
       </div>
     </form>
 
