@@ -11,10 +11,10 @@
     <h2>Regístrate</h2>
     <form (ngSubmit)="onSubmit()" #formulario="ngForm">
       <div>
-        <input type="text" id="nombre" name="nombre" [(ngModel)]="username" placeholder="Nombre" required>
+        <input type="text" id="nombre" name="nombre" [(ngModel)]="firstName" placeholder="Nombre" required>
       </div>
       <div>
-        <input type="text" id="gmail" name="gmail" [(ngModel)]="gmail" placeholder="Gmail" required>
+        <input type="text" id="gmail" name="gmail" [(ngModel)]="email" placeholder="Gmail" required>
       </div>
       <div class="password-container">
         <input type="password" id="password" name="password" [(ngModel)]="password" placeholder="Contraseña" required>
@@ -23,7 +23,7 @@
 
 
       <div class="button-container">
-        <button type="submit" [ngClass]="{ 'enabled': formulario.valid && username && gmail && password }" [disabled]="!formulario.valid || !username || !gmail || !password" [ngStyle]="{ 'background-color': (formulario.valid && username && gmail && password) ? '' : 'grey' }">Siguiente</button>
+        <button type="submit" [ngClass]="{ 'enabled': formulario.valid && firstName && email && password }" [disabled]="!formulario.valid || !firstName || !email || !password" [ngStyle]="{ 'background-color': (formulario.valid && firstName && email && password) ? '' : 'grey' }">Siguiente</button>
       </div>
     </form>
 
