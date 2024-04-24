@@ -10,13 +10,17 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class HomeComponent implements OnInit {
   posts: any[] = [];
+  categories: string[] = ['Categoria1', 'Categoria2', 'Categoria3', 'Categoria4'];
+  selectedCategories: string[] = [];
+
 
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    // Escucha el evento click del botón de publicar
+    this.getCategories();
     document.getElementById('publicar')?.addEventListener('click', () => {
       this.submitPost();
+
     });
 
     // Carga los posts al iniciar el componente
@@ -94,4 +98,38 @@ export class HomeComponent implements OnInit {
         }
       );
   }
+
+  getCategories() {
+    const token = localStorage.getItem('idToken');
+
+    if (!token) {
+      console.error('No se encontró el token en el almacenamiento local.');
+      return;
+    }
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'idToken': token,
+    });
+
+    this.http.get<any>('http://127.0.0.1:8080/api/categories', {headers: headers})
+      .subscribe(
+        (response) => {
+          this.categories = response.data;
+        },
+        (error) => {
+          console.error('Error al obtener las categorías:', error);
+        }
+      );
+  }
+
+  toggleCategory(category: string) {
+    if (this.selectedCategories.includes(category)) {
+      this.selectedCategories = this.selectedCategories.filter(c => c !== category);
+    } else {
+      this.selectedCategories.push(category);
+    }
+    console.log('Categorías seleccionadas:', this.selectedCategories);
+  }
 }
+

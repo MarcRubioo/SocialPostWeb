@@ -1,45 +1,57 @@
-<div id="columnas">
-  <div id="column1">
-    <div class="IZQ">
-      <div class="logo">
-        <img src="assets/logo.png" alt="Logo" class="logo">
+  <div id="columnas">
+    <div id="column1">
+      <div class="IZQ">
+        <div class="logo">
+          <img src="assets/logo.png" alt="Logo" class="logo">
+        </div>
+
+        <div id="menu">
+          <div id="home">
+            <button routerLinkActive="active" routerLink="/home">Home</button>
+          </div>
+
+          <div id="amigos">
+            <button routerLinkActive="active" routerLink="/amigos">Amigos</button>
+          </div>
+
+          <div id="perfil">
+            <button routerLinkActive="active" routerLink="/perfil">Perfil</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="column2">
+      <div id="titulo">
+        <p>Home</p>
       </div>
 
-      <div id="menu">
-        <div id="home">
-          <button routerLinkActive="active" routerLink="/home">Home</button>
-        </div>
 
-        <div id="amigos">
-          <button routerLinkActive="active" routerLink="/amigos">Amigos</button>
-        </div>
 
-        <div id="perfil">
-          <button routerLinkActive="active" routerLink="/perfil">Perfil</button>
+
+
+      <div *ngFor="let post of posts" class="post-container">
+        <div class="post">
+          <p>{{ post.email }}</p>
+          <p>{{ post.description }}</p>
+          <p>Likes: {{ post.likes.length }}</p>
+          <p>Fecha de creación: {{ post.createdAT | date }}</p>
         </div>
       </div>
+
+    </div>
+
+    <div  id="column3">
+
+      <p>Categorías seleccionadas: {{ selectedCategories }}</p>
+
+      <div *ngFor="let category of categories">
+        <label>
+          <input type="checkbox" [value]="category" (change)="toggleCategory(category)">
+          {{ category }}
+        </label>
+      </div>
+
+
     </div>
   </div>
-
-  <div id="column2">
-    <div id="titulo">
-      <p>Home</p>
-    </div>
-
-
-
-
-
-    <div *ngFor="let post of posts" class="post-container">
-      <div class="post">
-        <p>{{ post.email }}</p>
-        <p>{{ post.description }}</p>
-        <p>Likes: {{ post.likes.length }}</p> <!-- Muestra la cantidad de likes -->
-        <p>Fecha de creación: {{ post.createdAT | date }}</p> <!-- Muestra la fecha de creación -->
-      </div>
-    </div>
-
-  </div>
-
-  <div  id="column3"></div>
-</div>
