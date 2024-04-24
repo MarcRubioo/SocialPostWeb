@@ -82,3 +82,48 @@
   line-height: 1.5;
   margin-bottom: 10px;
 }
+
+
+
+#categorias {
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-left: 10%;
+
+}
+
+#categorias p {
+  color: #007bff;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+#categorias label {
+  display: block;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+#categorias input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+#categorias input[type="checkbox"]:checked + span {
+  color: #007bff;
+  font-weight: bold;
+}
+
+#categorias input[type="checkbox"]:checked + span::before {
+  content: "\u2713"; /* Unicode check mark character */
+  margin-right: 4px;
+}
+
+#categorias input[type="checkbox"]:checked + span::after {
+  content: "";
+}
+
+
