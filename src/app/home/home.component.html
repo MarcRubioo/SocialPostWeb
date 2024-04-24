@@ -7,57 +7,39 @@
 
       <div id="menu">
         <div id="home">
-        <button routerLinkActive="active" routerLink="/home">Home</button>
-      </div>
+          <button routerLinkActive="active" routerLink="/home">Home</button>
+        </div>
 
-      <div id="amigos">
-        <button routerLinkActive="active" routerLink="/amigos">Amigos</button>
-      </div>
+        <div id="amigos">
+          <button routerLinkActive="active" routerLink="/amigos">Amigos</button>
+        </div>
 
         <div id="perfil">
           <button routerLinkActive="active" routerLink="/perfil">Perfil</button>
         </div>
-
-
       </div>
     </div>
-    <button id="nuevoPost">Nuevo post</button>
-
   </div>
+
   <div id="column2">
     <div id="titulo">
       <p>Home</p>
+    </div>
 
-      <div class="tweet">
-        <img src="assets/logo.png" alt="PFP" class="tweet_author_logo"/>
-        <div class="tweet_main">
-          <div class="tweet_header">
-            <div class="tweet_author_name">
-              <p>IsmaElPro</p>
-            </div>
-            <div class="tweet_author_slug">
-              <p>@isma7123</p>
-            </div>
-            <div class="tweet_publish_time">
-              <p>23m</p>
-            </div>
-          </div>
-          <div class="tweet_content">
-            <p>EZ low elos</p>
-          </div>
-        </div>
 
+
+
+
+    <div *ngFor="let post of posts" class="post-container">
+      <div class="post">
+        <p>{{ post.email }}</p>
+        <p>{{ post.description }}</p>
+        <p>Likes: {{ post.likes.length }}</p> <!-- Muestra la cantidad de likes -->
+        <p>Fecha de creación: {{ post.createdAT | date }}</p> <!-- Muestra la fecha de creación -->
       </div>
     </div>
 
-    <form id="formularioPost">
-      <textarea id="texto" placeholder="Escribe tu mensaje..."></textarea>
-      <input type="file" id="foto" accept="image/*" multiple>
-      <label for="foto" id="emojiAttachment">📎</label>
-      <button id="publicar">Publicar</button>
-    </form>
-
-
   </div>
+
   <div  id="column3"></div>
 </div>

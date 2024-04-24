@@ -28,6 +28,41 @@
     <div id="titulo">
       <p>Perfil</p>
     </div>
+
+    <div id="infouser">
+    <div *ngIf="userDetails">
+      <ul>
+        <li> <strong>{{ userDetails.firstName }}</strong></li>
+        <li> <strong>{{ userDetails.age }}<strong> y</strong></strong></li>
+      </ul>
+    </div>
+
+    <div *ngIf="!userDetails">
+      <p>Cargando detalles del usuario...</p>
+    </div>
+    </div>
+
+
+<br/>
+    <div id="posts">
+      <form (submit)="submitPost()">
+        <textarea [(ngModel)]="postContent" name="postContent" placeholder="Escribe tu mensaje aquí" class="post-textarea"></textarea>
+        <button type="submit" class="post-button">Publicar</button>
+      </form>
+    </div>
+
+    <div *ngFor="let post of userPosts" class="post-container">
+      <div class="post">
+        <p>{{ post.email }}</p>
+        <p>{{ post.description }}</p>
+        <p>Likes: {{ post.likes.length }}</p>
+        <p>Fecha de creación: {{ parseDate(post.createdAT) | date }}</p>
+      </div>
+    </div>
+
+
+
+
   </div>
   <div  id="column3"></div>
 </div>
