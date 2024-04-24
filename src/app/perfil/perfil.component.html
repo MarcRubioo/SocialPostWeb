@@ -17,36 +17,36 @@
         <div id="perfil">
           <button routerLinkActive="active" routerLink="/perfil">Perfil</button>
         </div>
-
-
       </div>
-
     </div>
-
   </div>
-  <div  id="column2">
+
+  <div id="column2">
     <div id="titulo">
       <p>Perfil</p>
     </div>
 
     <div id="infouser">
-    <div *ngIf="userDetails">
-      <ul>
-        <li> <strong>{{ userDetails.firstName }}</strong></li>
-        <li> <strong>{{ userDetails.age }}<strong> y</strong></strong></li>
-      </ul>
+      <div *ngIf="userDetails">
+        <ul>
+          <li> <strong>{{ userDetails.firstName }}</strong></li>
+          <li> <strong>{{ userDetails.age }}<strong> y</strong></strong></li>
+        </ul>
+      </div>
+
+      <div *ngIf="!userDetails">
+        <p>Cargando detalles del usuario...</p>
+      </div>
     </div>
 
-    <div *ngIf="!userDetails">
-      <p>Cargando detalles del usuario...</p>
-    </div>
-    </div>
+    <br/>
 
-
-<br/>
     <div id="posts">
       <form (submit)="submitPost()">
         <textarea [(ngModel)]="postContent" name="postContent" placeholder="Escribe tu mensaje aquí" class="post-textarea"></textarea>
+        <select [(ngModel)]="selectedCategory" name="categories" class="post-dropdown">
+          <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+        </select>
         <button type="submit" class="post-button">Publicar</button>
       </form>
     </div>
@@ -59,9 +59,6 @@
         <p>Fecha de creación: {{ parseDate(post.createdAT) | date }}</p>
       </div>
     </div>
-
-
-
 
   </div>
   <div  id="column3"></div>

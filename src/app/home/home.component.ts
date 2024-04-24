@@ -10,7 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class HomeComponent implements OnInit {
   posts: any[] = [];
-  categories: string[] = ['Categoria1', 'Categoria2', 'Categoria3', 'Categoria4'];
+  categories: string[] = [];
   selectedCategories: string[] = [];
 
 
@@ -73,7 +73,6 @@ export class HomeComponent implements OnInit {
   // Función para obtener todos los posts desde el servidor
   getAllPosts() {
     const token = localStorage.getItem('idToken');
-
     if (!token) {
       console.error('No se encontró el token en el almacenamiento local.');
       return;
@@ -84,11 +83,12 @@ export class HomeComponent implements OnInit {
       'idToken': token,
     });
 
-    this.http.get<any>('http://127.0.0.1:8080/api/allposts', {headers: headers})
+    this.http.get<any>('http://127.0.0.1:8080/api/allposts', { headers: headers })
       .subscribe(
         (response) => {
-          // Mapea los posts y convierte las fechas a objetos Date
-          this.posts = response.data.map(post => ({
+          this.posts = response.data.filter(post => {
+            return this.selectedCategories.every(category => post.categories.includes(category));
+          }).map(post => ({
             ...post,
             createdAT: this.parseDate(post.createdAT)
           }));
@@ -98,6 +98,8 @@ export class HomeComponent implements OnInit {
         }
       );
   }
+
+
 
   getCategories() {
     const token = localStorage.getItem('idToken');
@@ -123,6 +125,8 @@ export class HomeComponent implements OnInit {
       );
   }
 
+
+
   toggleCategory(category: string) {
     if (this.selectedCategories.includes(category)) {
       this.selectedCategories = this.selectedCategories.filter(c => c !== category);
@@ -130,6 +134,8 @@ export class HomeComponent implements OnInit {
       this.selectedCategories.push(category);
     }
     console.log('Categorías seleccionadas:', this.selectedCategories);
+    this.getAllPosts(); // Llama a getAllPosts cada vez que cambia la selección de categorías
   }
 }
+
 
