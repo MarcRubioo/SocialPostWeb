@@ -93,12 +93,11 @@ export class PerfilComponent implements OnInit {
       createdAT: new Date().toISOString(),
       description: this.postContent,
       images: [],
-      category: this.selectedCategory,
       likes: [],
       comments: [],
     };
 
-    this.http.post<any>('http://127.0.0.1:8080/api/posts', postData, {headers: headers}).subscribe(
+    this.http.post<any>('http://127.0.0.1:8080/api/posts?category=' + this.selectedCategory, postData, {headers: headers}).subscribe(
       response => {
         console.log('Publicación creada:', response);
         this.postContent = '';
