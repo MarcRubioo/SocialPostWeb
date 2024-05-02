@@ -45,11 +45,13 @@
       <form (submit)="submitPost()">
         <textarea [(ngModel)]="postContent" name="postContent" placeholder="Escribe tu mensaje aquí" class="post-textarea"></textarea>
         <select [(ngModel)]="selectedCategory" name="categories" class="post-dropdown">
+          <option value="" disabled selected>Seleccionar Categoría</option>
           <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
         </select>
         <button type="submit" class="post-button">Publicar</button>
       </form>
     </div>
+
 
     <div *ngFor="let post of userPosts" class="post-container">
       <div class="post">
