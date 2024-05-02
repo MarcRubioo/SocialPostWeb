@@ -43,8 +43,9 @@
 
     <div  id="column3">
 
-      <p>Categorías seleccionadas: {{ selectedCategories }}</p>
 
+      <div id="categorias">
+      <p>Categorías</p><br/>
       <div *ngFor="let category of categories">
         <label>
           <input type="checkbox" [value]="category" (change)="toggleCategory(category)">
@@ -53,5 +54,6 @@
       </div>
 
 
+      </div>
     </div>
   </div>

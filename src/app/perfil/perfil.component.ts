@@ -12,26 +12,23 @@ export class PerfilComponent implements OnInit {
   postContent: string;
   userDetails: any;
   userPosts: any[];
-
+  categories: string[] = [];
+  selectedCategory: string; // Variable para almacenar la categoría seleccionada
 
   constructor(private http: HttpClient) {
-    this.loadUserPosts()
+    this.loadUserPosts();
   }
 
   ngOnInit() {
     this.getUserDetails();
     this.loadUserPosts();
-
+    this.getCategories();
   }
-
-
 
   parseDate(dateString: string): Date {
     const parsedDate = new Date(dateString);
     return isNaN(parsedDate.getTime()) ? new Date() : parsedDate;
   }
-
-
 
   getUserDetails() {
     const email = localStorage.getItem('email');
@@ -51,8 +48,6 @@ export class PerfilComponent implements OnInit {
       .subscribe(
         (response) => {
           this.userDetails = response.data[0];
-          console.log('Detalles del usuario:', this.userDetails);
-          // Aquí puedes asignar los detalles del usuario a las variables de tu componente y mostrarlas en tu página web
         },
         (error) => {
           console.error('Error al obtener los detalles del usuario:', error);
@@ -75,7 +70,7 @@ export class PerfilComponent implements OnInit {
 
   submitPost() {
     if (!this.postContent) {
-      return; // Evitar publicaciones vacías
+      return;
     }
 
     const token = localStorage.getItem('idToken');
@@ -98,12 +93,11 @@ export class PerfilComponent implements OnInit {
       createdAT: new Date().toISOString(),
       description: this.postContent,
       images: [],
-      category: [],
       likes: [],
       comments: [],
     };
 
-    this.http.post<any>('http://127.0.0.1:8080/api/posts', postData, {headers: headers}).subscribe(
+    this.http.post<any>('http://127.0.0.1:8080/api/posts?category=' + this.selectedCategory, postData, {headers: headers}).subscribe(
       response => {
         console.log('Publicación creada:', response);
         this.postContent = '';
@@ -114,9 +108,7 @@ export class PerfilComponent implements OnInit {
     );
   }
 
-
   loadUserPosts() {
-
     const token = localStorage.getItem('idToken');
     const email = localStorage.getItem('email');
 
@@ -127,12 +119,35 @@ export class PerfilComponent implements OnInit {
 
     this.http.get<any>('http://127.0.0.1:8080/api/userPosts?email=' + email, {headers: headers}).subscribe(
       response => {
-        console.log('Conseguidoo posts de usuario:', response);
-        this.userPosts = response.data;        //variable = response.data[0]
+        this.userPosts = response.data;
       },
       error => {
         console.error('Error al crear la publicación:', error);
       }
     );
+  }
+
+  getCategories() {
+    const token = localStorage.getItem('idToken');
+
+    if (!token) {
+      console.error('No se encontró el token en el almacenamiento local.');
+      return;
+    }
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'idToken': token,
+    });
+
+    this.http.get<any>('http://127.0.0.1:8080/api/categories', {headers: headers})
+      .subscribe(
+        (response) => {
+          this.categories = response.data;
+        },
+        (error) => {
+          console.error('Error al obtener las categorías:', error);
+        }
+      );
   }
 }
