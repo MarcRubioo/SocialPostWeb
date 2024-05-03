@@ -16,6 +16,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { enviroment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
     RegisterComponent,
     HomeComponent,
     AmigosComponent,
-    PerfilComponent
+    PerfilComponent,
+    AdminLoginComponent
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,7 @@ import {RegisterComponent} from "./register/register.component";
 import {RouterModule, Routes} from "@angular/router";
 import {AmigosComponent} from "./amigos/amigos.component";
 import {PerfilComponent} from "./perfil/perfil.component";
+import {AdminLoginComponent} from "./admin-login/admin-login.component";
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'register' , component:RegisterComponent},
   {path: 'amigos' , component:AmigosComponent},
   {path: 'perfil' , component:PerfilComponent},
+  {path: 'admin-login', component:AdminLoginComponent}
 
 
 ]

@@ -1,19 +1,20 @@
 import {Component} from '@angular/core';
-import {Router} from "@angular/router";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Auth, signInWithEmailAndPassword} from '@angular/fire/auth';
+import {Auth, signInWithEmailAndPassword} from "@angular/fire/auth";
+import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  selector: 'app-admin-login',
+  templateUrl: './admin-login.component.html',
+  styleUrls: ['./admin-login.component.css']
 })
-export class LoginComponent {
+export class AdminLoginComponent {
   username: string = '';
   password: string = '';
   hidePassword: boolean = true;
 
-  constructor(private router: Router, private http: HttpClient, private auth: Auth) {
+  constructor(private http: HttpClient, private auth: Auth, private router: Router) {
+
   }
 
   async onSubmit() {
@@ -43,34 +44,34 @@ export class LoginComponent {
         }
 
         // Realiza la solicitud HTTP al servidor
-        this.http.post<any>("http://localhost:8080/api/users/login",
+        this.http.post<any>("http://localhost:8080/api/admin/login",
           {
             email: this.username,
             password: this.password,
             firstName: ""
-          }, headers)
-          .subscribe(
-            response => {
-              if (response) {
-                console.log("response: ", response);
-                // Redirige al usuario a la página de inicio si el inicio de sesión es correcto
-                if (response.responseNo == 200) {
-                  alert("Inicio de sesión correctamente realizado");
-                  this.router.navigate(['/home']);
-                }
+          }, headers).subscribe(
+          response => {
+            if (response) {
+              console.log("response: ", response);
+              // Redirige al usuario a la página de inicio si el inicio de sesión es correcto
+              if (response.responseNo == 200) {
+                alert("Inicio de sesión correctamente realizado");
+                this.router.navigate(['/home']);
               }
-            },
-            error => {
-              console.error('Error al iniciar sesión:', error);
-              alert("Problema al iniciar sesión. Verifique sus credenciales.");
             }
-          );
+          },
+          error => {
+            console.error('Error al iniciar sesión:', error);
+            alert("Problema al iniciar sesión. Verifique sus credenciales.");
+          }
+        );
       }
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
       alert("Problema al iniciar sesión. Verifique sus credenciales.");
     }
   }
+
 
   togglePasswordVisibility(): void {
     this.hidePassword = !this.hidePassword;
@@ -81,4 +82,5 @@ export class LoginComponent {
       passwordInput.type = 'text';
     }
   }
+
 }

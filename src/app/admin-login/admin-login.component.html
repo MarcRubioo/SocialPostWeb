@@ -8,31 +8,22 @@
   </div>
 
   <div class="formulari">
-    <h2>Regístrate</h2>
+    <h2>Admin Login</h2>
     <form (ngSubmit)="onSubmit()" #formulario="ngForm">
       <div>
-        <input type="text" id="nombre" name="nombre" [(ngModel)]="firstName" placeholder="Nombre" required>
-      </div>
-      <div>
-        <input type="text" id="gmail" name="gmail" [(ngModel)]="email" placeholder="Gmail" required>
+        <input type="text" id="username" name="username" [(ngModel)]="username" placeholder="Gmail" required>
       </div>
       <div class="password-container">
         <input type="password" id="password" name="password" [(ngModel)]="password" placeholder="Contraseña" required>
         <button type="button" id="lupa" (click)="togglePasswordVisibility()">👁️‍🗨️</button>
       </div>
 
-
-      <div class="button-container">
-        <button type="submit" [ngClass]="{ 'enabled': formulario.valid && firstName && email && password }" [disabled]="!formulario.valid || !firstName || !email || !password" [ngStyle]="{ 'background-color': (formulario.valid && firstName && email && password) ? '' : 'grey' }">Siguiente</button>
-      </div>
+      <button type="submit" [ngClass]="{ 'enabled': formulario.valid && username && password }" [disabled]="!formulario.valid" [ngStyle]="{ 'background-color': (formulario.valid && username && password) ? '' : 'grey' }">Siguiente</button>
     </form>
 
   </div>
 
-
 </div>
-
-
 
 
 
