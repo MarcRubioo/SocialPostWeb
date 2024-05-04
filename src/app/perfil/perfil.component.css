@@ -1,200 +1,197 @@
-  #columnas{
-    display: flex;
-    flex-direction: row;
-  }
-  #column1{
-    height: 100vh;
-    width: 25%;
-  }
-  #column2 {
-    height: 100vh;
-    width: 49%;
-    border-left: solid 2px #C5C5C5;
-    border-right: solid 2px #C5C5C5;
-    overflow-y: auto;
-  }
+#columnas {
+  display: flex;
+  flex-direction: row;
+}
 
-  #column3{
-    height: 100vh;
-    width: 25%;
-  }
+#column1 {
+  height: 100vh;
+  width: 25%;
+}
 
+#column2 {
+  height: 100vh;
+  width: 49%;
+  border-left: solid 2px #C5C5C5;
+  border-right: solid 2px #C5C5C5;
+  overflow-y: auto;
+}
 
-  .logo {
-    height: 80px;
-    margin-left: 14% ;
-    margin-top: 5%;
-  }
-
-  #home {
-    margin-top: 16%;
-    margin-left: 43%;
-  }
-
-  #amigos {
-    margin-top: 10%;
-    margin-left: 42%;
-  }
-
-  #perfil {
-    margin-top: 10%;
-    margin-left: 43%;
-  }
-
-  .IZQ button {
-    border: none;
-    background-color: transparent;
-    padding: 0;
-    font-weight: bold;
-    transition: background-color 0.3s;
-  }
-
-  .IZQ button:hover {
-    background-color: lightgray;
-  }
-
-  #titulo {
-    font-weight: bold;
-    font-size: 160%;
-    border: none;
-    background-color: transparent;
-    padding: 0;
-    transition: background-color 0.3s;
-    border-bottom: 1px solid #C5C5C5;
-  }
-
-  #titulo p {
-    margin-left: 8%;
-    margin-top: 3%;
-  }
+#column3 {
+  height: 100vh;
+  width: 25%;
+}
 
 
+.logo {
+  height: 80px;
+  margin-left: 14%;
+  margin-top: 5%;
+}
 
-  form {
-    max-width: 400px;
-    margin: 0 auto;
-  }
+#home {
+  margin-top: 16%;
+  margin-left: 43%;
+}
 
-  #posts {
-    margin: 20px auto;
-    width: 80%;
-    max-width: 600px;
-  }
+#amigos {
+  margin-top: 10%;
+  margin-left: 42%;
+}
 
-  .post-textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    resize: vertical;
-  }
+#perfil {
+  margin-top: 10%;
+  margin-left: 43%;
+}
 
-  .post-button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+.IZQ button {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
 
-  .post-button:hover {
-    background-color: #45a049;
-  }
+.IZQ button:hover {
+  background-color: lightgray;
+}
 
-  #infouser {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
-  }
+#titulo {
+  text-align: center;
+  font-weight: bold;
+  font-size: xx-large;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  transition: background-color 0.3s;
+  border-bottom: 1px solid #C5C5C5;
+}
 
-  #infouser ul {
-    list-style: none;
-    padding: 0;
-  }
 
-  #infouser li {
-    margin-bottom: 15px;
-    text-transform: capitalize; /* Convertir primera letra a mayúscula */
-  }
+form {
+  max-width: 400px;
+  margin: 0 auto;
+}
 
-  #infouser li strong {
-    font-weight: bold;
-    margin-right: 10px;
-    color: #1da1f2; /* Azul de Twitter */
-  }
+#posts {
+  margin: 20px auto;
+  width: 80%;
+  max-width: 600px;
+}
 
-  #infouser p {
-    font-size: 16px;
-    color: #333;
-    line-height: 1.5;
-  }
+.post-textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+}
 
-  #infouser p.loading {
-    font-style: italic;
-  }
+.post-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-  #infouser h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #333;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
-  }
+.post-button:hover {
+  background-color: #45a049;
+}
 
-  #infouser h3 {
-    font-size: 18px;
-    color: #1da1f2; /* Azul de Twitter */
-    margin-bottom: 10px;
-  }
+#infouser {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
 
-  /* Estilos para el contenedor de cada post */
-  .post-container {
-    margin-bottom: 20px;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #fff;
-    max-height: calc(100vh - 220px); /* Ajusta la altura máxima según sea necesario */
-    overflow-y: auto;
-  }
+#infouser ul {
+  list-style: none;
+  padding: 0;
+}
 
-  /* Estilos para el contenido del post */
-  .post-content {
-    font-size: 16px;
-    line-height: 1.5;
-    margin-bottom: 10px;
-  }
+#infouser li {
+  margin-bottom: 15px;
+  text-transform: capitalize; /* Convertir primera letra a mayúscula */
+}
 
-  /* Estilos para la información del post (email, fecha, etc.) */
-  .post-info {
-    font-size: 14px;
-    color: #666;
-  }
+#infouser li strong {
+  font-weight: bold;
+  margin-right: 10px;
+  color: #1da1f2; /* Azul de Twitter */
+}
 
-  /* Estilos para el contador de likes */
-  .like-counter {
-    font-size: 14px;
-    color: #666;
-    margin-top: 5px;
-  }
+#infouser p {
+  font-size: 16px;
+  color: #333;
+  line-height: 1.5;
+}
 
-  /* Estilos para el icono de pulgar arriba */
-  .like-icon {
-    font-size: 20px;
-    color: #999;
-    margin-right: 5px;
-    cursor: pointer;
-  }
+#infouser p.loading {
+  font-style: italic;
+}
 
-  /* Estilos para el icono de pulgar arriba cuando está activo */
-  .like-icon.active {
-    color: #007bff;
-  }
+#infouser h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+#infouser h3 {
+  font-size: 18px;
+  color: #1da1f2; /* Azul de Twitter */
+  margin-bottom: 10px;
+}
+
+/* Estilos para el contenedor de cada post */
+.post-container {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+  max-height: calc(100vh - 220px); /* Ajusta la altura máxima según sea necesario */
+  overflow-y: auto;
+}
+
+/* Estilos para el contenido del post */
+.post-content {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+/* Estilos para la información del post (email, fecha, etc.) */
+.post-info {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Estilos para el contador de likes */
+.like-counter {
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+}
+
+/* Estilos para el icono de pulgar arriba */
+.like-icon {
+  font-size: 20px;
+  color: #999;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+/* Estilos para el icono de pulgar arriba cuando está activo */
+.like-icon.active {
+  color: #007bff;
+}
 
 

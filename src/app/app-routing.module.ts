@@ -7,6 +7,8 @@ import {RouterModule, Routes} from "@angular/router";
 import {AmigosComponent} from "./amigos/amigos.component";
 import {PerfilComponent} from "./perfil/perfil.component";
 import {AdminLoginComponent} from "./admin-login/admin-login.component";
+import {AdminDashboardComponent} from "./admin-dashboard/admin-dashboard.component";
+import {AdminUsersListComponent} from "./admin-users-list/admin-users-list.component";
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -15,7 +17,9 @@ const routes: Routes = [
   {path: 'register' , component:RegisterComponent},
   {path: 'amigos' , component:AmigosComponent},
   {path: 'perfil' , component:PerfilComponent},
-  {path: 'admin-login', component:AdminLoginComponent}
+  {path: 'admin-login', component:AdminLoginComponent},
+  {path: 'admin-dashboard', component:AdminDashboardComponent},
+  {path: 'admin-userListing', component:AdminUsersListComponent},
 
 
 ]

@@ -1,28 +1,29 @@
-#columnas{
+#columnas {
   display: flex;
   flex-direction: row;
 }
-#column1{
+
+#column1 {
   height: 100vh;
   width: 25%;
 }
-#column2{
+
+#column2 {
   height: 100vh;
-  width: 49%;
+  width: 50%;
   border-left: solid 2px #C5C5C5;
   border-right: solid 2px #C5C5C5;
-
+  overflow-y: auto;
 }
 
-#column3{
+#column3 {
   height: 100vh;
   width: 25%;
 }
-
 
 .logo {
   height: 80px;
-  margin-left: 14% ;
+  margin-left: 14%;
   margin-top: 5%;
 }
 
@@ -63,9 +64,4 @@
   transition: background-color 0.3s;
   border-bottom: 1px solid #C5C5C5;
 }
-
-
-
-
-
 

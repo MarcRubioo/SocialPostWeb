@@ -55,18 +55,14 @@
 }
 
 #titulo {
+  text-align: center;
   font-weight: bold;
-  font-size: 160%;
+  font-size: xx-large;
   border: none;
   background-color: transparent;
   padding: 0;
   transition: background-color 0.3s;
   border-bottom: 1px solid #C5C5C5;
-}
-
-#titulo p {
-  margin-left: 8%;
-  margin-top: 3%;
 }
 
 .delete-icon {

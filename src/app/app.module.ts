@@ -17,6 +17,8 @@ import { enviroment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { AdminUsersListComponent } from './admin-users-list/admin-users-list.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
     HomeComponent,
     AmigosComponent,
     PerfilComponent,
-    AdminLoginComponent
+    AdminLoginComponent,
+    AdminDashboardComponent,
+    AdminUsersListComponent
   ],
   imports: [
     BrowserModule,
