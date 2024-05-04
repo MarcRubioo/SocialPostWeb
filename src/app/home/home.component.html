@@ -1,50 +1,48 @@
-  <div id="columnas">
-    <div id="column1">
-      <div class="IZQ">
-        <div class="logo" >
-          <img src="assets/logo.png" alt="Logo" class="logo">
+<div id="columnas">
+  <div id="column1">
+    <div class="IZQ">
+      <div class="logo">
+        <img src="assets/logo.png" alt="Logo" class="logo">
+      </div>
+
+      <div id="menu">
+        <div id="home">
+          <button routerLinkActive="active" routerLink="/home">Home</button>
         </div>
 
-        <div id="menu">
-          <div id="home">
-            <button routerLinkActive="active" routerLink="/home">Home</button>
-          </div>
+        <div id="amigos">
+          <button routerLinkActive="active" routerLink="/amigos">Amigos</button>
+        </div>
 
-          <div id="amigos">
-            <button routerLinkActive="active" routerLink="/amigos">Amigos</button>
-          </div>
-
-          <div id="perfil">
-            <button routerLinkActive="active" routerLink="/perfil">Perfil</button>
-          </div>
+        <div id="perfil">
+          <button routerLinkActive="active" routerLink="/perfil">Perfil</button>
         </div>
       </div>
     </div>
+  </div>
 
-    <div id="column2">
-      <div id="titulo">
-        <p>Home</p>
-      </div>
-
-
-
-
-
-      <div *ngFor="let post of posts" class="post-container">
-        <div class="post">
-          <p>{{ post.email }}</p>
-          <p>{{ post.description }}</p>
-          <p>Likes: {{ post.likes.length }}</p>
-          <p>Fecha de creación: {{ post.createdAT | date }}</p>
-        </div>
-      </div>
-
+  <div id="column2">
+    <div id="titulo">
+      <p>Home</p>
     </div>
 
-    <div  id="column3">
+    <div *ngFor="let post of posts" class="post-container">
+      <div class="post">
+        <!-- Conditionally render the "X" mark for admins -->
+        <div *ngIf="admin" class="delete-icon" (click)="deletePost(post)">X</div>
+        <p>{{ post.email }}</p>
+        <p>{{ post.description }}</p>
+        <p>Likes: {{ post.likes.length }}</p>
+        <p>Fecha de creación: {{ post.createdAT | date }}</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="column3">
 
 
-      <div id="categorias">
+    <div id="categorias">
       <p>Categorías</p><br/>
       <div *ngFor="let category of categories">
         <label>
@@ -54,6 +52,6 @@
       </div>
 
 
-      </div>
     </div>
   </div>
+</div>

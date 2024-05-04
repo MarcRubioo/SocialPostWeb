@@ -1,7 +1,8 @@
 // home.component.ts
 
-import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {AdminServiceService} from "../admin-service.service";
 
 @Component({
   selector: 'app-home',
@@ -12,9 +13,11 @@ export class HomeComponent implements OnInit {
   posts: any[] = [];
   categories: string[] = [];
   selectedCategories: string[] = [];
+  admin: boolean = this.adminService.admin
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private adminService: AdminServiceService) {
+  }
 
   ngOnInit(): void {
     this.getCategories();
@@ -83,7 +86,7 @@ export class HomeComponent implements OnInit {
       'idToken': token,
     });
 
-    this.http.get<any>('http://127.0.0.1:8080/api/allposts', { headers: headers })
+    this.http.get<any>('http://127.0.0.1:8080/api/allposts', {headers: headers})
       .subscribe(
         (response) => {
           this.posts = response.data.filter(post => {
@@ -98,7 +101,6 @@ export class HomeComponent implements OnInit {
         }
       );
   }
-
 
 
   getCategories() {
@@ -126,7 +128,6 @@ export class HomeComponent implements OnInit {
   }
 
 
-
   toggleCategory(category: string) {
     if (this.selectedCategories.includes(category)) {
       this.selectedCategories = this.selectedCategories.filter(c => c !== category);
@@ -135,6 +136,26 @@ export class HomeComponent implements OnInit {
     }
     console.log('Categorías seleccionadas:', this.selectedCategories);
     this.getAllPosts(); // Llama a getAllPosts cada vez que cambia la selección de categorías
+  }
+
+  deletePost(post: any) {
+    if (this.admin) {
+      this.adminService.deletePost(post)
+        .subscribe(idPostDeleted => {
+          if (idPostDeleted == "") {
+            console.error("post id was empty!");
+            return;
+          }
+          console.log("idPost | ", idPostDeleted);
+          const index = this.posts.findIndex(p => p.id === idPostDeleted);
+          if (index !== -1) {
+            this.posts.splice(index, 1);
+            console.log("Post deleted from the array");
+          } else {
+            console.log("Post not found in the array");
+          }
+        });
+    }
   }
 }
 

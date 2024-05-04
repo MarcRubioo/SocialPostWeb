@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Auth, signInWithEmailAndPassword} from '@angular/fire/auth';
+import {AdminServiceService} from "../admin-service.service";
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,8 @@ export class LoginComponent {
   password: string = '';
   hidePassword: boolean = true;
 
-  constructor(private router: Router, private http: HttpClient, private auth: Auth) {
+  constructor(private router: Router, private http: HttpClient,
+              private auth: Auth, private adminService: AdminServiceService) {
   }
 
   async onSubmit() {
@@ -56,6 +58,7 @@ export class LoginComponent {
                 // Redirige al usuario a la página de inicio si el inicio de sesión es correcto
                 if (response.responseNo == 200) {
                   alert("Inicio de sesión correctamente realizado");
+                  this.adminService.admin = false;
                   this.router.navigate(['/home']);
                 }
               }
