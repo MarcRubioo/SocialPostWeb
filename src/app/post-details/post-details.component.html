@@ -23,17 +23,29 @@
 
   <div id="column2">
     <div id="titulo">
-      <p>Home</p>
+      <p>Post</p>
     </div>
 
-    <div *ngFor="let post of posts" class="post-container" (click)="sendPost(post)">
+    <div id="mainPostDetails">
       <div class="post">
         <!-- Conditionally render the "X" mark for admins -->
-        <div *ngIf="admin" class="delete-icon" (click)="deletePost(post)">X</div>
+        <!--        <div *ngIf="admin" class="delete-icon" (click)="deletePost(post)">X</div>-->
         <p>{{ post.email }}</p>
         <p>{{ post.description }}</p>
         <p>Likes: {{ post.likes.length }}</p>
         <p>Fecha de creación: {{ post.createdAT | date }}</p>
+      </div>
+
+    </div>
+
+    <div *ngFor="let comment of comments" class="comment-container">
+      <div class="comment">
+        <!-- Conditionally render the "X" mark for admins -->
+        <div *ngIf="admin" class="delete-icon" (click)="deletePost(post)">X</div>
+        <p>{{ comment.email }}</p>
+        <p>{{ comment.comment }}</p>
+        <p>Likes: {{ comment.likes.length }}</p>
+        <p>Fecha de creación: {{ comment.commentAt | date }}</p>
       </div>
     </div>
 
@@ -41,17 +53,5 @@
 
   <div id="column3">
 
-
-    <div id="categorias">
-      <p>Categorías</p><br/>
-      <div *ngFor="let category of categories">
-        <label>
-          <input type="checkbox" [value]="category" (change)="toggleCategory(category)">
-          {{ category }}
-        </label>
-      </div>
-
-
-    </div>
   </div>
 </div>

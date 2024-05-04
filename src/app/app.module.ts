@@ -19,6 +19,7 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { AdminUsersListComponent } from './admin-users-list/admin-users-list.component';
+import { PostDetailsComponent } from './post-details/post-details.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AdminUsersListComponent } from './admin-users-list/admin-users-list.com
     PerfilComponent,
     AdminLoginComponent,
     AdminDashboardComponent,
-    AdminUsersListComponent
+    AdminUsersListComponent,
+    PostDetailsComponent
   ],
   imports: [
     BrowserModule,

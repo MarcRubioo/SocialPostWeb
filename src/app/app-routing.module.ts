@@ -9,6 +9,7 @@ import {PerfilComponent} from "./perfil/perfil.component";
 import {AdminLoginComponent} from "./admin-login/admin-login.component";
 import {AdminDashboardComponent} from "./admin-dashboard/admin-dashboard.component";
 import {AdminUsersListComponent} from "./admin-users-list/admin-users-list.component";
+import {PostDetailsComponent} from "./post-details/post-details.component";
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: 'admin-login', component:AdminLoginComponent},
   {path: 'admin-dashboard', component:AdminDashboardComponent},
   {path: 'admin-userListing', component:AdminUsersListComponent},
+  {path: 'post-details', component: PostDetailsComponent},
 
 
 ]

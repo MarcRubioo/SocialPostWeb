@@ -3,6 +3,8 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AdminServiceService} from "../admin-service.service";
+import {PostService} from "../post.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -16,7 +18,8 @@ export class HomeComponent implements OnInit {
   admin: boolean = this.adminService.admin
 
 
-  constructor(private http: HttpClient, private adminService: AdminServiceService) {
+  constructor(private http: HttpClient, private adminService: AdminServiceService,
+              private postService: PostService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -138,6 +141,22 @@ export class HomeComponent implements OnInit {
     this.getAllPosts(); // Llama a getAllPosts cada vez que cambia la selección de categorías
   }
 
+
+  sendPost(post: any) {
+    const token = localStorage.getItem('idToken');
+
+    if (!token) {
+      console.error('No se encontró el token en el almacenamiento local.');
+      return;
+    }
+
+    this.postService.post = post;
+
+    this.router.navigate(["/post-details"])
+  }
+
+
+
   deletePost(post: any) {
     if (this.admin) {
       this.adminService.deletePost(post)
@@ -157,6 +176,7 @@ export class HomeComponent implements OnInit {
         });
     }
   }
+
 }
 
 
