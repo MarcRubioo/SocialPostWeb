@@ -1,7 +1,8 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AdminServiceService} from "./admin-service.service";
-import {Observable, of} from "rxjs";
+import {catchError, map, Observable, of} from "rxjs";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class PostService {
   comments: any[] = [];
   admin: boolean = this.adminService.admin;
 
-  constructor(private http: HttpClient, private adminService: AdminServiceService) {
+  constructor(private http: HttpClient, private adminService: AdminServiceService,
+              private router: Router) {
   }
 
   loadPostComments(email: string): Promise<any> {
@@ -68,8 +70,24 @@ export class PostService {
         'idToken': token,
       });
 
-
+      return this.http.delete<any>(`http://localhost:8080/api/admin/deletePostComment/${post.id}/${comment.id}`, {headers: headers})
+        .pipe(
+          map(response => {
+            if (response && response.responseNo == 200) {
+              window.alert("Comment eliminated correctly");
+              return comment.id;
+            }
+            return "";
+          }),
+          catchError(error => {
+            console.error("Error | ", error);
+            return of("");
+          })
+        )
+    } else {
+      return of("");
     }
-
   }
+
+
 }

@@ -26,7 +26,35 @@ export class PostDetailsComponent {
   deleteComment(comment: any, post: any) {
     if (this.admin) {
       this.postService.deleteComment(comment, post)
-        .subscribe();
+        .subscribe(idCommentDeleted => {
+          if (idCommentDeleted == "") {
+            console.error("comment id was empty!");
+            return;
+          }
+
+          console.log("idComment | ", idCommentDeleted);
+          const index = this.comments.findIndex(u => u.id === comment.id);
+          if (index !== -1) {
+            this.comments.splice(index, 1);
+            console.log("Comment deleted from the array");
+          } else {
+            console.log("Comment not found in the array");
+          }
+        });
+    }
+  }
+
+  deletePost(post: any) {
+    if (this.admin) {
+      this.adminService.deletePost(post)
+        .subscribe(idPostDeleted => {
+          if (idPostDeleted == "") {
+            console.error("post id was empty!");
+            return;
+          }
+          console.log("idPost | ", idPostDeleted);
+          this.router.navigate(["../home"]);
+        });
     }
   }
 
