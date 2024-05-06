@@ -82,5 +82,18 @@ export class UserDetailsComponent implements OnInit {
     }
   }
 
+  addFriend(user: any) {
+
+  }
+
+  deleteFriend(user: any) {
+
+  }
+
+  checkIfFriend(email: string, user: any): boolean {
+    return user.friends.some(friend => friend.email === email);
+  }
+
+
   protected readonly localStorage = localStorage;
 }

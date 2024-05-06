@@ -28,21 +28,37 @@
 
     <div class="user-container">
       <div id="main-user-container" class="user">
-        <!-- Conditionally render the "X" mark for admins -->
         <div class="user-details">
           <img src="{{ user.img }}" alt="User Image"/>
           <div>
             <p>{{ user.firstName }}</p>
             <p>{{ user.email }}</p>
-            <p class="user-friends">Friends <b>{{ user.friends.length }}</b></p>
           </div>
+          <div class="user-friend-action">
+            <ng-container
+              *ngIf="checkIfFriend(localStorage.getItem('email'), user) && user.email !== localStorage.getItem('email')">
+              <p>Already friends!
+                <img src="assets/friend_already_added_drawable.svg" alt="Already Befriended"
+                     style="height: 24px; width: 24px" (click)="deleteFriend(user)"/>
+              </p>
+            </ng-container>
+            <ng-container
+              *ngIf="!checkIfFriend(localStorage.getItem('email'), user) && user.email !== localStorage.getItem('email')">
+              <p>Send a friend request!!
+                <img src="assets/add_friend_drawable.svg" alt="Add Friend" style="height: 24px; width: 24px"
+                     (click)="addFriend(user)"/>
+              </p>
+            </ng-container>
+          </div>
+          <br>
+          <p class="user-friends">Friends <b>{{ user.friends.length }}</b></p>
         </div>
         <p class="user-description">Description of user</p>
-
       </div>
     </div>
 
 
+    <h2 style="text-align: center; margin-bottom: 13px">User Posts</h2>
     <div *ngFor="let post of posts; let i = index" class="posts-container">
       <div class="post">
         <!-- Conditionally render the "X" mark for admins -->
@@ -59,10 +75,12 @@
         <div class="actions">
           <p>
             <ng-container *ngIf="post.likes.includes(localStorage.getItem('email'));">
-              <img src="assets/heart_filled.svg" alt="Filled Heart" style="height: 24px; width: 24px" (click)="deleteLikeToPost(post, i)"/>
+              <img src="assets/heart_filled.svg" alt="Filled Heart" style="height: 24px; width: 24px"
+                   (click)="deleteLikeToPost(post, i)"/>
             </ng-container>
             <ng-container *ngIf="!post.likes.includes(localStorage.getItem('email'));">
-              <img src="assets/heart_empty.svg" alt="Empty Heart" style="height: 24px; width: 24px" (click)="addLikeToPost(post, i)"/>
+              <img src="assets/heart_empty.svg" alt="Empty Heart" style="height: 24px; width: 24px"
+                   (click)="addLikeToPost(post, i)"/>
             </ng-container>
             {{ post.likes.length }}
           </p>
