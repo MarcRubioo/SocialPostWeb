@@ -23,10 +23,27 @@
     </div>
 
   </div>
-  <div  id="column2">
+
+
+  <div id="column2">
     <div id="titulo">
       <p>Amigos</p>
     </div>
+
+    <div *ngFor="let friend of friends" class="friend-container">
+      <div class="friend">
+        <!-- add friend.img as image and make it round -->
+        <img ngSrc="{{friend.img}}" fill alt="user image">
+        <p>{{friend.firstName}}</p>
+        <div class="delete-icon" (click)="deleteFriend(user)">X</div>
+      </div>
+    </div>
+
   </div>
-  <div  id="column3"></div>
+
+
+  <div id="column3">
+
+
+  </div>
 </div>

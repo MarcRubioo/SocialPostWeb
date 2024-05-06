@@ -34,7 +34,8 @@ export class PostService {
         'idToken': token,
       });
 
-      const params = new HttpParams().set("email", email);
+      let params = new HttpParams();
+      params = params.set("email", email);
 
       this.http.get<any>("http://localhost:8080/api/userPosts", {
         headers: headers,
@@ -90,4 +91,41 @@ export class PostService {
   }
 
 
+  getUserData(postEmail: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const token = localStorage.getItem('idToken');
+      const email = localStorage.getItem('email');
+
+      if (!email || !token) {
+        console.error('No se encontró el email o el token en el almacenamiento local.');
+        reject('No token found');
+        return;
+      }
+
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'idToken': token
+      });
+
+      let params = new HttpParams();
+      params = params.set("email", postEmail);
+
+      this.http.get<any>("http://localhost:8080/api/user", {
+        headers: headers,
+        params: params
+      })
+        .subscribe(
+          response => {
+            if (response && response.responseNo == 200) {
+              console.log(response);
+              console.log("gotten user data correctly");
+              resolve(response.data[0]);
+            }
+          },
+          error => {
+            reject(error);
+          }
+        )
+    });
+  }
 }

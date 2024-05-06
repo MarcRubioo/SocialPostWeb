@@ -21,6 +21,7 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { AdminUsersListComponent } from './admin-users-list/admin-users-list.component';
 import { PostDetailsComponent } from './post-details/post-details.component';
 import { AdminCategoriesListingComponent } from './admin-categories-listing/admin-categories-listing.component';
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -36,15 +37,16 @@ import { AdminCategoriesListingComponent } from './admin-categories-listing/admi
     PostDetailsComponent,
     AdminCategoriesListingComponent
   ],
-  imports: [
-    BrowserModule,
-    AngularFireAuthModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    provideFirebaseApp(() => initializeApp(enviroment.firebase)),
-    provideAuth(() => getAuth())
-  ],
+    imports: [
+        BrowserModule,
+        AngularFireAuthModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        provideFirebaseApp(() => initializeApp(enviroment.firebase)),
+        provideAuth(() => getAuth()),
+        NgOptimizedImage,
+    ],
   providers: [AngularFireAuth], // Agrega AngularFireAuth a los providers
   bootstrap: [AppComponent]
 })

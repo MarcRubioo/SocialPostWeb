@@ -9,18 +9,45 @@ import {AdminServiceService} from "../admin-service.service";
   templateUrl: './post-details.component.html',
   styleUrls: ['./post-details.component.css']
 })
-export class PostDetailsComponent {
+export class PostDetailsComponent implements OnInit {
 
   post: any = this.postService.post;
   comments: any[] = [];
+  commentsDetails: any[] = [];
+  user: any;
   admin: boolean = this.adminService.admin;
 
-  constructor(private http: HttpClient, private postService: PostService,
-              private router: Router, private adminService: AdminServiceService) {
-    console.clear();
+  constructor(private postService: PostService, private router: Router,
+              private adminService: AdminServiceService) {
     console.log("Post received | ", this.post);
 
     this.comments = this.post.comments;
+    console.log("comments, ", this.comments);
+  }
+
+  ngOnInit() {
+    this.getUserInfo(this.post.email);
+    this.comments.forEach((comment: any) => {
+      this.postService.getUserData(comment.email)
+        .then(
+          user => {
+            this.commentsDetails.push(user);
+          }
+        )
+    });
+  }
+
+  getUserInfo(email: string): void {
+    this.postService.getUserData(email)
+      .then(
+        user => {
+          this.user = user;
+          console.log("user data gotten correctly");
+        },
+        error => {
+          console.log(error);
+        }
+      )
   }
 
   deleteComment(comment: any, post: any) {
@@ -68,4 +95,5 @@ export class PostDetailsComponent {
   //   }
   // }
 
+  protected readonly localStorage = localStorage;
 }
