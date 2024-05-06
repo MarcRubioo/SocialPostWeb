@@ -220,7 +220,7 @@ export class PostService {
           if (response && response.responseNo == 200) {
             console.log(response);
             console.log("Deleted like to comment!");
-            resolve(response.data[0]);
+            resolve(response.data[0][0].likes);
           }
         }, error => {
           reject(error);
@@ -257,7 +257,7 @@ export class PostService {
           if (response && response.responseNo == 200) {
             console.log(response);
             console.log("Deleted like to comment!");
-            resolve(response.data[0]);
+            resolve(response.data[0][0].likes);
           }
         }, error => {
           reject(error);

@@ -117,7 +117,7 @@ export class PostDetailsComponent implements OnInit {
       .then(
         likesList => {
           this.comments[position].likes = likesList;
-          console.log("likes at the ts | ", this.comments[position].likes);
+          console.log("likes at the ts | ", this.comments[position]);
         }, error => {
           console.error(error);
         }
