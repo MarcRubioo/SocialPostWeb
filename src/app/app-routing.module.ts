@@ -10,6 +10,7 @@ import {AdminLoginComponent} from "./admin-login/admin-login.component";
 import {AdminDashboardComponent} from "./admin-dashboard/admin-dashboard.component";
 import {AdminUsersListComponent} from "./admin-users-list/admin-users-list.component";
 import {PostDetailsComponent} from "./post-details/post-details.component";
+import {AdminCategoriesListingComponent} from "./admin-categories-listing/admin-categories-listing.component";
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'admin-dashboard', component:AdminDashboardComponent},
   {path: 'admin-userListing', component:AdminUsersListComponent},
   {path: 'post-details', component: PostDetailsComponent},
+  {path: 'admin-categoriesListing', component: AdminCategoriesListingComponent},
 
 
 ]

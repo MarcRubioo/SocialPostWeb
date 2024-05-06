@@ -20,6 +20,7 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { AdminUsersListComponent } from './admin-users-list/admin-users-list.component';
 import { PostDetailsComponent } from './post-details/post-details.component';
+import { AdminCategoriesListingComponent } from './admin-categories-listing/admin-categories-listing.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { PostDetailsComponent } from './post-details/post-details.component';
     AdminLoginComponent,
     AdminDashboardComponent,
     AdminUsersListComponent,
-    PostDetailsComponent
+    PostDetailsComponent,
+    AdminCategoriesListingComponent
   ],
   imports: [
     BrowserModule,

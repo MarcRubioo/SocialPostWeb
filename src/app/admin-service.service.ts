@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError, map, Observable, of} from 'rxjs';
 import {Router} from "@angular/router";
@@ -8,12 +8,14 @@ import {Router} from "@angular/router";
 })
 export class AdminServiceService {
 
-  public admin : boolean;
+  public admin: boolean;
   public users: any[] = [];
+  public categories: string[] = [];
 
   constructor(private http: HttpClient) {
     if (this.admin) {
       this.adminGetAllUsers();
+      this.adminGetAllCategories();
     }
   }
 
@@ -83,6 +85,38 @@ export class AdminServiceService {
   }
 
 
+  deleteCategory(category: string): Observable<string> {
+    const token = localStorage.getItem('idToken');
+
+    if (!token) {
+      console.error('No se encontraron el token o el email en el almacenamiento local.');
+      return of("");
+    }
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'idToken': token,
+    });
+
+    return this.http.delete<any>(`http://localhost:8080/api/admin/deleteCategory/${category}`, {
+      headers: headers
+    })
+      .pipe(
+        map(response => {
+          if (response.responseNo == 200) {
+            window.alert("Category eliminated correctly");
+            return category;
+          }
+          return "";
+        }),
+        catchError(error => {
+          console.error("Error | ", error);
+          return of("");
+        })
+      );
+  }
+
+
   adminGetAllUsers() {
     this.users = [];
     const token = localStorage.getItem('idToken');
@@ -109,4 +143,97 @@ export class AdminServiceService {
       }
     )
   }
+
+  adminGetAllCategories(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const token = localStorage.getItem('idToken');
+      if (!token) {
+        console.error('No se encontraron el token o el email en el almacenamiento local.');
+        reject('No token found');
+        return;
+      }
+
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'idToken': token,
+      });
+
+      this.http.get<any>("http://localhost:8080/api/admin/getAllCategories", {headers: headers})
+        .subscribe(response => {
+          if (response && response.responseNo == 200) {
+            console.log(response);
+            console.log("gotten all categories correctly");
+            resolve(response.data[0]);
+          } else {
+            reject('Failed to get categories');
+          }
+        }, error => {
+          reject(error);
+        });
+    });
+  }
+
+
+  createCategory(category: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const token = localStorage.getItem('idToken');
+      if (!token) {
+        console.error('No se encontraron el token o el email en el almacenamiento local.');
+        reject('No token found');
+      }
+
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'idToken': token,
+      });
+
+      this.http.post<any>("http://localhost:8080/api/admin/insertCategory", category, {headers: headers})
+        .subscribe(response => {
+            if (response && response.responseNo == 200) {
+              console.log(response);
+              console.log("Category added correctly");
+              this.categories = response.data[0];
+              console.log("categories after insert | ", this.categories);
+              resolve(this.categories);
+            } else {
+              console.error(response);
+              reject('Failed to create category');
+            }
+          },
+          error => {
+            reject(error);
+          })
+    })
+  }
+
+
+  updateCategory(category: string, newValue: string) {
+    const token = localStorage.getItem('idToken');
+    if (!token) {
+      console.error('No se encontraron el token o el email en el almacenamiento local.');
+      return;
+    }
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'idToken': token,
+    });
+
+    console.log("Category | " + category + " | New Value | " + newValue);
+
+
+    this.http.put<any>(`http://localhost:8080/api/admin/updateCategory/${category}`, newValue, {headers: headers})
+      .subscribe(response => {
+        if (response && response.responseNo == 200) {
+          console.log(response);
+          console.log("Category updated correctly");
+          let categoryIndex = this.categories.indexOf(category);
+          this.categories[categoryIndex] = newValue;
+        } else {
+          console.error(response);
+        }
+      })
+  }
+
+
 }

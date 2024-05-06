@@ -25,4 +25,10 @@ export class AdminDashboardComponent {
       this.router.navigate(["/admin-userListing"]);
     }
   }
+
+  goToCategoriesListing() {
+    if (this.admin) {
+      this.router.navigate(["/admin-categoriesListing"])
+    }
+  }
 }

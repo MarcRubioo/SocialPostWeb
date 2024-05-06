@@ -22,22 +22,30 @@
   </div>
 
 
-
   <div id="column2">
     <div id="titulo">
-      <p>Lista De Usuarios</p>
+      <p>Lista De Categorías</p>
     </div>
 
-    <div *ngFor="let user of users" class="user-container">
+    <div *ngFor="let category of categories" class="category-container">
       <div class="category">
+        <input type="text" placeholder="{{category}}" [(ngModel)]="editedValues[category]"/>
         <!-- Conditionally render the "X" mark for admins -->
-        <div *ngIf="admin" class="delete-icon" (click)="deleteUser(user)">X</div>
-        <p>{{ user.firstName }}</p>
-        <p>{{ user.email }}</p>
+        <div *ngIf="admin" class="edit-delete-icons">
+          <div class="edit-text" (click)="middleGroundEditCategory(category)">Editar</div>
+          <div class="delete-icon" (click)="deleteCategory(category)">X</div>
+        </div>
       </div>
     </div>
-  </div>
 
+    <div class="create-category-container">
+      <div class="createCategory">
+        <input type="text" placeholder="Nueva categoría" [(ngModel)]="newCategory"/>
+        <div class="create-text" (click)="createCategory(newCategory)">Crear</div>
+      </div>
+    </div>
+
+  </div>
 
 
   <div id="column3">
