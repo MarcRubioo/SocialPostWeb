@@ -85,6 +85,58 @@ export class PostDetailsComponent implements OnInit {
     }
   }
 
+  addLikeToPost(post: any) {
+    //PathVariables needed  idPost
+    this.postService.addLikeToPost(post)
+      .then(
+        likesList => {
+          this.post.likes = likesList;
+          console.log("likes at the ts | ", this.post.likes);
+        }, error => {
+          console.error(error);
+        }
+      )
+  }
+
+  deleteLikeToPost(post: any) {
+    //PathVariables needed  idPost
+    this.postService.deleteLikeToPost(post)
+      .then(
+        likesList => {
+          this.post.likes = likesList;
+          console.log("likes at the ts | ", this.post.likes);
+        }, error => {
+          console.error(error);
+        }
+      )
+  }
+
+  addLikeToComment(post: any, comment: any, position: number) {
+    //PathVariables needed  idPost | idComment
+    this.postService.addLikeToComment(post, comment)
+      .then(
+        likesList => {
+          this.comments[position].likes = likesList;
+          console.log("likes at the ts | ", this.comments[position].likes);
+        }, error => {
+          console.error(error);
+        }
+      )
+  }
+
+  deleteLikeToComment(post: any, comment: any, position: number) {
+    //PathVariables needed  idPost | idComment
+    this.postService.deleteLikeToComment(post, comment)
+      .then(
+        likesList => {
+          this.comments[position].likes = likesList;
+          console.log("likes at the ts | ", this.comments[position].likes);
+        }, error => {
+          console.error(error);
+        }
+      )
+  }
+
   // async loadPostDetails(): Promise<void> {
   //   this.post = this.postService.post;
   //

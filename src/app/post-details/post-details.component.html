@@ -41,12 +41,12 @@
         <p class="post-description">{{ post.description }}</p>
         <div class="actions">
           <p>
-            <ng-container *ngIf="post.likes.includes(localStorage.getItem('email')); else emptyHeart">
-              <img src="assets/heart_filled.svg" alt="Filled Heart" style="height: 24px; width: 24px"/>
+            <ng-container *ngIf="post.likes.includes(localStorage.getItem('email'))">
+              <img src="assets/heart_filled.svg" alt="Filled Heart" style="height: 24px; width: 24px" (click)="deleteLikeToPost(post)"/>
             </ng-container>
-            <ng-template #emptyHeart>
-              <img src="assets/heart_empty.svg" alt="Empty Heart" style="height: 24px; width: 24px"/>
-            </ng-template>
+            <ng-container *ngIf="!post.likes.includes(localStorage.getItem('email'));">
+              <img src="assets/heart_empty.svg" alt="Empty Heart" style="height: 24px; width: 24px" (click)="addLikeToPost(post)"/>
+            </ng-container>
             {{ post.likes.length }}
           </p>
           <p>
@@ -73,12 +73,12 @@
         <p class="comment-text">{{ comment.comment }}</p>
         <div class="actions">
           <p>
-            <ng-container *ngIf="comment.likes.includes(localStorage.getItem('email')); else emptyHeart">
-              <img src="assets/heart_filled.svg" alt="Filled Heart" style="height: 24px; width: 24px"/>
+            <ng-container *ngIf="comment.likes.includes(localStorage.getItem('email'));">
+              <img src="assets/heart_filled.svg" alt="Filled Heart" style="height: 24px; width: 24px" (click)="deleteLikeToComment(post, comment, i)"/>
             </ng-container>
-            <ng-template #emptyHeart>
-              <img src="assets/heart_empty.svg" alt="Empty Heart" style="height: 24px; width: 24px"/>
-            </ng-template>
+            <ng-container *ngIf="!comment.likes.includes(localStorage.getItem('email'));">
+              <img src="assets/heart_empty.svg" alt="Empty Heart" style="height: 24px; width: 24px" (click)="addLikeToComment(post, comment, i)"/>
+            </ng-container>
             {{ comment.likes.length }}
           </p>
         </div>
