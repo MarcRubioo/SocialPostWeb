@@ -33,8 +33,9 @@
     <div *ngFor="let friend of friends" class="friend-container">
       <div class="friend">
         <!-- add friend.img as image and make it round -->
-        <img ngSrc="{{friend.img}}" fill alt="user image">
+        <img src="{{friend.img}}" alt="user image">
         <p>{{friend.firstName}}</p>
+        <p>{{friend.email}}</p>
         <div class="delete-icon" (click)="deleteFriend(user)">X</div>
       </div>
     </div>

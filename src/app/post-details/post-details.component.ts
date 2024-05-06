@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {PostService} from "../post.service";
 import {Router} from "@angular/router";
 import {AdminServiceService} from "../admin-service.service";
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'app-post-details',
@@ -18,14 +19,15 @@ export class PostDetailsComponent implements OnInit {
   admin: boolean = this.adminService.admin;
 
   constructor(private postService: PostService, private router: Router,
-              private adminService: AdminServiceService) {
+              private adminService: AdminServiceService, private userService: UserService,
+              ) {
     console.log("Post received | ", this.post);
 
     this.comments = this.post.comments;
     console.log("comments, ", this.comments);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getUserInfo(this.post.email);
     this.comments.forEach((comment: any) => {
       this.postService.getUserData(comment.email)
@@ -50,7 +52,7 @@ export class PostDetailsComponent implements OnInit {
       )
   }
 
-  deleteComment(comment: any, post: any) {
+  deleteComment(comment: any, post: any): void {
     if (this.admin) {
       this.postService.deleteComment(comment, post)
         .subscribe(idCommentDeleted => {
@@ -71,7 +73,7 @@ export class PostDetailsComponent implements OnInit {
     }
   }
 
-  deletePost(post: any) {
+  deletePost(post: any): void {
     if (this.admin) {
       this.adminService.deletePost(post)
         .subscribe(idPostDeleted => {
@@ -85,7 +87,7 @@ export class PostDetailsComponent implements OnInit {
     }
   }
 
-  addLikeToPost(post: any) {
+  addLikeToPost(post: any): void {
     //PathVariables needed  idPost
     this.postService.addLikeToPost(post)
       .then(
@@ -98,7 +100,7 @@ export class PostDetailsComponent implements OnInit {
       )
   }
 
-  deleteLikeToPost(post: any) {
+  deleteLikeToPost(post: any): void {
     //PathVariables needed  idPost
     this.postService.deleteLikeToPost(post)
       .then(
@@ -111,7 +113,7 @@ export class PostDetailsComponent implements OnInit {
       )
   }
 
-  addLikeToComment(post: any, comment: any, position: number) {
+  addLikeToComment(post: any, comment: any, position: number): void {
     //PathVariables needed  idPost | idComment
     this.postService.addLikeToComment(post, comment)
       .then(
@@ -124,7 +126,7 @@ export class PostDetailsComponent implements OnInit {
       )
   }
 
-  deleteLikeToComment(post: any, comment: any, position: number) {
+  deleteLikeToComment(post: any, comment: any, position: number): void {
     //PathVariables needed  idPost | idComment
     this.postService.deleteLikeToComment(post, comment)
       .then(
@@ -135,6 +137,13 @@ export class PostDetailsComponent implements OnInit {
           console.error(error);
         }
       )
+  }
+
+
+  goToUserDetails(user: any): void {
+    //TODO put user in a service then navigate to userDetails page
+    this.userService.user = user;
+    this.router.navigate(["/user-details"])
   }
 
   // async loadPostDetails(): Promise<void> {

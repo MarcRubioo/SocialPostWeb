@@ -31,7 +31,7 @@
         <!-- Conditionally render the "X" mark for admins -->
         <div *ngIf="admin" class="delete-icon" (click)="deletePost(post)">X</div>
         <div class="user-details">
-          <img src="{{ user.img }}" alt="post User Image"/>
+          <img src="{{ user.img }}" alt="post User Image" (click)="goToUserDetails(user)"/>
           <div>
             <p>{{ user.firstName }}</p>
             <p>{{ post.email }}</p>

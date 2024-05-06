@@ -26,8 +26,13 @@ export class FriendsService {
         'idToken': token
       });
 
+      let params = new HttpParams();
+      params = params.set('email', email);
 
-      this.http.get<any>("http://localhost:8080/api/user/friends", {headers: headers})
+      this.http.get<any>("http://localhost:8080/api/user/friends", {
+        headers: headers,
+        params: params
+      })
         .subscribe(
           response => {
             if (response && response.responseNo == 200) {
