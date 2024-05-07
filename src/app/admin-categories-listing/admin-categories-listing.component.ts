@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
 import {AdminServiceService} from "../admin-service.service";
 
 @Component({
@@ -15,7 +14,7 @@ export class AdminCategoriesListingComponent implements OnInit {
 
   newCategory: string;
 
-  constructor(private http: HttpClient, private adminService: AdminServiceService) {
+  constructor(private adminService: AdminServiceService) {
   }
 
   ngOnInit(): void {

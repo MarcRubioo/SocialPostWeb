@@ -77,15 +77,15 @@
   user-select: none;
 }
 
-.post-container {
+.user-container {
   position: relative;
-  margin-bottom: 40px;
+  margin-bottom: 70px;
   padding: 15px;
   border: 1px solid #1DA1F2;
   border-radius: 10px;
 }
 
-.comment-container {
+.posts-container {
   margin-bottom: 20px;
   padding: 15px;
   border: 1px solid #ccc;
@@ -94,17 +94,23 @@
   position: relative;
 }
 
-.post-time {
+.user-friends {
   position: absolute;
   top: 10px;
   right: 10px;
 }
 
-.comment-container .delete-icon {
+.user-friend-icon {
+  position: absolute;
+  top: 10px;
+  right: 30px;
+}
+
+.posts-container .delete-icon {
   top: 5px; /* Adjust top position for comments */
 }
 
-.comment-container p {
+.posts-container p {
   font-size: 16px;
   line-height: 1.5;
   margin-bottom: 10px;
@@ -127,17 +133,17 @@
   margin: 10px;
 }
 
-.comment {
+.post {
   position: relative;
 }
 
-.comment-time {
+.post-time {
   position: absolute;
   top: 10px;
   right: 10px;
 }
 
-.comment-text {
+.post-body {
   margin-top: 30px; /* Adjust margin between time and comment text */
   margin-left: 15px;
   margin-right: 15px;
@@ -151,4 +157,16 @@
 
 .actions p {
   margin-left: 15px;
+}
+
+.user-friend-action {
+  position: absolute;
+  top: 10px;
+  right: 10px; /* Adjust the right spacing as needed */
+}
+
+.user-friends {
+  position: absolute;
+  top: 70px; /* Adjust the top margin to move it below the icon */
+  right: 10px;
 }

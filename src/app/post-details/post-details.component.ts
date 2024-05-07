@@ -3,27 +3,56 @@ import {HttpClient} from "@angular/common/http";
 import {PostService} from "../post.service";
 import {Router} from "@angular/router";
 import {AdminServiceService} from "../admin-service.service";
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'app-post-details',
   templateUrl: './post-details.component.html',
   styleUrls: ['./post-details.component.css']
 })
-export class PostDetailsComponent {
+export class PostDetailsComponent implements OnInit {
 
   post: any = this.postService.post;
   comments: any[] = [];
+  commentsDetails: any[] = [];
+  user: any;
   admin: boolean = this.adminService.admin;
 
-  constructor(private http: HttpClient, private postService: PostService,
-              private router: Router, private adminService: AdminServiceService) {
-    console.clear();
+  constructor(private postService: PostService, private router: Router,
+              private adminService: AdminServiceService, private userService: UserService,
+              ) {
     console.log("Post received | ", this.post);
 
     this.comments = this.post.comments;
+    console.log("comments, ", this.comments);
   }
 
-  deleteComment(comment: any, post: any) {
+  ngOnInit(): void {
+    this.getUserInfo(this.post.email);
+    this.comments.forEach((comment: any) => {
+      this.postService.getUserData(comment.email)
+        .then(
+          user => {
+            this.commentsDetails.push(user);
+          }
+        )
+    });
+  }
+
+  getUserInfo(email: string): void {
+    this.postService.getUserData(email)
+      .then(
+        user => {
+          this.user = user;
+          console.log("user data gotten correctly");
+        },
+        error => {
+          console.log(error);
+        }
+      )
+  }
+
+  deleteComment(comment: any, post: any): void {
     if (this.admin) {
       this.postService.deleteComment(comment, post)
         .subscribe(idCommentDeleted => {
@@ -44,7 +73,7 @@ export class PostDetailsComponent {
     }
   }
 
-  deletePost(post: any) {
+  deletePost(post: any): void {
     if (this.admin) {
       this.adminService.deletePost(post)
         .subscribe(idPostDeleted => {
@@ -58,6 +87,65 @@ export class PostDetailsComponent {
     }
   }
 
+  addLikeToPost(post: any): void {
+    //PathVariables needed  idPost
+    this.postService.addLikeToPost(post)
+      .then(
+        likesList => {
+          this.post.likes = likesList;
+          console.log("likes at the ts | ", this.post.likes);
+        }, error => {
+          console.error(error);
+        }
+      )
+  }
+
+  deleteLikeToPost(post: any): void {
+    //PathVariables needed  idPost
+    this.postService.deleteLikeToPost(post)
+      .then(
+        likesList => {
+          this.post.likes = likesList;
+          console.log("likes at the ts | ", this.post.likes);
+        }, error => {
+          console.error(error);
+        }
+      )
+  }
+
+  addLikeToComment(post: any, comment: any, position: number): void {
+    //PathVariables needed  idPost | idComment
+    this.postService.addLikeToComment(post, comment)
+      .then(
+        likesList => {
+          this.comments[position].likes = likesList;
+          console.log("likes at the ts | ", this.comments[position]);
+        }, error => {
+          console.error(error);
+        }
+      )
+  }
+
+  deleteLikeToComment(post: any, comment: any, position: number): void {
+    //PathVariables needed  idPost | idComment
+    this.postService.deleteLikeToComment(post, comment)
+      .then(
+        likesList => {
+          this.comments[position].likes = likesList;
+          console.log("likes at the ts | ", this.comments[position].likes);
+        }, error => {
+          console.error(error);
+        }
+      )
+  }
+
+
+  goToUserDetails(user: any): void {
+    //TODO put user in a service then navigate to userDetails page
+    this.userService.user = user;
+    this.router.navigate(["/user-details"])
+  }
+
   // async loadPostDetails(): Promise<void> {
   //   this.post = this.postService.post;
   //
@@ -68,4 +156,5 @@ export class PostDetailsComponent {
   //   }
   // }
 
+  protected readonly localStorage = localStorage;
 }

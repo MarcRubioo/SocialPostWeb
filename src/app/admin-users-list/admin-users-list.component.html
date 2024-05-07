@@ -29,7 +29,7 @@
     </div>
 
     <div *ngFor="let user of users" class="user-container">
-      <div class="category">
+      <div class="friend">
         <!-- Conditionally render the "X" mark for admins -->
         <div *ngIf="admin" class="delete-icon" (click)="deleteUser(user)">X</div>
         <p>{{ user.firstName }}</p>
