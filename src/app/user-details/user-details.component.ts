@@ -83,11 +83,31 @@ export class UserDetailsComponent implements OnInit {
   }
 
   addFriend(user: any) {
-
+    this.userService.addFriendToUser(user)
+      .then(
+        currentUserFriendsList => {
+          if (currentUserFriendsList.length <= 0) {
+            console.error("something went wrong");
+            return;
+          } else if (currentUserFriendsList.some(friend => friend.email === user.email)) {
+            console.log("Friend added successfully");
+          }
+        }
+      )
   }
 
   deleteFriend(user: any) {
-
+    this.userService.deleteFriend(user)
+      .then(
+        currentUserFriendsList => {
+          if (currentUserFriendsList.length <= 0) {
+            console.error("something went wrong");
+            return;
+          } else if (currentUserFriendsList.some(friend => friend.email === user.email)) {
+            console.log("Friend deleted successfully");
+          }
+        }
+      )
   }
 
   checkIfFriend(email: string, user: any): boolean {
