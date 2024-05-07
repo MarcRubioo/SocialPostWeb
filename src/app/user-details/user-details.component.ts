@@ -22,6 +22,7 @@ export class UserDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUserPosts();
+    console.log("user | ", this.user);
   }
 
   loadUserPosts(): void {
@@ -63,7 +64,7 @@ export class UserDetailsComponent implements OnInit {
       )
   }
 
-  sendPost(post: any) {
+  sendPost(post: any): void {
     const token = localStorage.getItem('idToken');
 
     if (!token) {
@@ -96,7 +97,7 @@ export class UserDetailsComponent implements OnInit {
     }
   }
 
-  addFriend(user: any) {
+  addFriend(user: any): void {
     this.userService.addFriendToUser(user)
       .then(
         currentUserFriendsList => {
@@ -105,12 +106,14 @@ export class UserDetailsComponent implements OnInit {
             return;
           } else if (currentUserFriendsList.some(friend => friend.email === user.email)) {
             console.log("Friend added successfully");
+            window.alert("Friend added successfully");
+
           }
         }
       )
   }
 
-  deleteFriend(user: any) {
+  deleteFriend(user: any): void {
     this.userService.deleteFriend(user)
       .then(
         currentUserFriendsList => {
@@ -119,16 +122,58 @@ export class UserDetailsComponent implements OnInit {
             return;
           } else if (currentUserFriendsList.some(friend => friend.email === user.email)) {
             console.log("Friend deleted successfully");
+            window.alert("Friend deleted successfully");
           }
         }
       )
   }
 
   checkIfFriend(email: string, user: any): boolean {
-    console.log("user friends | ", user.friends);
     return user.friends.some(friend => friend.email === email);
   }
 
+  checkIfFollowing(email: string, user: any): boolean {
+    return user.followers.some(following => following.email === email);
+  }
+
+  followUser(user: any): void {
+    let email = localStorage.getItem('email');
+
+    this.userService.followUser(user)
+      .then(
+        followersList => {
+          if (followersList.length <= 0) {
+            console.error("something went wrong");
+            return;
+          }
+          this.user.followers = followersList[0];
+          console.log(this.user.followers);
+          if (this.user.followers.some(follower => follower.email === email)) {
+            console.log("User followed successfully");
+            window.alert("User followed successfully");
+          }
+        }
+      )
+  }
+
+  unfollowUser(user: any): void {
+    let email = localStorage.getItem('email');
+
+    this.userService.unfollowUser(user)
+      .then(
+        followersList => {
+          if (followersList.length <= 0) {
+            console.error("something went wrong");
+            return;
+          }
+          this.user.followers = followersList[0];
+          if (!this.user.followers.some(follower => follower.email === email)) {
+            console.log("User unfollowed successfully");
+            window.alert("User unfollowed successfully");
+          }
+        }
+      )
+  }
 
   protected readonly localStorage = localStorage;
 }
