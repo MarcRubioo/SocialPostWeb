@@ -170,3 +170,31 @@
   top: 70px; /* Adjust the top margin to move it below the icon */
   right: 10px;
 }
+
+.follow-counts {
+  display: flex;
+}
+
+.follow-counts p {
+  margin-right: 30px; /* Adjust margin as needed */
+}
+
+.twitter-follow-button, .twitter-follow-button:visited {
+  background-color: #1DA1F2;
+  color: #fff;
+  border-radius: 17px;
+  height: 28px;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 26px;
+  padding: 8px 15px 8px 15px;
+  text-decoration: none;
+  background-repeat: no-repeat;
+  background-size: 16px 13px;
+  background-position: 8px 10px;
+  margin-right: 15px;
+}
+.twitter-follow-button:hover {
+  background-color: #0c7abf;
+  cursor: pointer;
+}

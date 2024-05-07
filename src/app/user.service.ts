@@ -125,4 +125,78 @@ export class UserService {
       );
     });
   }
+
+
+  followUser(user: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const token = localStorage.getItem('idToken');
+      const email = localStorage.getItem('email');
+
+      if (!token || !email) {
+        console.error('No se encontró el email o el token en el almacenamiento local.');
+        reject('No token found');
+        return;
+      }
+
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'idToken': token
+      });
+
+      let params = new HttpParams();
+      params = params.set("email", email);
+
+      this.http.post<any>("http://localhost:8080/api/user/follow", user, {
+        headers: headers,
+        params: params
+      }).subscribe(
+        response => {
+          if (response && response.responseNo == 200) {
+            console.log(response);
+            console.log("User followed successfully!");
+            resolve(response.data);
+          }
+        }, error => {
+          reject(error);
+        }
+      )
+    });
+  }
+
+  unfollowUser(user: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const token = localStorage.getItem('idToken');
+      const email = localStorage.getItem('email');
+
+      if (!token || !email) {
+        console.error('No se encontró el email o el token en el almacenamiento local.');
+        reject('No token found');
+        return;
+      }
+
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'idToken': token
+      });
+
+      let params = new HttpParams();
+      params = params.set("email", email);
+      params = params.set("userEmail", user.email);
+
+      this.http.delete<any>("http://localhost:8080/api/user/follow", {
+        headers: headers,
+        params: params
+      }).subscribe(
+        response => {
+          if (response && response.responseNo == 200) {
+            console.log(response);
+            console.log("User unfollowed successfully!");
+            resolve(response.data);
+          }
+        }, error => {
+          reject(error);
+        }
+      )
+    });
+  }
 }
