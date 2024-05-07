@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AdminServiceService} from "../admin-service.service";
 import {UserService} from "../user.service";
 import {PostService} from "../post.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user-details',
@@ -15,7 +16,7 @@ export class UserDetailsComponent implements OnInit {
   admin = this.adminService.admin;
 
   constructor(private userService: UserService, private postService: PostService,
-              private adminService: AdminServiceService) {
+              private adminService: AdminServiceService, private router: Router) {
 
   }
 
@@ -60,6 +61,19 @@ export class UserDetailsComponent implements OnInit {
           console.error(error);
         }
       )
+  }
+
+  sendPost(post: any) {
+    const token = localStorage.getItem('idToken');
+
+    if (!token) {
+      console.error('No se encontró el token en el almacenamiento local.');
+      return;
+    }
+
+    this.postService.post = post;
+
+    this.router.navigate(["/post-details"])
   }
 
   deletePost(post: any): void {
@@ -111,6 +125,7 @@ export class UserDetailsComponent implements OnInit {
   }
 
   checkIfFriend(email: string, user: any): boolean {
+    console.log("user friends | ", user.friends);
     return user.friends.some(friend => friend.email === email);
   }
 

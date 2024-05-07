@@ -26,7 +26,7 @@
       <p>Home</p>
     </div>
 
-    <div *ngFor="let post of posts" class="post-container" (click)="sendPost(post)">
+    <div *ngFor="let post of posts; let i = index" class="post-container" (click)="sendPost(post)">
       <div class="post">
         <!-- Conditionally render the "X" mark for admins -->
         <div *ngIf="admin" class="delete-icon" (click)="deletePost(post)">X</div>
@@ -34,6 +34,30 @@
         <p>{{ post.description }}</p>
         <p>Likes: {{ post.likes.length }}</p>
         <p>Fecha de creación: {{ post.createdAT | date }}</p>
+
+        <ng-container *ngIf="post.images.length > 0">
+          <div *ngFor="let image of post.images; let j = index">
+            <img src="{{image}}" alt='Post Image ${j}'>
+          </div>
+        </ng-container>
+
+        <div class="actions">
+          <p>
+            <ng-container *ngIf="post.likes.includes(localStorage.getItem('email'));">
+              <img src="assets/heart_filled.svg" alt="Filled Heart" style="height: 24px; width: 24px"
+                   (click)="deleteLikeToPost(post, i)"/>
+            </ng-container>
+            <ng-container *ngIf="!post.likes.includes(localStorage.getItem('email'));">
+              <img src="assets/heart_empty.svg" alt="Empty Heart" style="height: 24px; width: 24px"
+                   (click)="addLikeToPost(post, i)"/>
+            </ng-container>
+            {{ post.likes.length }}
+          </p>
+          <p>
+            <img src="assets/comments.svg" alt="Comments" style="height: 24px; width: 24px">
+            {{ post.comments.length }}
+          </p>
+        </div>
       </div>
     </div>
 

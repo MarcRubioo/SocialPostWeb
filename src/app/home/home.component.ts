@@ -177,6 +177,33 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  addLikeToPost(post: any, position: number): void {
+    //PathVariables needed  idPost
+    this.postService.addLikeToPost(post)
+      .then(
+        likesList => {
+          this.posts[position].likes = likesList;
+          console.log("likes at the ts | ", this.posts[position].likes);
+        }, error => {
+          console.error(error);
+        }
+      )
+  }
+
+  deleteLikeToPost(post: any, position: number): void {
+    //PathVariables needed  idPost
+    this.postService.deleteLikeToPost(post)
+      .then(
+        likesList => {
+          this.posts[position].likes = likesList;
+          console.log("likes at the ts | ", this.posts[position].likes);
+        }, error => {
+          console.error(error);
+        }
+      )
+  }
+
+  protected readonly localStorage = localStorage;
 }
 
 

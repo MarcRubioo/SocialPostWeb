@@ -59,6 +59,12 @@
         <p>{{ post.description }}</p>
         <p>Likes: {{ post.likes.length }}</p>
         <p>Fecha de creación: {{ parseDate(post.createdAT) | date }}</p>
+
+        <ng-container *ngIf="post.images.length > 0">
+          <div *ngFor="let image of post.images; let i = index">
+            <img src="{{image}}" alt='Post Image ${i}'>
+          </div>
+        </ng-container>
       </div>
     </div>
 

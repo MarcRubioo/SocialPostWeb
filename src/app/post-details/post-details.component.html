@@ -39,6 +39,13 @@
           </div>
         </div>
         <p class="post-description">{{ post.description }}</p>
+
+        <ng-container *ngIf="post.images.length > 0">
+          <div *ngFor="let image of post.images; let i = index">
+            <img src="{{image}}" alt='Post Image ${i}'>
+          </div>
+        </ng-container>
+
         <div class="actions">
           <p>
             <ng-container *ngIf="post.likes.includes(localStorage.getItem('email'))">

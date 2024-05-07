@@ -59,7 +59,7 @@
 
 
     <h2 style="text-align: center; margin-bottom: 13px">User Posts</h2>
-    <div *ngFor="let post of posts; let i = index" class="posts-container">
+    <div *ngFor="let post of posts; let i = index" class="posts-container" (click)="sendPost(post)">
       <div class="post">
         <!-- Conditionally render the "X" mark for admins -->
         <div *ngIf="admin" class="delete-icon" (click)="deletePost(post)">X</div>
@@ -72,6 +72,13 @@
         </div>
         <p class="post-time">{{ post.createdAT | date }}</p>
         <p class="post-body">{{ post.description }}</p>
+
+        <ng-container *ngIf="post.images.length > 0">
+          <div *ngFor="let image of post.images; let i = index">
+            <img src="{{image}}" alt='Post Image ${i}'>
+          </div>
+        </ng-container>
+
         <div class="actions">
           <p>
             <ng-container *ngIf="post.likes.includes(localStorage.getItem('email'));">
@@ -83,6 +90,10 @@
                    (click)="addLikeToPost(post, i)"/>
             </ng-container>
             {{ post.likes.length }}
+          </p>
+          <p>
+            <img src="assets/comments.svg" alt="Comments" style="height: 24px; width: 24px">
+            {{ post.comments.length }}
           </p>
         </div>
       </div>

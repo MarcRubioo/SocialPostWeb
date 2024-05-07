@@ -91,6 +91,15 @@
   margin-bottom: 10px;
 }
 
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.actions p {
+  margin-left: 15px;
+}
 
 
 #categorias {
