@@ -22,7 +22,7 @@ import { AdminUsersListComponent } from './admin-users-list/admin-users-list.com
 import { PostDetailsComponent } from './post-details/post-details.component';
 import { AdminCategoriesListingComponent } from './admin-categories-listing/admin-categories-listing.component';
 import {NgOptimizedImage} from "@angular/common";
-import { ChatComponent } from './chat/chat.component';
+// import { ChatComponent } from './chat/chat.component';
 import {StreamAutocompleteTextareaModule, StreamChatModule} from "stream-chat-angular";
 import { TranslateModule } from '@ngx-translate/core';
 import { UserDetailsComponent } from './user-details/user-details.component';
@@ -44,7 +44,7 @@ import { MenuComponent } from './menu/menu.component';
     UserDetailsComponent,
     MenuComponent,
     UserDetailsComponent,
-    ChatComponent
+    // ChatComponent
   ],
   imports: [
     BrowserModule,
