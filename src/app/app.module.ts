@@ -23,6 +23,7 @@ import { PostDetailsComponent } from './post-details/post-details.component';
 import { AdminCategoriesListingComponent } from './admin-categories-listing/admin-categories-listing.component';
 import {NgOptimizedImage} from "@angular/common";
 import { UserDetailsComponent } from './user-details/user-details.component';
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { UserDetailsComponent } from './user-details/user-details.component';
     AdminUsersListComponent,
     PostDetailsComponent,
     AdminCategoriesListingComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    MenuComponent
   ],
     imports: [
         BrowserModule,
