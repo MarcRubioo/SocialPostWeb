@@ -152,3 +152,17 @@
 .actions p {
   margin-left: 15px;
 }
+
+.post-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.post-image {
+  max-height: 300px;
+  max-width: 100%;
+  margin: 0 5px;
+}
+

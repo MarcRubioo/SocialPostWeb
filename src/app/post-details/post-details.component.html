@@ -34,17 +34,20 @@
           <img src="{{ user.img }}" alt="post User Image" (click)="goToUserDetails(user)"/>
           <div>
             <p>{{ user.firstName }}</p>
-            <p>{{ post.email }}</p>
             <p class="post-time">{{ post.createdAT | date }}</p>
           </div>
         </div>
-        <p class="post-description">{{ post.description }}</p>
+        <p class="post-description">{{ post.description }}</p> <br/>
 
+        <!-- Renderizar imágenes si existen -->
         <ng-container *ngIf="post.images.length > 0">
-          <div *ngFor="let image of post.images; let i = index">
-            <img src="{{image}}" alt='Post Image ${i}'>
+          <div class="post-image-container">
+            <ng-container *ngFor="let image of post.images">
+              <img [src]="image" alt="Post Image" class="post-image">
+            </ng-container>
           </div>
-        </ng-container>
+        </ng-container><br/>
+
 
         <div class="actions">
           <p>

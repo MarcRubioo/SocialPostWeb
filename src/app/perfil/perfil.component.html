@@ -1,37 +1,37 @@
 <div id="columnas">
   <div id="column1">
-    <div class="IZQ">
-      <div class="logo">
-        <img src="assets/logo.png" alt="Logo" class="logo">
-      </div>
-
-      <div id="menu">
-        <div id="home">
-          <button routerLinkActive="active" routerLink="/home">Home</button>
-        </div>
-
-        <div id="amigos">
-          <button routerLinkActive="active" routerLink="/amigos">Amigos</button>
-        </div>
-
-        <div id="perfil">
-          <button routerLinkActive="active" routerLink="/perfil">Perfil</button>
-        </div>
-      </div>
-    </div>
+    <app-menu></app-menu>
   </div>
 
-  <div id="column2">
-    <div id="titulo">
-      <p>Perfil</p>
-    </div>
+  <div id="column2" class="flex flex-col gap-5">
 
-    <div id="infouser">
-      <div *ngIf="userDetails">
-        <ul>
-          <li> <strong>{{ userDetails.firstName }}</strong></li>
-          <li> <strong>{{ userDetails.age }}<strong> y</strong></strong></li>
-        </ul>
+
+    <p class="flex text-3xl font-bold justify-center pt-3">Perfil</p>
+
+
+    <div id="infouser" class="rounded-xl p-5 ">
+      <div *ngIf="userDetails" class="flex flex-col gap-7">
+        <div class="flex flex-row justify-between">
+          <div class="flex flex-row gap-5 items-center">
+            <img height="50px" width="50px" class="rounded-full" src="{{userDetails.img}}" />
+            <p>{{ userDetails.firstName }}</p>
+          </div>
+          <div class="flex flex-row gap-5 items-center">
+            <div class="flex flex-col gap-3 items-center">
+              <p class="font-bold">{{userDetails.followers.length}}</p>
+              <p class="text-sm">Seguidores</p>
+            </div>
+            <div class="flex flex-col gap-3 items-center">
+              <p class="font-bold">{{userDetails.following.length}}</p>
+              <p class="text-sm">Seguiendo</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-3">
+          <img src="assets/friends.svg"/>
+          <p class="text-sm">{{userDetails.friends.length}}</p>
+        </div>
+
       </div>
 
       <div *ngIf="!userDetails">
@@ -39,35 +39,49 @@
       </div>
     </div>
 
-    <br/>
-
-    <div id="posts">
-      <form (submit)="submitPost()">
-        <textarea [(ngModel)]="postContent" name="postContent" placeholder="Escribe tu mensaje aquí" class="post-textarea"></textarea>
-        <select [(ngModel)]="selectedCategory" name="categories" class="post-dropdown">
-          <option value="" disabled selected>Seleccionar Categoría</option>
-          <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
-        </select>
-        <button type="submit" class="post-button">Publicar</button>
-      </form>
+    <div class="flex gap-2 text-xl mt-10">
+      <p>Publicaciones de </p>
+      <p class="font-bold">{{userDetails.firstName}}</p>
     </div>
 
 
-    <div *ngFor="let post of userPosts" class="user-container">
-      <div class="post">
-        <p>{{ post.email }}</p>
+
+
+    <div *ngFor="let post of userPosts" id="container-post" >
+      <div class="flex flex-col p-5 gap-5">
+        <div class="flex flex-row justify-between">
+          <div class="flex gap-3 items-center">
+            <img class="rounded-full" height="50px" width="50px" src="{{userDetails.img}}" />
+            <p>{{ post.email }}</p>
+          </div>
+          <p> {{ parseDate(post.createdAT) | date }}</p>
+        </div>
+
         <p>{{ post.description }}</p>
-        <p>Likes: {{ post.likes.length }}</p>
-        <p>Fecha de creación: {{ parseDate(post.createdAT) | date }}</p>
+
+
 
         <ng-container *ngIf="post.images.length > 0">
-          <div *ngFor="let image of post.images; let i = index">
+          <div class="flex justify-center" *ngFor="let image of post.images; let i = index">
             <img src="{{image}}" alt='Post Image ${i}'>
           </div>
         </ng-container>
+
+        <div class="flex justify-center gap-[140px]">
+          <div class="flex gap-3">
+            <img src="assets/heart_filled.svg" alt="Filled Heart" style="height: 24px; width: 24px" />
+            <p>{{post.likes.length}}</p>
+          </div>
+          <div class="flex gap-3">
+            <img src="assets/comments.svg" alt="Filled Heart" style="height: 24px; width: 24px" />
+            <p>{{post.comments.length}}</p>
+          </div>
+        </div>
       </div>
     </div>
-
   </div>
-  <div  id="column3"></div>
+
+  <div  id="column3">
+    <p>hola</p>
+  </div>
 </div>

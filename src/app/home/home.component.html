@@ -19,42 +19,62 @@
         </div>
       </div>
     </div>
+
+    <button class="create-post-button" (click)="toggleCreatePostForm()">POST</button>
+
   </div>
 
   <div id="column2">
     <div id="titulo">
-      <p>Home</p>
+    </div>
+    <div *ngIf="showCreatePostForm" id="create-post-form"><br/><br/>
+      <form (submit)="submitPost()">
+        <textarea [(ngModel)]="postContent" name="postContent" placeholder="Escribe tu mensaje aquí" class="post-textarea"></textarea>
+        <select [(ngModel)]="selectedCategory" name="categories" class="post-dropdown">
+          <option value="" disabled selected>Seleccionar Categoría</option>
+          <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+        </select><br/><br/>
+        <button type="submit" class="post-button">Publicar</button>
+      </form><br/><br/>
     </div>
 
-    <div *ngFor="let post of posts; let i = index" class="post-container" (click)="sendPost(post)">
-      <div class="post">
-        <!-- Conditionally render the "X" mark for admins -->
-        <div *ngIf="admin" class="delete-icon" (click)="deletePost(post)">X</div>
-        <p>{{ post.email }}</p>
-        <p>{{ post.description }}</p>
-        <p>Likes: {{ post.likes.length }}</p>
-        <p>Fecha de creación: {{ post.createdAT | date }}</p>
 
+    <div *ngFor="let post of posts; let i = index" class="post-container">
+      <div class="post">
+        <div *ngIf="admin" class="delete-icon" (click)="deletePost(post)">X</div>
+        <div class="user-info">
+          <img src="{{postUserDetail[i].img}}" alt="user img" height="50px" width="50px" class="rounded-full">
+          <p>{{ post.email }}</p>
+        </div>
+        <div class="description-container">
+          <p>{{ post.description }}</p>
+        </div>
+        <p class="post-time">{{ post.createdAT | date }}</p><br/>
+
+        <!-- Renderizar imágenes si existen -->
         <ng-container *ngIf="post.images.length > 0">
-          <div *ngFor="let image of post.images; let j = index">
-            <img src="{{image}}" alt='Post Image ${j}'>
+          <div class="post-image-container">
+            <div class="carousel-container">
+              <div class="carousel">
+                <div class="carousel-slide" *ngIf="currentSlide >= 0 && currentSlide < post.images.length">
+                  <img [src]="post.images[currentSlide]" alt="Post Image" class="post-image">
+                </div>
+              </div>
+              <button class="prev" (click)="prevSlide(i)" *ngIf="post.images.length > 1">❮</button>
+              <button class="next" (click)="nextSlide(i)" *ngIf="post.images.length > 1">❯</button>
+            </div>
           </div>
         </ng-container>
 
-        <div class="actions">
-          <p>
-            <ng-container *ngIf="post.likes.includes(localStorage.getItem('email'));">
-              <img src="assets/heart_filled.svg" alt="Filled Heart" style="height: 24px; width: 24px"
-                   (click)="deleteLikeToPost(post, i)"/>
-            </ng-container>
-            <ng-container *ngIf="!post.likes.includes(localStorage.getItem('email'));">
-              <img src="assets/heart_empty.svg" alt="Empty Heart" style="height: 24px; width: 24px"
-                   (click)="addLikeToPost(post, i)"/>
-            </ng-container>
-            {{ post.likes.length }}
+        <!-- Contadores de likes y comentarios -->
+        <div class="info-container">
+          <p class="likes-info">
+            <span class="likes-count">{{ post.likes.length }}</span>
+            <img *ngIf="post.likes.includes(localStorage.getItem('email'))" src="assets/heart_filled.svg" alt="Heart Filled" class="heart-icon" (click)="deleteLikeToPost(post, i)">
+            <img *ngIf="!post.likes.includes(localStorage.getItem('email'))" src="assets/heart_empty.svg" alt="Heart Empty" class="heart-icon" (click)="addLikeToPost(post, i)">
           </p>
-          <p>
-            <img src="assets/comments.svg" alt="Comments" style="height: 24px; width: 24px">
+          <p class="comments-info">
+            <img src="assets/comments.svg" alt="Comments" class="comment-icon"  (click)="sendPost(post)">
             {{ post.comments.length }}
           </p>
         </div>
@@ -62,6 +82,7 @@
     </div>
 
   </div>
+
 
   <div id="column3">
 
@@ -74,8 +95,7 @@
           {{ category }}
         </label>
       </div>
-
-
     </div>
+
   </div>
 </div>
