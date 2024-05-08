@@ -42,7 +42,7 @@ import { MenuComponent } from './menu/menu.component';
     PostDetailsComponent,
     AdminCategoriesListingComponent,
     UserDetailsComponent,
-    MenuComponent
+    MenuComponent,
     UserDetailsComponent,
     ChatComponent
   ],
