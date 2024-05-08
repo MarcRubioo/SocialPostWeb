@@ -1,3 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
 #columnas {
   display: flex;
   flex-direction: row;

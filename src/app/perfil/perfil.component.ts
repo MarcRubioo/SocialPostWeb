@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import firebase from 'firebase/compat/app';
+
 
 @Component({
   selector: 'app-perfil',
@@ -23,6 +23,7 @@ export class PerfilComponent implements OnInit {
     this.getUserDetails();
     this.loadUserPosts();
     this.getCategories();
+
   }
 
   parseDate(dateString: string): Date {
