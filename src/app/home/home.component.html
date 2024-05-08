@@ -26,7 +26,6 @@
 
   <div id="column2">
     <div id="titulo">
-      <h1>Inicio</h1>
     </div>
     <div *ngIf="showCreatePostForm" id="create-post-form"><br/><br/>
       <form (submit)="submitPost()">
@@ -40,12 +39,16 @@
     </div>
 
 
-
     <div *ngFor="let post of posts; let i = index" class="post-container">
       <div class="post">
         <div *ngIf="admin" class="delete-icon" (click)="deletePost(post)">X</div>
-        <p>{{ post.email }}</p>
-        <p>{{ post.description }}</p><br/>
+        <div class="user-info">
+          <img src="{{postUserDetail[i].img}}" alt="user img" height="50px" width="50px" class="rounded-full">
+          <p>{{ post.email }}</p>
+        </div>
+        <div class="description-container">
+          <p>{{ post.description }}</p>
+        </div>
         <p class="post-time">{{ post.createdAT | date }}</p><br/>
 
         <!-- Renderizar imágenes si existen -->
@@ -74,10 +77,10 @@
             <img src="assets/comments.svg" alt="Comments" class="comment-icon"  (click)="sendPost(post)">
             {{ post.comments.length }}
           </p>
-
+        </div>
       </div>
     </div>
-  </div>
+
   </div>
 
 

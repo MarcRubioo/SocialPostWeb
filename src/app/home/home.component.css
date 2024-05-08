@@ -60,6 +60,7 @@
   font-size: 2rem;
   border-bottom: 1px solid #C5C5C5;
   padding: -4%;
+  font-size: 80px;
 }
 
 .post-container {
@@ -276,7 +277,7 @@
 
 
 .post-textarea {
-  width: 48%; /* Ancho completo */
+  width: 47%; /* Ancho completo */
   padding: 10px; /* Espaciado interno */
   font-size: 16px; /* Tamaño de fuente */
   border-radius: 5px; /* Bordes redondeados */
@@ -287,7 +288,7 @@
 }
 
 .post-dropdown {
-  width: 50%; /* Ancho completo */
+  width: 47%; /* Ancho completo */
   padding: 10px; /* Espaciado interno */
   font-size: 16px; /* Tamaño de fuente */
   border-radius: 5px; /* Bordes redondeados */
@@ -297,7 +298,7 @@
 }
 
 .post-button {
-  width: 50%; /* Ancho completo */
+  width: 47%; /* Ancho completo */
   padding: 10px; /* Espaciado interno */
   font-size: 16px; /* Tamaño de fuente */
   border: none; /* Sin borde */
@@ -310,6 +311,17 @@
 }
 
 .post-button:hover {
-  background-color: #1da1f2; /* Color de fondo verde oscuro al pasar el ratón */
+  background-color: #1da1f2;
 }
 
+.user-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.description-container {
+  margin-top: 10px;
+  margin-left: 10px;
+}

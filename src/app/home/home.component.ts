@@ -13,6 +13,7 @@ import {Router} from "@angular/router";
 })
 export class HomeComponent implements OnInit {
   posts: any[] = [];
+  postUserDetail: any[] = [];
   categories: string[] = [];
   selectedCategories: string[] = [];
   showCreatePostForm: boolean = false;
@@ -33,9 +34,24 @@ export class HomeComponent implements OnInit {
 
         this.getAllPosts().then(() => {
             this.posts.forEach((post, index) => {
+                this.postService.getUserData(post.email)
+                    .then(
+                        user => {
+                            console.log(user)
+                            this.postUserDetail.push(user);
+                        },
+                        error => {
+                            console.log(error);
+                        }
+                    )
                 this.currentSlides[index] = 0; // Inicializar el índice de la diapositiva actual para cada post
             });
         });
+
+    }
+
+    getUserInfo(email: string): void {
+
     }
 
     toggleCreatePostForm(): void {
