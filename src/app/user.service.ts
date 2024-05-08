@@ -78,7 +78,7 @@ export class UserService {
           if (response && response.responseNo == 200) {
             console.log(response);
             console.log("Friend added successfully!");
-            resolve(response.data);
+            resolve(response.data[0]);
           }
         }, error => {
           reject(error);
@@ -117,7 +117,7 @@ export class UserService {
           if (response && response.responseNo == 200) {
             console.log(response);
             console.log("Friend deleted successfully!");
-            resolve(response.data);
+            resolve(response.data[0]);
           }
         },error => {
           reject(error);

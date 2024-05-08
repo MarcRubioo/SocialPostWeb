@@ -40,21 +40,21 @@
           </div>
           <div class="user-friend-action">
             <ng-container
-              *ngIf="checkIfFollowing(localStorage.getItem('email'), user) && user.email !== localStorage.getItem('email')">
+              *ngIf="followed">
               <a class="twitter-follow-button" data-show-count="true" data-size="large" (click)="unfollowUser(user)">Unfollow</a>
             </ng-container>
             <ng-container
-              *ngIf="!checkIfFollowing(localStorage.getItem('email'), user) && user.email !== localStorage.getItem('email')">
+              *ngIf="!followed">
               <a class="twitter-follow-button" data-show-count="true" data-size="large" (click)="followUser(user)">Follow</a>
             </ng-container>
 
             <ng-container
-              *ngIf="checkIfFriend(localStorage.getItem('email'), user) && user.email !== localStorage.getItem('email')">
+              *ngIf="befriended">
               <img src="assets/friend_already_added_drawable.svg" alt="Already Befriended"
                    style="height: 24px; width: 24px" (click)="deleteFriend(user)"/>
             </ng-container>
             <ng-container
-              *ngIf="!checkIfFriend(localStorage.getItem('email'), user) && user.email !== localStorage.getItem('email')">
+              *ngIf="!befriended">
               <img src="assets/add_friend_drawable.svg" alt="Add Friend" style="height: 24px; width: 24px"
                    (click)="addFriend(user)"/>
             </ng-container>

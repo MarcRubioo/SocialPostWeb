@@ -41,10 +41,10 @@ export class RegisterComponent {
       response => {
         if (response) {
           console.log(response)
-          alert("Registro realizado");
           if (response.responseNo == 200) {
             localStorage.setItem("idToken", response.data[0].id);
             localStorage.setItem("email", this.email);
+            alert("Registro realizado");
             this.router.navigate(['/login']);
           }
         }

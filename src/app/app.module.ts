@@ -13,16 +13,19 @@ import {FormsModule} from "@angular/forms";
 import {AmigosComponent} from './amigos/amigos.component';
 import {PerfilComponent} from './perfil/perfil.component';
 import {HttpClientModule} from '@angular/common/http';
-import { enviroment } from '../environments/environment';
-import { provideAuth,getAuth } from '@angular/fire/auth';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-import { AdminLoginComponent } from './admin-login/admin-login.component';
-import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
-import { AdminUsersListComponent } from './admin-users-list/admin-users-list.component';
-import { PostDetailsComponent } from './post-details/post-details.component';
-import { AdminCategoriesListingComponent } from './admin-categories-listing/admin-categories-listing.component';
+import {enviroment} from '../environments/environment';
+import {provideAuth, getAuth} from '@angular/fire/auth';
+import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
+import {AdminLoginComponent} from './admin-login/admin-login.component';
+import {AdminDashboardComponent} from './admin-dashboard/admin-dashboard.component';
+import {AdminUsersListComponent} from './admin-users-list/admin-users-list.component';
+import {PostDetailsComponent} from './post-details/post-details.component';
+import {AdminCategoriesListingComponent} from './admin-categories-listing/admin-categories-listing.component';
 import {NgOptimizedImage} from "@angular/common";
-import { UserDetailsComponent } from './user-details/user-details.component';
+import {UserDetailsComponent} from './user-details/user-details.component';
+import { ChatComponent } from './chat/chat.component';
+import {StreamAutocompleteTextareaModule, StreamChatModule} from "stream-chat-angular";
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -37,19 +40,23 @@ import { UserDetailsComponent } from './user-details/user-details.component';
     AdminUsersListComponent,
     PostDetailsComponent,
     AdminCategoriesListingComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    ChatComponent
   ],
-    imports: [
-        BrowserModule,
-        AngularFireAuthModule,
-        AppRoutingModule,
-        FormsModule,
-        HttpClientModule,
-        provideFirebaseApp(() => initializeApp(enviroment.firebase)),
-        provideAuth(() => getAuth()),
-        NgOptimizedImage,
-    ],
-  providers: [AngularFireAuth], // Agrega AngularFireAuth a los providers
+  imports: [
+    BrowserModule,
+    AngularFireAuthModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    provideFirebaseApp(() => initializeApp(enviroment.firebase)),
+    provideAuth(() => getAuth()),
+    NgOptimizedImage,
+    StreamChatModule,
+    TranslateModule.forRoot(),
+    StreamAutocompleteTextareaModule
+  ],
+  providers: [AngularFireAuth],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -14,6 +14,8 @@ export class UserDetailsComponent implements OnInit {
   user: any = this.userService.user;
   posts: any[] = [];
   admin = this.adminService.admin;
+  befriended: boolean = false;
+  followed: boolean = false;
 
   constructor(private userService: UserService, private postService: PostService,
               private adminService: AdminServiceService, private router: Router) {
@@ -100,14 +102,17 @@ export class UserDetailsComponent implements OnInit {
   addFriend(user: any): void {
     this.userService.addFriendToUser(user)
       .then(
-        currentUserFriendsList => {
-          if (currentUserFriendsList.length <= 0) {
+        userToAdd => {
+          console.log(userToAdd);
+
+          if (userToAdd == null) {
             console.error("something went wrong");
             return;
-          } else if (currentUserFriendsList.some(friend => friend.email === user.email)) {
+          } else {
             console.log("Friend added successfully");
             window.alert("Friend added successfully");
-
+            this.user.friends.push(userToAdd);
+            this.befriended = true;
           }
         }
       )
@@ -116,13 +121,19 @@ export class UserDetailsComponent implements OnInit {
   deleteFriend(user: any): void {
     this.userService.deleteFriend(user)
       .then(
-        currentUserFriendsList => {
-          if (currentUserFriendsList.length <= 0) {
+        userToDelete => {
+          console.log(userToDelete);
+          if (userToDelete == null) {
             console.error("something went wrong");
             return;
-          } else if (currentUserFriendsList.some(friend => friend.email === user.email)) {
-            console.log("Friend deleted successfully");
-            window.alert("Friend deleted successfully");
+          }
+
+          console.log("Friend deleted successfully");
+          window.alert("Friend deleted successfully");
+          let deleteUserIndex = this.user.friends.findIndex(user => user.email == userToDelete.email);
+          if (deleteUserIndex !== -1) {
+            this.user.friends.splice(deleteUserIndex, 1);
+            this.befriended = false;
           }
         }
       )
@@ -150,7 +161,7 @@ export class UserDetailsComponent implements OnInit {
           console.log(this.user.followers);
           if (this.user.followers.some(follower => follower.email === email)) {
             console.log("User followed successfully");
-            window.alert("User followed successfully");
+            this.followed = true;
           }
         }
       )
@@ -170,6 +181,7 @@ export class UserDetailsComponent implements OnInit {
           if (!this.user.followers.some(follower => follower.email === email)) {
             console.log("User unfollowed successfully");
             window.alert("User unfollowed successfully");
+            this.followed = false;
           }
         }
       )

@@ -45,9 +45,5 @@ export class AmigosComponent implements OnInit {
       )
   }
 
-  addFriend(user: any) {
-
-  }
-
   protected readonly user = user;
 }
