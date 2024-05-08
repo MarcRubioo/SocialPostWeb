@@ -17,34 +17,30 @@
         <div id="perfil">
           <button routerLinkActive="active" routerLink="/perfil">Perfil</button>
         </div>
-
-
       </div>
     </div>
-
   </div>
+
 
 
   <div id="column2">
     <div id="titulo">
-      <p>Amigos</p>
+      <p>Lista De Usuarios</p>
     </div>
 
-    <div *ngFor="let friend of friends" class="friend-container">
+    <div *ngFor="let user of users" class="user-container">
       <div class="friend">
-        <!-- add friend.img as image and make it round -->
-        <img src="{{friend.img}}" alt="user image">
-        <p>{{friend.firstName}}</p>
-        <p>{{friend.email}}</p>
-        <div class="delete-icon" (click)="deleteFriend(user)">X</div>
+        <!-- Conditionally render the "X" mark for admins -->
+        <div *ngIf="admin" class="delete-icon" (click)="deleteUser(user)">X</div>
+        <p>{{ user.firstName }}</p>
+        <p>{{ user.email }}</p>
       </div>
     </div>
-
   </div>
 
 
-  <div id="column3">
 
+  <div id="column3">
 
   </div>
 </div>

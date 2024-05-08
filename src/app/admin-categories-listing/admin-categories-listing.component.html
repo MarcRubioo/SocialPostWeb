@@ -1,0 +1,54 @@
+<div id="columnas">
+  <div id="column1">
+    <div class="IZQ">
+      <div class="logo">
+        <img src="assets/logo.png" alt="Logo" class="logo">
+      </div>
+
+      <div id="menu">
+        <div id="home">
+          <button routerLinkActive="active" routerLink="/home">Home</button>
+        </div>
+
+        <div id="amigos">
+          <button routerLinkActive="active" routerLink="/amigos">Amigos</button>
+        </div>
+
+        <div id="perfil">
+          <button routerLinkActive="active" routerLink="/perfil">Perfil</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="column2">
+    <div id="titulo">
+      <p>Lista De Categorías</p>
+    </div>
+
+    <div *ngFor="let category of categories" class="category-container">
+      <div class="category">
+        <input type="text" placeholder="{{category}}" [(ngModel)]="editedValues[category]"/>
+        <!-- Conditionally render the "X" mark for admins -->
+        <div *ngIf="admin" class="edit-delete-icons">
+          <div class="edit-text" (click)="middleGroundEditCategory(category)">Editar</div>
+          <div class="delete-icon" (click)="deleteCategory(category)">X</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="create-category-container">
+      <div class="createCategory">
+        <input type="text" placeholder="Nueva categoría" [(ngModel)]="newCategory"/>
+        <div class="create-text" (click)="createCategory(newCategory)">Crear</div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div id="column3">
+
+  </div>
+</div>

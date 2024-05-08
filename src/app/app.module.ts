@@ -16,6 +16,13 @@ import {HttpClientModule} from '@angular/common/http';
 import { enviroment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { AdminUsersListComponent } from './admin-users-list/admin-users-list.component';
+import { PostDetailsComponent } from './post-details/post-details.component';
+import { AdminCategoriesListingComponent } from './admin-categories-listing/admin-categories-listing.component';
+import {NgOptimizedImage} from "@angular/common";
+import { UserDetailsComponent } from './user-details/user-details.component';
 
 @NgModule({
   declarations: [
@@ -24,17 +31,24 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
     RegisterComponent,
     HomeComponent,
     AmigosComponent,
-    PerfilComponent
+    PerfilComponent,
+    AdminLoginComponent,
+    AdminDashboardComponent,
+    AdminUsersListComponent,
+    PostDetailsComponent,
+    AdminCategoriesListingComponent,
+    UserDetailsComponent
   ],
-  imports: [
-    BrowserModule,
-    AngularFireAuthModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    provideFirebaseApp(() => initializeApp(enviroment.firebase)),
-    provideAuth(() => getAuth())
-  ],
+    imports: [
+        BrowserModule,
+        AngularFireAuthModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        provideFirebaseApp(() => initializeApp(enviroment.firebase)),
+        provideAuth(() => getAuth()),
+        NgOptimizedImage,
+    ],
   providers: [AngularFireAuth], // Agrega AngularFireAuth a los providers
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import firebase from 'firebase/compat/app';
 
 @Component({
@@ -44,7 +44,13 @@ export class PerfilComponent implements OnInit {
       'idToken': idToken
     });
 
-    this.http.get<any>('http://127.0.0.1:8080/api/user?email=' + email, { headers: headers })
+    let params = new HttpParams();
+    params = params.set("email", email);
+
+    this.http.get<any>('http://127.0.0.1:8080/api/user', {
+      headers: headers,
+      params: params
+    })
       .subscribe(
         (response) => {
           this.userDetails = response.data[0];

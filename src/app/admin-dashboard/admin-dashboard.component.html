@@ -17,34 +17,26 @@
         <div id="perfil">
           <button routerLinkActive="active" routerLink="/perfil">Perfil</button>
         </div>
-
-
       </div>
     </div>
-
   </div>
+
 
 
   <div id="column2">
     <div id="titulo">
-      <p>Amigos</p>
+      <p>Administrador</p>
     </div>
 
-    <div *ngFor="let friend of friends" class="friend-container">
-      <div class="friend">
-        <!-- add friend.img as image and make it round -->
-        <img src="{{friend.img}}" alt="user image">
-        <p>{{friend.firstName}}</p>
-        <p>{{friend.email}}</p>
-        <div class="delete-icon" (click)="deleteFriend(user)">X</div>
-      </div>
-    </div>
-
+    <button id="dashboardGoToHome" (click)="goToDeletePosts()">Eliminar Posts</button>
+    <!-- TODO create buttons to route for each admin option -->
+    <button id="dashboardGoToUserListing" (click)="goToUserListings()">Eliminar Usuarios</button>
+    <button id="dashboardGoToCategoryListing" (click)="goToCategoriesListing()">Categorías</button>
   </div>
 
 
-  <div id="column3">
 
+  <div id="column3">
 
   </div>
 </div>

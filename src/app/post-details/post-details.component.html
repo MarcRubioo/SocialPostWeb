@@ -1,0 +1,100 @@
+<div id="columnas">
+  <div id="column1">
+    <div class="IZQ">
+      <div class="logo">
+        <img src="assets/logo.png" alt="Logo" class="logo">
+      </div>
+
+      <div id="menu">
+        <div id="home">
+          <button routerLinkActive="active" routerLink="/home">Home</button>
+        </div>
+
+        <div id="amigos">
+          <button routerLinkActive="active" routerLink="/amigos">Amigos</button>
+        </div>
+
+        <div id="perfil">
+          <button routerLinkActive="active" routerLink="/perfil">Perfil</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="column2">
+    <div id="titulo">
+      <p>Post</p>
+    </div>
+
+    <div class="post-container">
+      <div id="mainPostDetails" class="post">
+        <!-- Conditionally render the "X" mark for admins -->
+        <div *ngIf="admin" class="delete-icon" (click)="deletePost(post)">X</div>
+        <div class="user-details">
+          <img src="{{ user.img }}" alt="post User Image" (click)="goToUserDetails(user)"/>
+          <div>
+            <p>{{ user.firstName }}</p>
+            <p>{{ post.email }}</p>
+            <p class="post-time">{{ post.createdAT | date }}</p>
+          </div>
+        </div>
+        <p class="post-description">{{ post.description }}</p>
+
+        <ng-container *ngIf="post.images.length > 0">
+          <div *ngFor="let image of post.images; let i = index">
+            <img src="{{image}}" alt='Post Image ${i}'>
+          </div>
+        </ng-container>
+
+        <div class="actions">
+          <p>
+            <ng-container *ngIf="post.likes.includes(localStorage.getItem('email'))">
+              <img src="assets/heart_filled.svg" alt="Filled Heart" style="height: 24px; width: 24px" (click)="deleteLikeToPost(post)"/>
+            </ng-container>
+            <ng-container *ngIf="!post.likes.includes(localStorage.getItem('email'));">
+              <img src="assets/heart_empty.svg" alt="Empty Heart" style="height: 24px; width: 24px" (click)="addLikeToPost(post)"/>
+            </ng-container>
+            {{ post.likes.length }}
+          </p>
+          <p>
+            <img src="assets/comments.svg" alt="Comments" style="height: 24px; width: 24px">
+            {{ post.comments.length }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+    <div *ngFor="let comment of comments; let i = index" class="comment-container">
+      <div class="comment">
+        <!-- Conditionally render the "X" mark for admins -->
+        <div *ngIf="admin" class="delete-icon" (click)="deleteComment(comment, post)">X</div>
+        <div class="user-details">
+          <img src="{{ commentsDetails[i].img }}" alt="Comment User Image"/>
+          <div>
+            <p>{{ commentsDetails[i].firstName }}</p>
+            <p>{{ comment.email }}</p>
+          </div>
+        </div>
+        <p class="comment-time">{{ comment.commentAt | date }}</p>
+        <p class="comment-text">{{ comment.comment }}</p>
+        <div class="actions">
+          <p>
+            <ng-container *ngIf="comment.likes.includes(localStorage.getItem('email'));">
+              <img src="assets/heart_filled.svg" alt="Filled Heart" style="height: 24px; width: 24px" (click)="deleteLikeToComment(post, comment, i)"/>
+            </ng-container>
+            <ng-container *ngIf="!comment.likes.includes(localStorage.getItem('email'));">
+              <img src="assets/heart_empty.svg" alt="Empty Heart" style="height: 24px; width: 24px" (click)="addLikeToComment(post, comment, i)"/>
+            </ng-container>
+            {{ comment.likes.length }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="column3">
+
+  </div>
+</div>

@@ -6,6 +6,12 @@ import {RegisterComponent} from "./register/register.component";
 import {RouterModule, Routes} from "@angular/router";
 import {AmigosComponent} from "./amigos/amigos.component";
 import {PerfilComponent} from "./perfil/perfil.component";
+import {AdminLoginComponent} from "./admin-login/admin-login.component";
+import {AdminDashboardComponent} from "./admin-dashboard/admin-dashboard.component";
+import {AdminUsersListComponent} from "./admin-users-list/admin-users-list.component";
+import {PostDetailsComponent} from "./post-details/post-details.component";
+import {AdminCategoriesListingComponent} from "./admin-categories-listing/admin-categories-listing.component";
+import {UserDetailsComponent} from "./user-details/user-details.component";
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -14,6 +20,12 @@ const routes: Routes = [
   {path: 'register' , component:RegisterComponent},
   {path: 'amigos' , component:AmigosComponent},
   {path: 'perfil' , component:PerfilComponent},
+  {path: 'admin-login', component:AdminLoginComponent},
+  {path: 'admin-dashboard', component:AdminDashboardComponent},
+  {path: 'admin-userListing', component:AdminUsersListComponent},
+  {path: 'post-details', component: PostDetailsComponent},
+  {path: 'admin-categoriesListing', component: AdminCategoriesListingComponent},
+  {path: 'user-details', component: UserDetailsComponent},
 
 
 ]

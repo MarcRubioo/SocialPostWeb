@@ -42,8 +42,9 @@ export class RegisterComponent {
         if (response) {
           console.log(response)
           alert("Registro realizado");
-          // localStorage.setItem("idToken", response.data[0].idToken);
           if (response.responseNo == 200) {
+            localStorage.setItem("idToken", response.data[0].id);
+            localStorage.setItem("email", this.email);
             this.router.navigate(['/login']);
           }
         }
