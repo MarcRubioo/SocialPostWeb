@@ -15,98 +15,125 @@ export class HomeComponent implements OnInit {
   posts: any[] = [];
   categories: string[] = [];
   selectedCategories: string[] = [];
+  showCreatePostForm: boolean = false;
+  selectedCategory: string = '';
+  postContent: string = '';
+  currentSlides: { [key: number]: number } = {};
   admin: boolean = this.adminService.admin
 
 
-  constructor(private http: HttpClient, private adminService: AdminServiceService,
-              private postService: PostService, private router: Router) {
-  }
+    constructor(private http: HttpClient, private adminService: AdminServiceService,
+                private postService: PostService, private router: Router) { }
 
-  ngOnInit(): void {
-    this.getCategories();
-    document.getElementById('publicar')?.addEventListener('click', () => {
-      this.submitPost();
+    ngOnInit(): void {
+        this.getCategories();
+        document.getElementById('publicar')?.addEventListener('click', () => {
+            this.submitPost();
+        });
 
-    });
+        this.getAllPosts().then(() => {
+            this.posts.forEach((post, index) => {
+                this.currentSlides[index] = 0; // Inicializar el índice de la diapositiva actual para cada post
+            });
+        });
+    }
 
-    // Carga los posts al iniciar el componente
-    this.getAllPosts();
-  }
+    toggleCreatePostForm(): void {
+        this.showCreatePostForm = !this.showCreatePostForm;
+    }
 
   // Función para convertir una cadena de fecha en un objeto Date
-  parseDate(dateString: string): Date {
-    const parsedDate = new Date(dateString);
-    return isNaN(parsedDate.getTime()) ? new Date() : parsedDate;
-  }
-
-  // Función para enviar una nueva publicación al servidor
-  submitPost() {
-    const textoInput = document.getElementById('texto') as HTMLTextAreaElement;
-    const fotoInput = document.getElementById('foto') as HTMLInputElement;
-
-    const token = localStorage.getItem('idToken');
-    const email = localStorage.getItem('email');
-
-    if (!token || !email) {
-      console.error('No se encontraron el token o el email en el almacenamiento local.');
-      return;
+    parseDate(dateString: string): Date {
+        const parsedDate = new Date(dateString);
+        return isNaN(parsedDate.getTime()) ? new Date() : parsedDate;
     }
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'idToken': token,
-      'userEmail': email
-    });
+    generateRandomId(): string {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const idLength = 15;
+        let randomId = '';
 
-    const postData = {
-      description: textoInput.value,
-      // Add other properties as needed
-    };
-
-    this.http.post<any>('http://127.0.0.1:8080/api/posts', postData, {headers: headers}).subscribe(
-      response => {
-        console.log('Publicación creada:', response);
-        this.getAllPosts(); // Recarga los posts después de publicar uno nuevo
-        textoInput.value = ''; // Limpia el campo de texto
-        fotoInput.value = ''; // Limpia el campo de foto (si es necesario)
-      },
-      error => {
-        console.error('Error al crear la publicación:', error);
-      }
-    );
-  }
-
-  // Función para obtener todos los posts desde el servidor
-  getAllPosts() {
-    const token = localStorage.getItem('idToken');
-    if (!token) {
-      console.error('No se encontró el token en el almacenamiento local.');
-      return;
-    }
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'idToken': token,
-    });
-
-    this.http.get<any>('http://127.0.0.1:8080/api/allposts', {headers: headers})
-      .subscribe(
-        (response) => {
-          this.posts = response.data.filter(post => {
-            return this.selectedCategories.every(category => post.categories.includes(category));
-          }).map(post => ({
-            ...post,
-            createdAT: this.parseDate(post.createdAT)
-          }));
-        },
-        (error) => {
-          console.error('Error al obtener los posts:', error);
+        for (let i = 0; i < idLength; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            randomId += characters.charAt(randomIndex);
         }
-      );
-  }
+
+        return randomId;
+    }
+  // Función para enviar una nueva publicación al servidor
+    submitPost() {
+        if (!this.postContent) {
+            return;
+        }
+
+        const token = localStorage.getItem('idToken');
+        const email = localStorage.getItem('email');
+
+        if (!token || !email) {
+            console.error('No se encontraron el token o el email en el almacenamiento local.');
+            return;
+        }
+
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'idToken': token,
+            'userEmail': email
+        });
+
+        const postData = {
+            id: this.generateRandomId(),
+            email: email,
+            createdAT: new Date().toISOString(),
+            description: this.postContent,
+            images: [],
+            likes: [],
+            comments: [],
+        };
+
+        this.http.post<any>('http://127.0.0.1:8080/api/posts?category=' + this.selectedCategory, postData, {headers: headers}).subscribe(
+            response => {
+                console.log('Publicación creada:', response);
+                this.postContent = '';
+            },
+            error => {
+                console.error('Error al crear la publicación:', error);
+            }
+        );
+    }
+    // Función para obtener todos los posts desde el servidor
+    async getAllPosts(): Promise<void> {
+        const token = localStorage.getItem('idToken');
+        if (!token) {
+            console.error('No se encontró el token en el almacenamiento local.');
+            return;
+        }
+
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'idToken': token,
+        });
+
+        try {
+            const response = await this.http.get<any>('http://127.0.0.1:8080/api/allposts', { headers: headers }).toPromise();
+            this.posts = response.data.filter(post => {
+                return this.selectedCategories.every(category => post.categories.includes(category));
+            }).map(post => ({
+                ...post,
+                createdAT: this.parseDate(post.createdAT)
+            }));
+
+            // Se completó la carga de los posts, ahora puedes inicializar los slides actuales
+            this.posts.forEach((post, index) => {
+                this.currentSlides[index] = 0;
+            });
+        } catch (error) {
+            console.error('Error al obtener los posts:', error);
+        }
+    }
 
 
-  getCategories() {
+
+    getCategories() {
     const token = localStorage.getItem('idToken');
 
     if (!token) {
@@ -120,14 +147,14 @@ export class HomeComponent implements OnInit {
     });
 
     this.http.get<any>('http://127.0.0.1:8080/api/categories', {headers: headers})
-      .subscribe(
-        (response) => {
-          this.categories = response.data;
-        },
-        (error) => {
-          console.error('Error al obtener las categorías:', error);
-        }
-      );
+        .subscribe(
+            (response) => {
+              this.categories = response.data;
+            },
+            (error) => {
+              console.error('Error al obtener las categorías:', error);
+            }
+        );
   }
 
 
@@ -160,50 +187,77 @@ export class HomeComponent implements OnInit {
   deletePost(post: any) {
     if (this.admin) {
       this.adminService.deletePost(post)
-        .subscribe(idPostDeleted => {
-          if (idPostDeleted == "") {
-            console.error("post id was empty!");
-            return;
-          }
-          console.log("idPost | ", idPostDeleted);
-          const index = this.posts.findIndex(p => p.id === idPostDeleted);
-          if (index !== -1) {
-            this.posts.splice(index, 1);
-            console.log("Post deleted from the array");
-          } else {
-            console.log("Post not found in the array");
-          }
-        });
+          .subscribe(idPostDeleted => {
+            if (idPostDeleted == "") {
+              console.error("post id was empty!");
+              return;
+            }
+            console.log("idPost | ", idPostDeleted);
+            const index = this.posts.findIndex(p => p.id === idPostDeleted);
+            if (index !== -1) {
+              this.posts.splice(index, 1);
+              console.log("Post deleted from the array");
+            } else {
+              console.log("Post not found in the array");
+            }
+          });
     }
   }
 
   addLikeToPost(post: any, position: number): void {
     //PathVariables needed  idPost
     this.postService.addLikeToPost(post)
-      .then(
-        likesList => {
-          this.posts[position].likes = likesList;
-          console.log("likes at the ts | ", this.posts[position].likes);
-        }, error => {
-          console.error(error);
-        }
-      )
+        .then(
+            likesList => {
+              this.posts[position].likes = likesList;
+              console.log("likes at the ts | ", this.posts[position].likes);
+            }, error => {
+              console.error(error);
+            }
+        )
   }
 
   deleteLikeToPost(post: any, position: number): void {
     //PathVariables needed  idPost
     this.postService.deleteLikeToPost(post)
-      .then(
-        likesList => {
-          this.posts[position].likes = likesList;
-          console.log("likes at the ts | ", this.posts[position].likes);
-        }, error => {
-          console.error(error);
-        }
-      )
+        .then(
+            likesList => {
+              this.posts[position].likes = likesList;
+              console.log("likes at the ts | ", this.posts[position].likes);
+            }, error => {
+              console.error(error);
+            }
+        )
   }
 
   protected readonly localStorage = localStorage;
+
+  currentSlide = 0;
+
+    prevSlide(postIndex: number) {
+        const post = this.posts[postIndex];
+        const totalSlides = post.images.length;
+        if (this.currentSlides[postIndex] === 0) {
+            this.currentSlides[postIndex] = totalSlides - 1;
+        } else {
+            this.currentSlides[postIndex]--;
+        }
+    }
+
+    nextSlide(postIndex: number) {
+        const post = this.posts[postIndex];
+        const totalSlides = post.images.length;
+        if (this.currentSlides[postIndex] === totalSlides - 1) {
+            this.currentSlides[postIndex] = 0;
+        } else {
+            this.currentSlides[postIndex]++;
+        }
+    }
+
+
+
+
+
 }
 
 
