@@ -1,37 +1,5 @@
-.logo {
-  height: 80px;
-  margin-top: 5%;
-}
 
-.item{
-  padding-top: 30px;
-  text-align: center;
-}
 
-#firstItem{
-  padding-top: 50px;
-}
-
-.btn{
-  background-color: red;
-  border: none;
-  background-color: transparent;
-}
-
-.btn:hover{
-  color: #5b7083;
-}
-
-.IZQ{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.btn.router-link-active {
-  font-weight: bold;
-}
 
 
 
