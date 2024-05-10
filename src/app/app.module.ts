@@ -1,7 +1,8 @@
 // app.module.ts
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {AngularFireAuth, AngularFireAuthModule} from '@angular/fire/compat/auth';
+import {AngularFireModule} from '@angular/fire/compat';
+import {AngularFireAuth, AngularFireAuthModule} from '@angular/fire/compat/auth'; // Importa AngularFireAuth
 import {AppComponent} from './app.component';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
@@ -50,6 +51,7 @@ import {MessageService} from "primeng/api";
     ChatComponent
   ],
   imports: [
+    BrowserModule,
     AngularFireAuthModule,
     AppRoutingModule,
     FormsModule,
