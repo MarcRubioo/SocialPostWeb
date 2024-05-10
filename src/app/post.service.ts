@@ -91,7 +91,7 @@ export class PostService {
   }
 
 
-  getUserData(postEmail: string): Promise<any> {
+  async getUserData(postEmail: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const token = localStorage.getItem('idToken');
       const email = localStorage.getItem('email');
@@ -264,5 +264,18 @@ export class PostService {
         }
       )
     });
+  }
+
+  private generateRandomId(): string {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const idLength = 15;
+    let randomId = '';
+
+    for (let i = 0; i < idLength; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      randomId += characters.charAt(randomIndex);
+    }
+
+    return randomId;
   }
 }

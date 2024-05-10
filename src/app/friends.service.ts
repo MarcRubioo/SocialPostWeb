@@ -67,11 +67,11 @@ export class FriendsService {
         'idToken': token
       });
 
-      const params = new HttpParams();
-      params.set("email", email);
-      params.set("friendEmail", user.email);
+      let params = new HttpParams();
+      params = params.set("email", email);
+      params = params.set("friendEmail", user.email);
 
-      this.http.get<any>("http://localhost:8080/api/user/friends", {
+      this.http.delete<any>("http://localhost:8080/api/user/friends", {
         headers: headers,
         params: params
       }).subscribe(

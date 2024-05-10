@@ -36,7 +36,7 @@
         <img src="{{friend.img}}" alt="user image">
         <p>{{friend.firstName}}</p>
         <p>{{friend.email}}</p>
-        <div class="delete-icon" (click)="deleteFriend(user)">X</div>
+        <div class="delete-icon" (click)="deleteFriend(friend)">X</div>
       </div>
     </div>
 
@@ -47,4 +47,14 @@
 
 
   </div>
+
+  <p-toast
+    position="bottom-center"
+    key="error-bc"
+    ></p-toast>
+
+  <p-toast
+    position="bottom-center"
+    key="success-bc"
+  ></p-toast>
 </div>

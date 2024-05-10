@@ -40,21 +40,21 @@
           </div>
           <div class="user-friend-action">
             <ng-container
-              *ngIf="followed">
+              *ngIf="followed && user.email !== localStorage.getItem('email')">
               <a class="twitter-follow-button" data-show-count="true" data-size="large" (click)="unfollowUser(user)">Unfollow</a>
             </ng-container>
             <ng-container
-              *ngIf="!followed">
+              *ngIf="!followed && user.email !== localStorage.getItem('email')">
               <a class="twitter-follow-button" data-show-count="true" data-size="large" (click)="followUser(user)">Follow</a>
             </ng-container>
 
             <ng-container
-              *ngIf="befriended">
+              *ngIf="befriended && user.email !== localStorage.getItem('email')">
               <img src="assets/friend_already_added_drawable.svg" alt="Already Befriended"
                    style="height: 24px; width: 24px" (click)="deleteFriend(user)"/>
             </ng-container>
             <ng-container
-              *ngIf="!befriended">
+              *ngIf="!befriended && user.email !== localStorage.getItem('email')">
               <img src="assets/add_friend_drawable.svg" alt="Add Friend" style="height: 24px; width: 24px"
                    (click)="addFriend(user)"/>
             </ng-container>
@@ -107,10 +107,19 @@
         </div>
       </div>
     </div>
+
   </div>
 
 
   <div id="column3">
+    <p-toast
+      position="top-right"
+      key="error-bc"
+    ></p-toast>
 
+    <p-toast
+      position="top-right"
+        key="success-bc"
+    ></p-toast>
   </div>
 </div>

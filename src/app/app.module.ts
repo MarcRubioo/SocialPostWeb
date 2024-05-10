@@ -1,8 +1,7 @@
 // app.module.ts
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {AngularFireModule} from '@angular/fire/compat';
-import {AngularFireAuth, AngularFireAuthModule} from '@angular/fire/compat/auth'; // Importa AngularFireAuth
+import {AngularFireAuth, AngularFireAuthModule} from '@angular/fire/compat/auth';
 import {AppComponent} from './app.component';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
@@ -13,20 +12,24 @@ import {FormsModule} from "@angular/forms";
 import {AmigosComponent} from './amigos/amigos.component';
 import {PerfilComponent} from './perfil/perfil.component';
 import {HttpClientModule} from '@angular/common/http';
-import { enviroment } from '../environments/environment';
-import { provideAuth,getAuth } from '@angular/fire/auth';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-import { AdminLoginComponent } from './admin-login/admin-login.component';
-import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
-import { AdminUsersListComponent } from './admin-users-list/admin-users-list.component';
-import { PostDetailsComponent } from './post-details/post-details.component';
-import { AdminCategoriesListingComponent } from './admin-categories-listing/admin-categories-listing.component';
+import {enviroment} from '../environments/environment';
+import {provideAuth, getAuth} from '@angular/fire/auth';
+import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
+import {AdminLoginComponent} from './admin-login/admin-login.component';
+import {AdminDashboardComponent} from './admin-dashboard/admin-dashboard.component';
+import {AdminUsersListComponent} from './admin-users-list/admin-users-list.component';
+import {PostDetailsComponent} from './post-details/post-details.component';
+import {AdminCategoriesListingComponent} from './admin-categories-listing/admin-categories-listing.component';
 import {NgOptimizedImage} from "@angular/common";
-import { ChatComponent } from './chat/chat.component';
-import {StreamAutocompleteTextareaModule, StreamChatModule} from "stream-chat-angular";
-import { TranslateModule } from '@ngx-translate/core';
-import { UserDetailsComponent } from './user-details/user-details.component';
-import { MenuComponent } from './menu/menu.component';
+import {ChatComponent} from './chat/chat.component';
+import {TranslateModule} from '@ngx-translate/core';
+import {UserDetailsComponent} from './user-details/user-details.component';
+import {MenuComponent} from './menu/menu.component';
+import {ToastModule} from "primeng/toast";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MessageModule} from "primeng/message";
+import {MessageService} from "primeng/api";
+
 
 @NgModule({
   declarations: [
@@ -47,7 +50,6 @@ import { MenuComponent } from './menu/menu.component';
     ChatComponent
   ],
   imports: [
-    BrowserModule,
     AngularFireAuthModule,
     AppRoutingModule,
     FormsModule,
@@ -55,11 +57,12 @@ import { MenuComponent } from './menu/menu.component';
     provideFirebaseApp(() => initializeApp(enviroment.firebase)),
     provideAuth(() => getAuth()),
     NgOptimizedImage,
-    StreamChatModule,
+    BrowserModule,
     TranslateModule.forRoot(),
-    StreamAutocompleteTextareaModule
+    ToastModule,
+    BrowserAnimationsModule
   ],
-  providers: [AngularFireAuth],
+  providers: [AngularFireAuth, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

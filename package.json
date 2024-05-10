@@ -23,9 +23,8 @@
     "emoji-mart": "^5.5.2",
     "firebase": "^10.10.0",
     "ngx-popperjs": "^15.2.4",
+    "primeng": "^15.4.1",
     "rxjs": "~7.5.0",
-    "stream-chat": "^8.31.0",
-    "stream-chat-angular": "^4.66.4",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"
   },

@@ -198,3 +198,8 @@
   background-color: #0c7abf;
   cursor: pointer;
 }
+
+p-toast {
+  z-index: 9999; /* Or any high value */
+}
+
