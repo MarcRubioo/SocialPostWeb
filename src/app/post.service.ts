@@ -266,7 +266,7 @@ export class PostService {
     });
   }
 
-  private generateRandomId(): string {
+  generateRandomId(): string {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const idLength = 15;
     let randomId = '';
