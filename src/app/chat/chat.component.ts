@@ -10,6 +10,8 @@ import {UserService} from "../user.service";
 export class ChatComponent implements OnInit {
 
   user: any;
+  friendsToChat: any[] = [];
+  messages: any[] = [];
 
   constructor(
     private postService: PostService,
@@ -18,6 +20,8 @@ export class ChatComponent implements OnInit {
   }
 
   async ngOnInit() {
+    await this.loadUserData();
+    this.friendsToChat = this.user.friends;
   }
 
   async loadUserData(): Promise<void> {
@@ -32,6 +36,17 @@ export class ChatComponent implements OnInit {
       ).catch(error => {
         console.error(error);
       })
+  }
+
+  async loadMessages(chatId: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      //TODO install socket.io-client and getChats
+    });
+  }
+
+
+  async checkIfChatRoomExists(friend: any): Promise<any> {
+    //TODO create Chat Object and pass it through webSocket
   }
 
 }
