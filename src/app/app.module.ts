@@ -9,7 +9,7 @@ import {RegisterComponent} from './register/register.component';
 import {HomeComponent} from './home/home.component';
 import {AppRoutingModule} from './app-routing.module';
 import {RouterOutlet} from "@angular/router";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AmigosComponent} from './amigos/amigos.component';
 import {PerfilComponent} from './perfil/perfil.component';
 import {HttpClientModule} from '@angular/common/http';
@@ -28,8 +28,10 @@ import {UserDetailsComponent} from './user-details/user-details.component';
 import {MenuComponent} from './menu/menu.component';
 import {ToastModule} from "primeng/toast";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MessageModule} from "primeng/message";
 import {MessageService} from "primeng/api";
+import {MatInputModule} from "@angular/material/input";
+import {MatAutocompleteModule} from "@angular/material/autocomplete"
+
 
 
 @NgModule({
@@ -62,7 +64,10 @@ import {MessageService} from "primeng/api";
     BrowserModule,
     TranslateModule.forRoot(),
     ToastModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
   ],
   providers: [AngularFireAuth, MessageService],
   bootstrap: [AppComponent]

@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {PostService} from "../post.service";
-import {UserService} from "../user.service";
-import * as sockets from "socket.io-client";
+import { Component, OnInit } from '@angular/core';
+import { PostService } from "../post.service";
+import { UserService } from "../user.service";
+import { FormControl } from "@angular/forms";
+import * as SockJS from "sockjs-client";
+import { Client, Frame, IMessage } from "@stomp/stompjs";
 
 @Component({
   selector: 'app-chat',
@@ -11,11 +13,16 @@ import * as sockets from "socket.io-client";
 export class ChatComponent implements OnInit {
 
   socket: any;
+  stompClient: Client;
+  searchFormControl = new FormControl();
 
   user: any;
   userChats: any[] = [];
   messages: any[] = [];
+  currentMessage: string = "";
   currentChat: any;
+
+  filteredFriends: any[] = [];
 
   constructor(
     private postService: PostService,
@@ -23,100 +30,146 @@ export class ChatComponent implements OnInit {
   ) {
   }
 
-  async ngOnInit() {
-    await this.loadUserData();
+  filterFriends(): void {
+    const value = this.searchFormControl.value.toLowerCase();
+    this.filteredFriends = this.user.friends.filter(friend => friend.firstName.toLowerCase().includes(value));
+  }
 
-    this.socket = sockets.io('http://localhost:8080', { transports: ['websocket'] });
-    this.socket.on('connect', () => {
+  ngOnInit(): void {
+    this.initConnectionSocket();
+  }
+
+  initConnectionSocket(): void {
+    const url = "//localhost:8080/chat-socket"; // Replace with your server URL
+    this.socket = new SockJS(url);
+    this.stompClient = new Client();
+    this.stompClient.webSocketFactory = () => this.socket;
+
+    this.stompClient.onConnect = (frame: Frame) => {
       console.log('Connected to WebSocket server');
-    });
+      // Subscribe to channels and set up other listeners
+      this.subscribeMainChannel();
+      // Activate the STOMP client after setting up the connection
+      this.stompClient.activate();
+    };
 
-    //Emit to get the userChats
-    this.socket.emit("/chat/myChatsToServer", { email: this.user.email });
+    this.stompClient.onWebSocketError = (error: Frame) => {
+      console.error('WebSocket error:', error);
+    };
 
-    this.socket.on('/chat/myChatsToClient', (response: any) => {
-      if (response && response.responseNo == 200) {
-        this.userChats = []
-        console.log(response);
-        this.userChats = response.data;
-      }
-    });
+    this.stompClient.activate();
 
-
-    //Response after loading chat messages
-    this.socket.on(`/chat/${this.currentChat.id}/getMessagesResponseToClient`, (response) => {
-      if (response && response.responseNo == 200) {
-        this.messages = [];
-
-        console.log(response);
-        this.messages = response.data;
-      }
-    });
-
-
-    //Response after clicking user and calling checkIfChatRoomExists
-    this.socket.on('/chat/checkChatRoomResponseToClient', (response: any) => {
-      if (response && response.responseNo == 200) {
-        console.log(response);
-        this.currentChat = response.data[0];
-      }
-    });
-
-
-    //Response after sending the message
-    this.socket.on(`/chat/${this.currentChat.id}/sendResponseToClient`, (response) => {
-      if (response && response.responseNo == 200) {
-        console.log(response);
-        this.messages = response.data;
-      }
-    })
+    this.loadUserData();
 
   }
 
+  subscribeRestChannels(): void {
+    this.stompClient.subscribe(`/toClient/${this.currentChat.id}/getMessagesToClient`, (message: IMessage) => {
+      this.messages = [];
+      const response = JSON.parse(message.body);
+      if (response && response.responseNo == 200) {
+        console.log("Response for getting messages | ", response.data);
+        this.messages = response.data;
+      } else {
+        console.log(response);
+      }
+    });
 
+    this.stompClient.subscribe(`/toClient/${this.currentChat.id}/sendResponseToClient`, (message: IMessage) => {
+      const response = JSON.parse(message.body);
+      if (response && response.responseNo == 200) {
+        console.log("Response from sending Message | ", response.data);
+      } else {
+        console.log(response);
+      }
+    });
 
-  async loadUserData(): Promise<void> {
+    this.stompClient.subscribe(`/toClient/checkChatRoomToClient`, (message: IMessage) => {
+      const response = JSON.parse(message.body);
+      if (response && response.responseNo == 200) {
+        console.log("Response from checkChatRoom | ", response.data);
+        this.currentChat = response.data[0];
+      } else {
+        console.log(response);
+      }
+    });
+  }
+
+  subscribeMainChannel(): void {
+    // Subscribe to your channels here
+    this.stompClient.subscribe('/toClient/myChatsToClient', (message: IMessage) => {
+      this.userChats = [];
+      const response = JSON.parse(message.body);
+      if (response && response.responseNo == 200) {
+        console.log(response.data);
+        this.userChats = response.data;
+        this.currentChat = this.userChats[0];
+
+        this.subscribeRestChannels();
+        console.clear();
+
+        console.log("this.userChats | ", this.userChats);
+      } else {
+        console.log(response);
+
+      }
+    });
+
+  }
+
+  loadUserData(): void {
     let email = localStorage.getItem('email');
-    await this.postService.getUserData(email)
+    this.postService.getUserData(email)
       .then(
         user => {
           if (user) {
             this.user = user;
+            this.filteredFriends = user.friends;
+            this.stompClient.publish({
+              destination: '/toServer/chat/myChatsToServer',
+              body: JSON.stringify({ userId: this.user.id })
+            });
           }
         }
       ).catch(error => {
-        console.error(error);
-      })
+      console.error(error);
+    });
   }
 
-  loadMessages(): void {
-    this.socket.emit(`/chat/${this.currentChat.id}/getMessagesToServer`);
-  }
 
+  loadMessages(chatId: string): void {
+    this.stompClient.publish({
+      destination: `/toServer/chat/${chatId}/getMessagesToServer`
+    });
+  }
 
   checkIfChatRoomExists(friend: any): void {
+    console.log("HNGUFBMDFZXKIBXF")
     let chat = {
       id: this.postService.generateRandomId(),
-      users: [this.user, friend],
+      users: [this.user.email, friend.email],
       userIds: [this.user.id, friend.id],
       lastMessage: "",
       lastMessageDate: ""
     }
-
-    this.socket.emit("/chat/checkChatRoomToServer", { chat: chat });
-
-    this.loadMessages();
+    this.stompClient.publish({
+      destination: '/toServer/chat/checkChatRoomToServer',
+      body: JSON.stringify({ chat: chat })
+    });
   }
 
-
-  sendMessage(text: string): void {
+  sendMessage(): void {
     let message = {
       senderId: this.user.id,
-      senderDate: new Date().toISOString(),
-      message: text
+      sentDate: new Date().toISOString(),
+      message: this.currentMessage
     }
+    this.stompClient.publish({
+      destination: `/toServer/chat/${this.currentChat.id}/sendToServer`,
+      body: JSON.stringify({ message: message })
+    });
 
-    this.socket.emit(`/chat/${this.currentChat.id}/sendToServer`, { message: message });
+    this.currentMessage = "";
   }
 
 }
