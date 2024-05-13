@@ -51,8 +51,14 @@
     <mat-divider *ngIf="currentChat"></mat-divider>
 
     <div class="chat-area" *ngIf="currentChat">
-      <div *ngFor="let message of messages; let i = index">
-        {{ message.message }}
+      <ng-container *ngIf="user"></ng-container>
+      <div *ngFor="let message of messages; let i = index" class="chat-bubble-container">
+        <div class="chat-bubble">
+          {{ message.message }}
+          <span class="chat-date">
+            {{ message.sentDate | date }}
+          </span>
+        </div>
       </div>
     </div>
     <div class="input-area" *ngIf="currentChat">
