@@ -58,7 +58,6 @@ export class AdminCategoriesListingComponent implements OnInit {
     if (this.admin) {
 
       if (/\d/.test(category)) {
-        window.alert("Category cannot contain any numbers!");
         return;
       }
       this.adminService.createCategory(category)

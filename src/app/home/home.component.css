@@ -73,6 +73,11 @@
   margin-bottom: 20px;
 }
 
+.clickable-post-container {
+  cursor: pointer;
+
+}
+
 .post-container p {
   font-size: 16px;
   line-height: 1.5;

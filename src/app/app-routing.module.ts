@@ -12,7 +12,7 @@ import {AdminUsersListComponent} from "./admin-users-list/admin-users-list.compo
 import {PostDetailsComponent} from "./post-details/post-details.component";
 import {AdminCategoriesListingComponent} from "./admin-categories-listing/admin-categories-listing.component";
 import {UserDetailsComponent} from "./user-details/user-details.component";
-// import {ChatComponent} from "./chat/chat.component";
+import {ChatComponent} from "./chat/chat.component";
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -27,8 +27,7 @@ const routes: Routes = [
   {path: 'post-details', component: PostDetailsComponent},
   {path: 'admin-categoriesListing', component: AdminCategoriesListingComponent},
   {path: 'user-details', component: UserDetailsComponent},
-  // {path: 'chat', component: ChatComponent},
-
+  {path: 'chat', component: ChatComponent}
 
 ]
 
