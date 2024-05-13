@@ -8,7 +8,7 @@ import {Client, Frame, IMessage} from "@stomp/stompjs";
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css']
+  styleUrls: ['./chat.component.css'],
 })
 export class ChatComponent implements OnInit {
 
@@ -75,17 +75,6 @@ export class ChatComponent implements OnInit {
         console.log(response);
       }
     });
-
-    this.stompClient.subscribe(`/toClient/checkChatRoomToClient`, (message: IMessage) => {
-      const response = JSON.parse(message.body);
-      if (response && response.responseNo == 200) {
-        console.log("Response from checkChatRoom | ", response.data);
-        this.currentChat = response.data[0];
-        this.loadMessages(this.currentChat.id);
-      } else {
-        console.log(response);
-      }
-    });
   }
 
   subscribeMainChannel(): void {
@@ -95,18 +84,23 @@ export class ChatComponent implements OnInit {
       if (response && response.responseNo == 200) {
         console.log(response.data);
         this.userChats = response.data;
-        // this.currentChat = this.userChats[0];
 
+        // Sort the userChats array by lastMessageDate in descending order
+        this.userChats.sort((a, b) => {
+          const dateA = new Date(a.lastMessageDate).getTime();
+          const dateB = new Date(b.lastMessageDate).getTime();
+          return dateB - dateA;
+        });
+
+        // this.currentChat = this.userChats[0];
         console.clear();
         console.log("this.userChats | ", this.userChats);
 
         this.subscribeRestChannels();
       } else {
         console.log(response);
-
       }
     });
-
   }
 
   loadUserData(): void {
@@ -135,7 +129,6 @@ export class ChatComponent implements OnInit {
     this.stompClient.publish({
       destination: `/toServer/chat/${chat.id}/getMessagesToServer`
     });
-
     this.stompClient.subscribe(`/toClient/${this.currentChat.id}/getMessagesToClient`, (message: IMessage) => {
       const response = JSON.parse(message.body);
       if (response && response.responseNo == 200) {
@@ -169,6 +162,20 @@ export class ChatComponent implements OnInit {
       destination: '/toServer/chat/checkChatRoomToServer',
       body: JSON.stringify({chat: chat})
     });
+
+    this.stompClient.subscribe(`/toClient/checkChatRoomToClient`, (message: IMessage) => {
+      const response = JSON.parse(message.body);
+      if (response && response.responseNo == 200) {
+        console.log("Response from checkChatRoom | ", response.data);
+        // this.currentChat = response.data[0];
+        this.userChats.push(response.data[0]);
+        this.loadMessages(this.currentChat.id);
+      } else if (response && response.responseNo == 400 && response.data) {
+        console.log("CHAT ALREADY EXISTS!!")
+      } else {
+        console.log(response);
+      }
+    });
   }
 
   sendMessage(): void {
@@ -189,8 +196,14 @@ export class ChatComponent implements OnInit {
       this.userChats[chatIndex].lastMessage = this.messageControl.value;
       this.userChats[chatIndex].lastMessageDate = message.sentDate;
     }
-
     this.messageControl.setValue("");
+
+    this.userChats.sort((a, b) => {
+      const dateA = new Date(a.lastMessageDate).getTime();
+      const dateB = new Date(b.lastMessageDate).getTime();
+      return dateB - dateA;
+    });
+
   }
 
 

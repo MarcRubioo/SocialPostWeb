@@ -1,7 +1,24 @@
-.container {
-  display: flex;
-  height: calc(100vh - 70px);
-  /*width: 100%;*/
+.global-container {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.main-header {
+  text-align: center;
+  font-weight: bold;
+  font-size: xx-large;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  transition: background-color 0.3s;
+  border-bottom: 1px solid #C5C5C5;
+}
+
+.main-container {
+  display: flex !important;
+  height: calc(100vh - 50px) !important;
+  width: 97% !important;
+  margin-right: 30px;
+  margin-left: 30px;
 }
 
 .chat-list {
@@ -12,16 +29,6 @@
   border-radius: 16px;
 }
 
-/* Hide the radio button */
-.mat-pseudo-checkbox {
-  display: none;
-}
-
-/* Hide the radio button background */
-.mat-pseudo-checkbox-background {
-  display: none;
-}
-
 .messages {
   width: 60%;
   margin: 16px;
@@ -30,10 +37,31 @@
   padding: 24px;
 
 }
-
 .search-input {
   margin: 24px;
 }
+
+.search-input > mat-form-field {
+  width: 90%;
+}
+
+.search-chat-divider {
+  border-top: 1px solid rgb(79 79 79 / 28%);
+  width: 100%; /* Adjust the width as needed */
+}
+
+.my-chats-list {
+  margin: 15px 15px;
+  width: 95%;
+  justify-content: center;
+}
+
+.bottom-option-divider {
+  border-top: 1px solid rgb(79 79 79 / 28%);
+  margin: auto;
+  width: 95%;
+}
+
 
 .chat-title {
   display: flex;
@@ -137,8 +165,4 @@
 .chat-bubble-container.sender > .chat-bubble {
   /*background: #1DA1F2;*/
   background: #c5cae9;
-}
-
-mat-divider {
-  border-top-color: rgb(79 79 79 / 28%);
 }
