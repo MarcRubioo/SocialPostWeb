@@ -1,24 +1,6 @@
 <div id="columnas">
   <div id="column1">
-    <div class="IZQ">
-      <div class="logo">
-        <img src="assets/logo.png" alt="Logo" class="logo">
-      </div>
-
-      <div id="menu">
-        <div id="home">
-          <button routerLinkActive="active" routerLink="/home">Home</button>
-        </div>
-
-        <div id="amigos">
-          <button routerLinkActive="active" routerLink="/amigos">Amigos</button>
-        </div>
-
-        <div id="perfil">
-          <button routerLinkActive="active" routerLink="/perfil">Perfil</button>
-        </div>
-      </div>
-    </div>
+    <app-menu></app-menu>
   </div>
 
   <div id="column2">
@@ -40,21 +22,21 @@
           </div>
           <div class="user-friend-action">
             <ng-container
-              *ngIf="followed">
+              *ngIf="followed && user.email !== localStorage.getItem('email')">
               <a class="twitter-follow-button" data-show-count="true" data-size="large" (click)="unfollowUser(user)">Unfollow</a>
             </ng-container>
             <ng-container
-              *ngIf="!followed">
+              *ngIf="!followed && user.email !== localStorage.getItem('email')">
               <a class="twitter-follow-button" data-show-count="true" data-size="large" (click)="followUser(user)">Follow</a>
             </ng-container>
 
             <ng-container
-              *ngIf="befriended">
+              *ngIf="befriended && user.email !== localStorage.getItem('email')">
               <img src="assets/friend_already_added_drawable.svg" alt="Already Befriended"
                    style="height: 24px; width: 24px" (click)="deleteFriend(user)"/>
             </ng-container>
             <ng-container
-              *ngIf="!befriended">
+              *ngIf="!befriended && user.email !== localStorage.getItem('email')">
               <img src="assets/add_friend_drawable.svg" alt="Add Friend" style="height: 24px; width: 24px"
                    (click)="addFriend(user)"/>
             </ng-container>
@@ -107,10 +89,19 @@
         </div>
       </div>
     </div>
+
   </div>
 
 
   <div id="column3">
+    <p-toast
+      position="top-right"
+      key="error-bc"
+    ></p-toast>
 
+    <p-toast
+      position="top-right"
+        key="success-bc"
+    ></p-toast>
   </div>
 </div>

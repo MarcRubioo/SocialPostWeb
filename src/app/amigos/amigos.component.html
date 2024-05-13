@@ -1,26 +1,6 @@
 <div id="columnas">
   <div id="column1">
-    <div class="IZQ">
-      <div class="logo">
-        <img src="assets/logo.png" alt="Logo" class="logo">
-      </div>
-
-      <div id="menu">
-        <div id="home">
-          <button routerLinkActive="active" routerLink="/home">Home</button>
-        </div>
-
-        <div id="amigos">
-          <button routerLinkActive="active" routerLink="/amigos">Amigos</button>
-        </div>
-
-        <div id="perfil">
-          <button routerLinkActive="active" routerLink="/perfil">Perfil</button>
-        </div>
-
-
-      </div>
-    </div>
+    <app-menu></app-menu>
 
   </div>
 
@@ -36,7 +16,7 @@
         <img src="{{friend.img}}" alt="user image">
         <p>{{friend.firstName}}</p>
         <p>{{friend.email}}</p>
-        <div class="delete-icon" (click)="deleteFriend(user)">X</div>
+        <div class="delete-icon" (click)="deleteFriend(friend)">X</div>
       </div>
     </div>
 
@@ -47,4 +27,14 @@
 
 
   </div>
+
+  <p-toast
+    position="bottom-center"
+    key="error-bc"
+    ></p-toast>
+
+  <p-toast
+    position="bottom-center"
+    key="success-bc"
+  ></p-toast>
 </div>

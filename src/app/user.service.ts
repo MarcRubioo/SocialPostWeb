@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 
 @Injectable({
@@ -50,7 +50,7 @@ export class UserService {
     });
   }
 
-  addFriendToUser(user: any) : Promise<any> {
+  addFriendToUser(user: any): Promise<any> {
     return new Promise((resolve, reject) => {
       //Need ls email, ls token, user
       const token = localStorage.getItem('idToken');
@@ -87,7 +87,7 @@ export class UserService {
     });
   }
 
-  deleteFriend(user: any) : Promise<any> {
+  deleteFriend(user: any): Promise<any> {
     return new Promise((resolve, reject) => {
       const token = localStorage.getItem('idToken');
       const email = localStorage.getItem('email');
@@ -111,7 +111,7 @@ export class UserService {
 
       this.http.delete<any>('http://localhost:8080/api/user/friends', {
         headers: headers,
-        params
+        params: params
       }).subscribe(
         response => {
           if (response && response.responseNo == 200) {
@@ -119,7 +119,7 @@ export class UserService {
             console.log("Friend deleted successfully!");
             resolve(response.data[0]);
           }
-        },error => {
+        }, error => {
           reject(error);
         }
       );
@@ -197,6 +197,43 @@ export class UserService {
           reject(error);
         }
       )
+    });
+  }
+
+
+  loadChatUserJWT(userId: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const token = localStorage.getItem('idToken');
+
+      if (!token) {
+        console.error('No se encontró el email o el token en el almacenamiento local.');
+        reject('No token found');
+        return;
+      }
+
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'idToken': token
+      });
+
+      let params = new HttpParams();
+      params = params.set("user_id", userId);
+
+      this.http.get<any>("http://localhost:8080/api/user/loadChatUserJWT", {
+        headers: headers,
+        params: params
+      })
+        .subscribe(
+          response => {
+            if (response && response.responseNo == 200) {
+              console.log(response);
+              console.log("Gotten jwt correctly");
+              resolve(response.data[0]);
+            }
+          }, error => {
+            reject(error);
+          }
+        );
     });
   }
 }
