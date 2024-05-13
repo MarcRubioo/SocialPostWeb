@@ -13,7 +13,7 @@
         <!-- Conditionally render the "X" mark for admins -->
         <div *ngIf="admin" class="delete-icon" (click)="deletePost(post)">X</div>
         <div class="user-details">
-          <img src="{{ user.img }}" alt="post User Image" (click)="goToUserDetails(user)"/>
+          <img src="{{ user.img }}" alt="post User Image" (click)="goToUserDetails(user)" style="cursor: pointer"/>
           <div>
             <p>{{ user.firstName }}</p>
             <p class="post-time">{{ post.createdAT | date }}</p>

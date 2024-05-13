@@ -10,35 +10,39 @@
     </div>
     <div *ngIf="showCreatePostForm" id="create-post-form"><br/><br/>
       <form (submit)="submitPost()">
-        <textarea [(ngModel)]="postContent" name="postContent" placeholder="Escribe tu mensaje aquí" class="post-textarea"></textarea>
+        <textarea [(ngModel)]="postContent" name="postContent" placeholder="Escribe tu mensaje aquí"
+                  class="post-textarea"></textarea>
         <select [(ngModel)]="selectedCategory" name="categories" class="post-dropdown">
           <option value="" disabled selected>Seleccionar Categoría</option>
           <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
         </select><br/><br/>
         <button type="submit" class="post-button">Publicar</button>
-      </form><br/><br/>
+      </form>
+      <br/><br/>
     </div>
 
 
     <div *ngFor="let post of posts; let i = index" class="post-container">
       <div class="post">
-        <div *ngIf="admin" class="delete-icon" (click)="deletePost(post)">X</div>
-        <div class="user-info">
-          <img src="{{postUserDetail[i].img}}" alt="user img" height="50px" width="50px" class="rounded-full">
-          <p>{{ post.email }}</p>
+        <div class="clickable-post-container" (click)="sendPost(post)">
+          <div *ngIf="admin" class="delete-icon" (click)="deletePost(post)">X</div>
+          <div class="user-info">
+            <img src="{{postUserDetail[i].img}}" alt="user img" height="50px" width="50px" class="rounded-full">
+            <p>{{ post.email }}</p>
+          </div>
+          <div class="description-container">
+            <p>{{ post.description }}</p>
+          </div>
+          <p class="post-time">{{ post.createdAT | date }}</p><br/>
         </div>
-        <div class="description-container">
-          <p>{{ post.description }}</p>
-        </div>
-        <p class="post-time">{{ post.createdAT | date }}</p><br/>
 
-        <!-- Renderizar imágenes si existen -->
+
         <ng-container *ngIf="post.images.length > 0">
           <div class="post-image-container">
             <div class="carousel-container">
               <div class="carousel">
-                <div class="carousel-slide" *ngIf="currentSlide >= 0 && currentSlide < post.images.length">
-                  <img [src]="post.images[currentSlide]" alt="Post Image" class="post-image">
+                <div class="carousel-slide" *ngIf="currentSlides[i] >= 0 && currentSlides[i] < post.images.length">
+                  <img [src]="post.images[currentSlides[i]]" alt="Post Image" class="post-image">
                 </div>
               </div>
               <button class="prev" (click)="prevSlide(i)" *ngIf="post.images.length > 1">❮</button>
@@ -47,15 +51,17 @@
           </div>
         </ng-container>
 
-        <!-- Contadores de likes y comentarios -->
+
         <div class="info-container">
           <p class="likes-info">
             <span class="likes-count">{{ post.likes.length }}</span>
-            <img *ngIf="post.likes.includes(localStorage.getItem('email'))" src="assets/heart_filled.svg" alt="Heart Filled" class="heart-icon" (click)="deleteLikeToPost(post, i)">
-            <img *ngIf="!post.likes.includes(localStorage.getItem('email'))" src="assets/heart_empty.svg" alt="Heart Empty" class="heart-icon" (click)="addLikeToPost(post, i)">
+            <img *ngIf="post.likes.includes(localStorage.getItem('email'))" src="assets/heart_filled.svg"
+                 alt="Heart Filled" class="heart-icon" (click)="deleteLikeToPost(post, i)">
+            <img *ngIf="!post.likes.includes(localStorage.getItem('email'))" src="assets/heart_empty.svg"
+                 alt="Heart Empty" class="heart-icon" (click)="addLikeToPost(post, i)">
           </p>
           <p class="comments-info">
-            <img src="assets/comments.svg" alt="Comments" class="comment-icon"  (click)="sendPost(post)">
+            <img src="assets/comments.svg" alt="Comments" class="comment-icon">
             {{ post.comments.length }}
           </p>
         </div>
