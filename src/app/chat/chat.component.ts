@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {PostService} from "../post.service";
 import {UserService} from "../user.service";
 import {FormControl} from "@angular/forms";
@@ -11,6 +11,8 @@ import {Client, Frame, IMessage} from "@stomp/stompjs";
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
+
+  @ViewChild('endOfChat') endOfChat: ElementRef;
 
   socket: any;
   stompClient: Client;
@@ -139,13 +141,14 @@ export class ChatComponent implements OnInit {
       if (response && response.responseNo == 200) {
         console.log("Response for getting messages | ", response.data);
 
-        // Convert sentDate strings to Date objects and sort the messages array
         this.messages = response.data.map((msg: any) => ({
           ...msg,
-          sentDate: new Date(msg.sentDate) // Convert sentDate string to Date object
+          sentDate: new Date(msg.sentDate)
         })).sort((a: any, b: any) => {
           return new Date(a.sentDate).getTime() - new Date(b.sentDate).getTime();
         });
+
+        this.scrollToBottom();
       } else {
         console.log(response);
       }
@@ -201,6 +204,14 @@ export class ChatComponent implements OnInit {
     const friendEmail = chat.users[1] === localStorage.getItem('email') ? chat.users[0] : chat.users[1];
     const friend = this.user.friends.find(friend => friend.email === friendEmail);
     return friend.firstName;
+  }
+
+  scrollToBottom(): void {
+    setTimeout(() => {
+      if (this.endOfChat) {
+        this.endOfChat.nativeElement.scrollIntoView({ behavior: "smooth" })
+      }
+    }, 100);
   }
 
   protected readonly localStorage = localStorage;

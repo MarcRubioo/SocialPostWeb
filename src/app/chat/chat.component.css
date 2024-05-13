@@ -7,15 +7,25 @@
 .chat-list {
   width: 40%;
   margin: 16px;
-  /*background: #c5cae9;*/
-  background-color: rgba(0, 0, 0, 0.20);
+  background: #c5cae9;
+  /*background-color: rgba(0, 0, 0, 0.20);*/
   border-radius: 16px;
+}
+
+/* Hide the radio button */
+.mat-pseudo-checkbox {
+  display: none;
+}
+
+/* Hide the radio button background */
+.mat-pseudo-checkbox-background {
+  display: none;
 }
 
 .messages {
   width: 60%;
   margin: 16px;
-  background: #1DA1F2;
+  background: rgba(0, 0, 0, 0.35);
   border-radius: 16px;
   padding: 24px;
 
@@ -40,6 +50,11 @@
   color: rgba(38, 38, 38, 0.7);
 }
 
+.chat-last-message {
+  /*color: white;*/
+  color: rgba(38, 38, 38, 0.9);
+}
+
 .messages-header {
   display: flex;
   margin-bottom: 8px;
@@ -55,7 +70,6 @@
 .messages-header > h1 {
   margin: 0;
   font-weight: 500;
-
 }
 
 .chat-area {
@@ -63,11 +77,26 @@
   background: rgba(0, 0, 0, 0.20);
   display: flex;
   flex-direction: column;
+  overflow: auto;
 }
 
 .chat-area > :first-child {
   margin-top: auto;
 }
+
+.chat-area::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.chat-area::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.10); /* Change this to your desired color */
+  border-radius: 10px;
+}
+
+.chat-area::-webkit-scrollbar {
+  width: 8px;
+}
+
 
 .input-area > mat-form-field {
   width: 100%;
@@ -86,11 +115,8 @@
 
 .chat-bubble {
   background: white;
-  padding-top: 8px;
-  padding-bottom: 18px;
-  padding-left: 8px;
-  padding-right: 100px;
-  margin-bottom: 16px;
+  padding: 8px 100px 18px 8px;
+  margin: 0 15px 16px;
   border-radius: 8px;
   width: fit-content;
   position: relative;
@@ -104,12 +130,13 @@
   color: rgba(0, 0, 0, 0.6);
 }
 
-.chat-bubble-container-.sender {
+.chat-bubble-container.sender {
   justify-content: flex-end;
 }
 
 .chat-bubble-container.sender > .chat-bubble {
-  background: #1DA1F2;
+  /*background: #1DA1F2;*/
+  background: #c5cae9;
 }
 
 mat-divider {

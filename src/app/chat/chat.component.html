@@ -19,10 +19,11 @@
       </mat-form-field>
     </div>
 
-    <mat-selection-list [multiple]="false">
+    <mat-selection-list [multiple]="false" hideSingleSelectionIndicator>
       <mat-divider></mat-divider>
 
-      <mat-list-option *ngFor="let chat of userChats; let i = index" [formControl]="chatListControl" (click)="loadMessages(chat)">
+      <mat-list-option *ngFor="let chat of userChats; let i = index" [formControl]="chatListControl"
+                       (click)="loadMessages(chat)">
         <mat-divider></mat-divider>
         <img matListItemAvatar [src]="getFriendImage(chat)">
 
@@ -31,11 +32,13 @@
         {{ getUserName(chat) }}
           </span>
           <span class="chat-date">
-            {{ chat.lastMessageDate | date }}
+            {{ chat.lastMessageDate | dateDisplay }}
           </span>
         </p>
-        <p mat-line>
+        <p mat-line class="chat-last-message">
+          <span>
           {{ chat.lastMessage }}
+          </span>
         </p>
         <mat-divider></mat-divider>
       </mat-list-option>
@@ -51,25 +54,29 @@
     <mat-divider *ngIf="currentChat"></mat-divider>
 
     <div class="chat-area" *ngIf="currentChat">
-      <ng-container *ngIf="user"></ng-container>
-      <div *ngFor="let message of messages; let i = index" class="chat-bubble-container">
-        <div class="chat-bubble">
-          {{ message.message }}
-          <span class="chat-date">
-            {{ message.sentDate | date }}
+      <ng-container *ngIf="user">
+        <div *ngFor="let message of messages; let i = index" class="chat-bubble-container"
+             [ngClass]="{ 'sender': message.senderId === user.id }">
+          <div class="chat-bubble">
+            {{ message.message }}
+            <span class="chat-date">
+            {{ message.sentDate | dateDisplay }}
           </span>
+          </div>
         </div>
-      </div>
+        <div #endOfChat></div>
+      </ng-container>
+
     </div>
     <div class="input-area" *ngIf="currentChat">
       <mat-form-field appearance="outline" color="accent">
-        <input [formControl]="messageControl" matInput placeholder="Send message..." (keydown.enter)="sendMessage()"> <!-- [(ngModel)]="currentMessage"  -->
+        <input [formControl]="messageControl" matInput placeholder="Send message..." (keydown.enter)="sendMessage()">
         <button mat-button matSuffix (click)="sendMessage()">
           <mat-icon>send</mat-icon>
         </button>
       </mat-form-field>
     </div>
 
-<!--    <button *ngIf="currentChat" (click)="sendMessage()" style="background: white">Send Message</button>-->
+    <!--    <button *ngIf="currentChat" (click)="sendMessage()" style="background: white">Send Message</button>-->
   </div>
 </div>

@@ -21,7 +21,7 @@ import {AdminDashboardComponent} from './admin-dashboard/admin-dashboard.compone
 import {AdminUsersListComponent} from './admin-users-list/admin-users-list.component';
 import {PostDetailsComponent} from './post-details/post-details.component';
 import {AdminCategoriesListingComponent} from './admin-categories-listing/admin-categories-listing.component';
-import {NgOptimizedImage} from "@angular/common";
+import {DatePipe, NgOptimizedImage} from "@angular/common";
 import {ChatComponent} from './chat/chat.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {UserDetailsComponent} from './user-details/user-details.component';
@@ -36,6 +36,7 @@ import {MatDividerModule} from "@angular/material/divider";
 import {MatLineModule} from "@angular/material/core";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIcon, MatIconModule} from "@angular/material/icon";
+import { DateDisplayPipe } from './pipes/date-display.pipe';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import {MatIcon, MatIconModule} from "@angular/material/icon";
     UserDetailsComponent,
     MenuComponent,
     UserDetailsComponent,
-    ChatComponent
+    ChatComponent,
+    DateDisplayPipe
   ],
   imports: [
     BrowserModule,
@@ -78,7 +80,7 @@ import {MatIcon, MatIconModule} from "@angular/material/icon";
     MatButtonModule,
     MatIconModule,
   ],
-  providers: [AngularFireAuth, MessageService],
+  providers: [AngularFireAuth, MessageService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {
