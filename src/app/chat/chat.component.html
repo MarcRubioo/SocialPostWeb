@@ -11,15 +11,59 @@
           (input)="filterFriends()"
         />
         <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let friend of filteredFriends" [value]="friend.firstName" (click)="checkIfChatRoomExists(friend)">
+          <mat-option *ngFor="let friend of filteredFriends" [value]="friend.firstName"
+                      (click)="checkIfChatRoomExists(friend)">
             {{ friend.firstName }}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
     </div>
+
+    <mat-selection-list [multiple]="false">
+      <mat-divider></mat-divider>
+
+      <mat-list-option *ngFor="let chat of userChats; let i = index" [formControl]="chatListControl" (click)="loadMessages(chat)">
+        <mat-divider></mat-divider>
+        <img matListItemAvatar [src]="getFriendImage(chat)">
+
+        <p mat-line class="chat-title">
+          <span class="chat-name">
+        {{ getUserName(chat) }}
+          </span>
+          <span class="chat-date">
+            {{ chat.lastMessageDate | date }}
+          </span>
+        </p>
+        <p mat-line>
+          {{ chat.lastMessage }}
+        </p>
+        <mat-divider></mat-divider>
+      </mat-list-option>
+    </mat-selection-list>
+
   </div>
 
   <div class="messages mat-elevation-z5">
-    <button (click)="sendMessage()" style="background: white">Send Message</button>
+    <div class="messages-header" *ngIf="currentChat">
+      <img [src]="getFriendImage(currentChat)"/>
+      <h1>{{ getUserName(currentChat) }}</h1>
+    </div>
+    <mat-divider *ngIf="currentChat"></mat-divider>
+
+    <div class="chat-area" *ngIf="currentChat">
+      <div *ngFor="let message of messages; let i = index">
+        {{ message.message }}
+      </div>
+    </div>
+    <div class="input-area" *ngIf="currentChat">
+      <mat-form-field appearance="outline" color="accent">
+        <input [formControl]="messageControl" matInput placeholder="Send message..." (keydown.enter)="sendMessage()"> <!-- [(ngModel)]="currentMessage"  -->
+        <button mat-button matSuffix (click)="sendMessage()">
+          <mat-icon>send</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+
+<!--    <button *ngIf="currentChat" (click)="sendMessage()" style="background: white">Send Message</button>-->
   </div>
 </div>

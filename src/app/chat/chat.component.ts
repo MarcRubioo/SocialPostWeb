@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { PostService } from "../post.service";
-import { UserService } from "../user.service";
-import { FormControl } from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {PostService} from "../post.service";
+import {UserService} from "../user.service";
+import {FormControl} from "@angular/forms";
 import * as SockJS from "sockjs-client";
-import { Client, Frame, IMessage } from "@stomp/stompjs";
+import {Client, Frame, IMessage} from "@stomp/stompjs";
 
 @Component({
   selector: 'app-chat',
@@ -15,11 +15,12 @@ export class ChatComponent implements OnInit {
   socket: any;
   stompClient: Client;
   searchFormControl = new FormControl();
+  chatListControl = new FormControl();
+  messageControl = new FormControl();
 
   user: any;
   userChats: any[] = [];
   messages: any[] = [];
-  currentMessage: string = "";
   currentChat: any;
 
   filteredFriends: any[] = [];
@@ -64,17 +65,6 @@ export class ChatComponent implements OnInit {
   }
 
   subscribeRestChannels(): void {
-    this.stompClient.subscribe(`/toClient/${this.currentChat.id}/getMessagesToClient`, (message: IMessage) => {
-      this.messages = [];
-      const response = JSON.parse(message.body);
-      if (response && response.responseNo == 200) {
-        console.log("Response for getting messages | ", response.data);
-        this.messages = response.data;
-      } else {
-        console.log(response);
-      }
-    });
-
     this.stompClient.subscribe(`/toClient/${this.currentChat.id}/sendResponseToClient`, (message: IMessage) => {
       const response = JSON.parse(message.body);
       if (response && response.responseNo == 200) {
@@ -89,6 +79,7 @@ export class ChatComponent implements OnInit {
       if (response && response.responseNo == 200) {
         console.log("Response from checkChatRoom | ", response.data);
         this.currentChat = response.data[0];
+        this.loadMessages(this.currentChat.id);
       } else {
         console.log(response);
       }
@@ -96,19 +87,18 @@ export class ChatComponent implements OnInit {
   }
 
   subscribeMainChannel(): void {
-    // Subscribe to your channels here
     this.stompClient.subscribe('/toClient/myChatsToClient', (message: IMessage) => {
       this.userChats = [];
       const response = JSON.parse(message.body);
       if (response && response.responseNo == 200) {
         console.log(response.data);
         this.userChats = response.data;
-        this.currentChat = this.userChats[0];
+        // this.currentChat = this.userChats[0];
+
+        console.clear();
+        console.log("this.userChats | ", this.userChats);
 
         this.subscribeRestChannels();
-        console.clear();
-
-        console.log("this.userChats | ", this.userChats);
       } else {
         console.log(response);
 
@@ -127,7 +117,7 @@ export class ChatComponent implements OnInit {
             this.filteredFriends = user.friends;
             this.stompClient.publish({
               destination: '/toServer/chat/myChatsToServer',
-              body: JSON.stringify({ userId: this.user.id })
+              body: JSON.stringify({userId: this.user.id})
             });
           }
         }
@@ -137,10 +127,30 @@ export class ChatComponent implements OnInit {
   }
 
 
-  loadMessages(chatId: string): void {
+  loadMessages(chat: any): void {
+
+    this.currentChat = chat;
     this.stompClient.publish({
-      destination: `/toServer/chat/${chatId}/getMessagesToServer`
+      destination: `/toServer/chat/${chat.id}/getMessagesToServer`
     });
+
+    this.stompClient.subscribe(`/toClient/${this.currentChat.id}/getMessagesToClient`, (message: IMessage) => {
+      const response = JSON.parse(message.body);
+      if (response && response.responseNo == 200) {
+        console.log("Response for getting messages | ", response.data);
+
+        // Convert sentDate strings to Date objects and sort the messages array
+        this.messages = response.data.map((msg: any) => ({
+          ...msg,
+          sentDate: new Date(msg.sentDate) // Convert sentDate string to Date object
+        })).sort((a: any, b: any) => {
+          return new Date(a.sentDate).getTime() - new Date(b.sentDate).getTime();
+        });
+      } else {
+        console.log(response);
+      }
+    });
+
   }
 
   checkIfChatRoomExists(friend: any): void {
@@ -154,7 +164,7 @@ export class ChatComponent implements OnInit {
     }
     this.stompClient.publish({
       destination: '/toServer/chat/checkChatRoomToServer',
-      body: JSON.stringify({ chat: chat })
+      body: JSON.stringify({chat: chat})
     });
   }
 
@@ -162,14 +172,36 @@ export class ChatComponent implements OnInit {
     let message = {
       senderId: this.user.id,
       sentDate: new Date().toISOString(),
-      message: this.currentMessage
+      message: this.messageControl.value
     }
+
     this.stompClient.publish({
       destination: `/toServer/chat/${this.currentChat.id}/sendToServer`,
-      body: JSON.stringify({ message: message })
+      body: JSON.stringify({message: message})
     });
 
-    this.currentMessage = "";
+    const chatIndex = this.userChats.findIndex(chat => chat.id === this.currentChat.id);
+    if (chatIndex !== -1) {
+      // Update lastMessage and lastMessageDate
+      this.userChats[chatIndex].lastMessage = this.messageControl.value;
+      this.userChats[chatIndex].lastMessageDate = message.sentDate;
+    }
+
+    this.messageControl.setValue("");
   }
 
+
+  getFriendImage(chat: any): string {
+    const friendEmail = chat.users[1] === localStorage.getItem('email') ? chat.users[0] : chat.users[1];
+    const friend = this.user.friends.find(friend => friend.email === friendEmail);
+    return friend.img;
+  }
+
+  getUserName(chat: any): string {
+    const friendEmail = chat.users[1] === localStorage.getItem('email') ? chat.users[0] : chat.users[1];
+    const friend = this.user.friends.find(friend => friend.email === friendEmail);
+    return friend.firstName;
+  }
+
+  protected readonly localStorage = localStorage;
 }

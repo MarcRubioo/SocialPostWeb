@@ -31,7 +31,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MessageService} from "primeng/api";
 import {MatInputModule} from "@angular/material/input";
 import {MatAutocompleteModule} from "@angular/material/autocomplete"
-
+import {MatListModule} from "@angular/material/list"
+import {MatDividerModule} from "@angular/material/divider";
+import {MatLineModule} from "@angular/material/core";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIcon, MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
@@ -65,9 +69,14 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete"
     TranslateModule.forRoot(),
     ToastModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     MatInputModule,
     MatAutocompleteModule,
-    ReactiveFormsModule,
+    MatListModule,
+    MatDividerModule,
+    MatLineModule,
+    MatButtonModule,
+    MatIconModule,
   ],
   providers: [AngularFireAuth, MessageService],
   bootstrap: [AppComponent]
