@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   showCreatePostForm: boolean = false;
   selectedCategory: string = '';
   postContent: string = '';
-  currentSlides: { [key: number]: number } = {};
+
   admin: boolean = this.adminService.admin
 
 
@@ -261,7 +261,7 @@ export class HomeComponent implements OnInit {
 
   protected readonly localStorage = localStorage;
 
-  currentSlide = 0;
+  currentSlides: { [key: number]: number } = {};
 
   prevSlide(postIndex: number) {
     const post = this.posts[postIndex];

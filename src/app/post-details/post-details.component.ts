@@ -73,6 +73,11 @@ export class PostDetailsComponent implements OnInit {
     }
   }
 
+  parseDate(dateString: string): Date {
+    const parsedDate = new Date(dateString);
+    return isNaN(parsedDate.getTime()) ? new Date() : parsedDate;
+  }
+
   deletePost(post: any): void {
     if (this.admin) {
       this.adminService.deletePost(post)
@@ -141,7 +146,6 @@ export class PostDetailsComponent implements OnInit {
 
 
   goToUserDetails(user: any): void {
-    //TODO put user in a service then navigate to userDetails page
     this.userService.user = user;
     this.router.navigate(["/user-details"])
   }

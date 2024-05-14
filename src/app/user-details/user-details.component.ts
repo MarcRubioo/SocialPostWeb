@@ -204,5 +204,27 @@ export class UserDetailsComponent implements OnInit {
       )
   }
 
+  currentSlides: { [key: number]: number } = {};
+
+  prevSlide(postIndex: number) {
+    const post = this.posts[postIndex];
+    const totalSlides = post.images.length;
+    if (this.currentSlides[postIndex] === 0) {
+      this.currentSlides[postIndex] = totalSlides - 1;
+    } else {
+      this.currentSlides[postIndex]--;
+    }
+  }
+
+  nextSlide(postIndex: number) {
+    const post = this.posts[postIndex];
+    const totalSlides = post.images.length;
+    if (this.currentSlides[postIndex] === totalSlides - 1) {
+      this.currentSlides[postIndex] = 0;
+    } else {
+      this.currentSlides[postIndex]++;
+    }
+  }
+
   protected readonly localStorage = localStorage;
 }

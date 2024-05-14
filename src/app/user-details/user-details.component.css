@@ -121,13 +121,13 @@
   align-items: center;
 }
 
-.user-details img {
-  border-radius: 50%; /* Make the image round */
-  width: 40px; /* Adjust width as needed */
-  height: 40px; /* Adjust height as needed */
-  object-fit: cover; /* Maintain aspect ratio */
-  margin-right: 10px; /* Adjust margin between image and text */
-}
+/*.user-details img {*/
+/*  border-radius: 50%; !* Make the image round *!*/
+/*  width: 40px; !* Adjust width as needed *!*/
+/*  height: 40px; !* Adjust height as needed *!*/
+/*  object-fit: cover; !* Maintain aspect ratio *!*/
+/*  margin-right: 10px; !* Adjust margin between image and text *!*/
+/*}*/
 
 .user-details p {
   margin: 10px;
