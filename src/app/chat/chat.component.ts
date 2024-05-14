@@ -35,7 +35,7 @@ export class ChatComponent implements OnInit {
 
   filterFriends(): void {
     const value = this.searchFormControl.value.toLowerCase();
-    this.filteredFriends = this.user.friends.filter(friend => friend.firstName.toLowerCase().includes(value));
+    this.filteredFriends = this.user.friends.filter(friend => friend.email.toLowerCase().includes(value));
   }
 
   ngOnInit(): void {
@@ -150,7 +150,8 @@ export class ChatComponent implements OnInit {
   }
 
   checkIfChatRoomExists(friend: any): void {
-    console.log("HNGUFBMDFZXKIBXF")
+    console.log("friend id sussy | " + friend.id);
+    return;
     let chat = {
       id: this.postService.generateRandomId(),
       users: [this.user.email, friend.email],
@@ -166,7 +167,8 @@ export class ChatComponent implements OnInit {
     this.stompClient.subscribe(`/toClient/checkChatRoomToClient`, (message: IMessage) => {
       const response = JSON.parse(message.body);
       if (response && response.responseNo == 200) {
-        console.log("Response from checkChatRoom | ", response.data);
+        console.log("Response from checkChatRoom | ", response);
+        console.log(response.data);
         // this.currentChat = response.data[0];
         this.userChats.push(response.data[0]);
         this.loadMessages(this.currentChat.id);

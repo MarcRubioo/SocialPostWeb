@@ -8,13 +8,22 @@
 
     <p class="flex text-3xl font-bold justify-center pt-3">Perfil</p>
 
-
     <div id="infouser" class="rounded-xl p-5 ">
       <div *ngIf="userDetails" class="flex flex-col gap-7">
         <div class="flex flex-row justify-between">
-          <div class="flex flex-row gap-5 items-center">
-            <img height="50px" width="50px" class="rounded-full" src="{{userDetails.img}}" />
-            <p>{{ userDetails.firstName }}</p>
+          <div class="flex flex-row gap-5 items-center" id="test">
+            <label class="hoverable relative" for="fileInput">
+              <div class="rounded-full overflow-hidden h-24 w-24 flex items-center justify-center">
+                <img class="object-cover h-full w-full" src="{{userDetails.img}}">
+              </div>
+              <div class="hover-text absolute inset-0 flex items-center justify-center text-white font-bold">Change avatar</div>
+              <div class="background absolute inset-0 bg-black opacity-50 rounded-full"></div>
+            </label>
+            <br/>
+            <input id="fileInput" type='file' (change)="onSelectFile($event)">
+            <p>{{userDetails.firstName}}</p>
+            <br>
+            <p>{{userDetails.email}}</p>
           </div>
           <div class="flex flex-row gap-5 items-center">
             <div class="flex flex-col gap-3 items-center">
@@ -51,14 +60,15 @@
       <div class="flex flex-col p-5 gap-5">
         <div class="flex flex-row justify-between">
           <div class="flex gap-3 items-center">
-            <img class="rounded-full" height="50px" width="50px" src="{{userDetails.img}}" />
+            <div class="rounded-full overflow-hidden h-14 w-14">
+              <img class="object-cover h-full w-full" src="{{userDetails.img}}" />
+            </div>
             <p>{{ post.email }}</p>
           </div>
-          <p> {{ parseDate(post.createdAT) | date }}</p>
+          <p> {{ post.createdAT | dateDisplay }}</p>
         </div>
 
         <p>{{ post.description }}</p>
-
 
 
         <ng-container *ngIf="post.images.length > 0">

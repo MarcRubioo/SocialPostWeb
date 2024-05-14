@@ -236,4 +236,43 @@ export class UserService {
         );
     });
   }
+
+  sendByteArrayToServer(byteArray: Uint8Array): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const idToken = localStorage.getItem('idToken'); // Get the user's authentication token
+      const email = localStorage.getItem("email");
+
+      if (!idToken || !email) {
+        console.error('No se encontró el email o el token en el almacenamiento local.');
+        reject('No token found');
+        return;
+      }
+
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'idToken': idToken
+      });
+
+
+      const body = {
+        email: email,
+        imgData: Array.from(byteArray) // Convert the Uint8Array to a regular array for JSON serialization
+      };
+
+      this.http.put<any>('http://localhost:8080/api/user/pfp', body,
+        {
+          headers: headers
+        }).subscribe(
+        response => {
+          if (response && response.responseNo == 200) {
+            console.log(response);
+            console.log("Uploaded photo correctly");
+            resolve(response.data[0]);
+          }
+        }, error => {
+          reject(error);
+        }
+      );
+    });
+  }
 }

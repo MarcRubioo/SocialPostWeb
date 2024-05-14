@@ -180,7 +180,7 @@ export class PostService {
       let params = new HttpParams();
       params = params.set("email", email);
 
-      this.http.delete<any>(`http://localhost:8080/api/deleteLikePost/${post.id}`,{
+      this.http.delete<any>(`http://localhost:8080/api/deleteLikePost/${post.id}`, {
         headers: headers,
         params: params
       }).subscribe(
@@ -249,7 +249,7 @@ export class PostService {
       let params = new HttpParams();
       params = params.set("email", email);
 
-      this.http.delete<any>(`http://localhost:8080/api/deleteLikePostComment/${post.id}/${comment.id}`,{
+      this.http.delete<any>(`http://localhost:8080/api/deleteLikePostComment/${post.id}/${comment.id}`, {
         headers: headers,
         params: params
       }).subscribe(
@@ -265,6 +265,49 @@ export class PostService {
       )
     });
   }
+
+
+  addComment(comment: any, postId: string): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      const token = localStorage.getItem("idToken");
+
+      if (!token) {
+        console.error('No se encontró el email o el token en el almacenamiento local.');
+        reject('No token found');
+        return;
+      }
+
+      let headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'idToken': token
+      });
+
+      let params = new HttpParams();
+      params = params.set("idPost", postId);
+
+      this.http.post<any>('http://127.0.0.1:8080/api/postcomment',
+        comment,
+        {
+          headers: headers,
+          params: params
+        }).subscribe(
+        response => {
+          if (response && response.responseNo == 200) {
+            console.log(response);
+            console.log("Added comment successfully!");
+            resolve(response.data[0]);
+          } else {
+            console.log(response);
+          }
+        },
+        error => {
+          reject(error);
+        }
+      );
+
+    });
+  }
+
 
   generateRandomId(): string {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

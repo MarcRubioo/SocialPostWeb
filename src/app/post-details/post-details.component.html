@@ -12,12 +12,15 @@
       <div id="mainPostDetails" class="post">
         <!-- Conditionally render the "X" mark for admins -->
         <div *ngIf="admin" class="delete-icon" (click)="deletePost(post)">X</div>
-        <div class="user-details">
-          <img src="{{ user.img }}" alt="post User Image" (click)="goToUserDetails(user)"/>
-          <div>
-            <p>{{ user.firstName }}</p>
-            <p class="post-time">{{ post.createdAT | date }}</p>
+        <div class="flex flex-row justify-between">
+          <div class="flex gap-3 items-center">
+            <div class="rounded-full overflow-hidden h-14 w-14">
+              <img class="object-cover h-full w-full cursor-pointer" src="{{user.img}}" (click)="goToUserDetails(user)"/>
+            </div>
+            <p>{{user.firstName}}</p>
+            <p>{{ post.email }}</p>
           </div>
+          <p> {{ post.createdAT | dateDisplay }}</p>
         </div>
         <p class="post-description">{{ post.description }}</p> <br/>
 
@@ -42,11 +45,19 @@
             {{ post.likes.length }}
           </p>
           <p>
-            <img src="assets/comments.svg" alt="Comments" style="height: 24px; width: 24px">
+            <img src="assets/comments.svg" alt="Comments" style="height: 24px; width: 24px; cursor: pointer" (click)="toggleCreatePostForm()">
             {{ post.comments.length }}
           </p>
         </div>
       </div>
+    </div>
+
+    <div *ngIf="showCommentPostForm" class="create-comment-form"><br><br>
+      <form (submit)="submitComment()">
+        <textarea [(ngModel)]="commentContent" name="commentContent" placeholder="Escribe tu mensaje aquí"
+                  class="comment-textarea"></textarea>
+        <button type="submit" class="comment-button">Comment</button>
+      </form>
     </div>
 
 
@@ -61,7 +72,7 @@
             <p>{{ comment.email }}</p>
           </div>
         </div>
-        <p class="comment-time">{{ comment.commentAt | date }}</p>
+        <p class="comment-time">{{ comment.commentAt | dateDisplay }}</p>
         <p class="comment-text">{{ comment.comment }}</p>
         <div class="actions">
           <p>

@@ -11,7 +11,9 @@
     <div class="user-container">
       <div id="main-user-container" class="user">
         <div class="user-details">
-          <img src="{{ user.img }}" alt="User Image"/>
+          <div class="rounded-full overflow-hidden h-24 w-24 flex items-center justify-center">
+            <img class="object-cover h-full w-full" src="{{user.img}}">
+          </div>
           <div>
             <p>{{ user.firstName }}</p>
             <p>{{ user.email }}</p>
@@ -33,11 +35,11 @@
             <ng-container
               *ngIf="befriended && user.email !== localStorage.getItem('email')">
               <img src="assets/friend_already_added_drawable.svg" alt="Already Befriended"
-                   style="height: 24px; width: 24px" (click)="deleteFriend(user)"/>
+                   style="height: 24px; width: 24px; cursor: pointer" (click)="deleteFriend(user)" />
             </ng-container>
             <ng-container
               *ngIf="!befriended && user.email !== localStorage.getItem('email')">
-              <img src="assets/add_friend_drawable.svg" alt="Add Friend" style="height: 24px; width: 24px"
+              <img src="assets/add_friend_drawable.svg" alt="Add Friend" style="height: 24px; width: 24px; cursor: pointer"
                    (click)="addFriend(user)"/>
             </ng-container>
           </div>
@@ -55,13 +57,15 @@
         <!-- Conditionally render the "X" mark for admins -->
         <div *ngIf="admin" class="delete-icon" (click)="deletePost(post)">X</div>
         <div class="user-details">
-          <img src="{{ user.img }}" alt="User Image"/>
+          <div class="rounded-full overflow-hidden h-14 w-14 flex items-center justify-center">
+            <img class="object-cover h-full w-full" src="{{user.img}}">
+          </div>
           <div>
             <p>{{ user.firstName }}</p>
             <p>{{ user.email }}</p>
           </div>
         </div>
-        <p class="post-time">{{ post.createdAT | date }}</p>
+        <p class="post-time">{{ post.createdAT | dateDisplay }}</p>
         <p class="post-body">{{ post.description }}</p>
 
         <ng-container *ngIf="post.images.length > 0">

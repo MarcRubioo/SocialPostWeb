@@ -31,6 +31,31 @@
 }
 
 
+.hoverable {
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.20);
+  border-radius: 50%;
+}
+
+.hoverable .hover-text {
+  display: none;
+  text-align: center;
+}
+
+.hoverable:hover .hover-text {
+  display: flex;
+  /*color: white;*/
+}
+
+.background {
+  display: none;
+}
+
+.hoverable:hover .background {
+  display: block;
+}
 
 
-
+#fileInput{
+  display: none;
+}

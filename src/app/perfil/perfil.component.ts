@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {UserService} from "../user.service";
 
 
 @Component({
@@ -8,14 +9,13 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
   styleUrls: ['./perfil.component.css']
 })
 export class PerfilComponent implements OnInit {
-  userData: String = localStorage.getItem('email');
   postContent: string;
   userDetails: any;
   userPosts: any[];
   categories: string[] = [];
   selectedCategory: string; // Variable para almacenar la categoría seleccionada
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private userService: UserService) {
     this.loadUserPosts();
   }
 
@@ -157,4 +157,37 @@ export class PerfilComponent implements OnInit {
         }
       );
   }
+
+  imgUrl: any = "";
+
+  onSelectFile(event) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+      reader.onload = (event) => { // called once readAsDataURL is completed
+        // this.imgUrl = event.target.result;
+        const base64String = event.target.result as string;
+        const base64Data = base64String.split(',')[1]; // Extract base64 data portion
+
+        // Convert base64 to byte array
+        const byteCharacters = atob(base64Data);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+
+        // Send the byte array to the server
+        this.userService.sendByteArrayToServer(byteArray)
+          .then(
+            newImgUrl => {
+              this.userDetails.img = newImgUrl;
+            }
+          );
+      }
+    }
+  }
+
 }

@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
   showCreatePostForm: boolean = false;
   selectedCategory: string = '';
   postContent: string = '';
-  currentSlides: { [key: number]: number } = {};
+
   admin: boolean = this.adminService.admin
 
 
@@ -58,15 +58,10 @@ export class HomeComponent implements OnInit {
   }
 
 
-  getUserInfo(email: string): void {
-
-  }
-
   toggleCreatePostForm(): void {
     this.showCreatePostForm = !this.showCreatePostForm;
   }
 
-  // Función para convertir una cadena de fecha en un objeto Date
   parseDate(dateString: string): Date {
     const parsedDate = new Date(dateString);
     return isNaN(parsedDate.getTime()) ? new Date() : parsedDate;
@@ -261,7 +256,7 @@ export class HomeComponent implements OnInit {
 
   protected readonly localStorage = localStorage;
 
-  currentSlide = 0;
+  currentSlides: { [key: number]: number } = {};
 
   prevSlide(postIndex: number) {
     const post = this.posts[postIndex];

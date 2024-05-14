@@ -66,11 +66,15 @@
   font-size: 2rem;
   border-bottom: 1px solid #C5C5C5;
   padding: -4%;
-  font-size: 80px;
 }
 
 .post-container {
   margin-bottom: 20px;
+}
+
+.clickable-post-container {
+  cursor: pointer;
+
 }
 
 .post-container p {
@@ -330,4 +334,8 @@
 .description-container {
   margin-top: 10px;
   margin-left: 10px;
+}
+
+.rounded-full {
+  border-radius: 50%;
 }
