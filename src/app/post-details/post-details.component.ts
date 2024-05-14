@@ -176,6 +176,14 @@ export class PostDetailsComponent implements OnInit {
       .then(
         commentToAdd => {
           this.post.comments.push(commentToAdd);
+          this.comments.forEach((comment: any) => {
+            this.postService.getUserData(comment.email)
+              .then(
+                user => {
+                  this.commentsDetails.push(user);
+                }
+              )
+          });
           console.log("Correctly added to array!");
         }, error => {
           console.error(error);

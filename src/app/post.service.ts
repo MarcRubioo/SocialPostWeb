@@ -296,6 +296,8 @@ export class PostService {
             console.log(response);
             console.log("Added comment successfully!");
             resolve(response.data[0]);
+          } else {
+            console.log(response);
           }
         },
         error => {
