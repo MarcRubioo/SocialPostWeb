@@ -45,11 +45,19 @@
             {{ post.likes.length }}
           </p>
           <p>
-            <img src="assets/comments.svg" alt="Comments" style="height: 24px; width: 24px">
+            <img src="assets/comments.svg" alt="Comments" style="height: 24px; width: 24px" (click)="toggleCreatePostForm()">
             {{ post.comments.length }}
           </p>
         </div>
       </div>
+    </div>
+
+    <div *ngIf="showCommentPostForm" class="create-comment-form"><br><br>
+      <form (submit)="submitComment()">
+        <textarea [(ngModel)]="commentContent" name="commentContent" placeholder="Escribe tu mensaje aquí"
+                  class="comment-textarea"></textarea>
+        <button type="submit" class="comment-button">Comment</button>
+      </form>
     </div>
 
 

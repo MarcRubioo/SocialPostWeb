@@ -15,7 +15,7 @@
             (input)="filterFriends()"
           />
           <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let friend of filteredFriends" [value]="friend.firstName"
+            <mat-option *ngFor="let friend of filteredFriends" [value]="friend.email"
                         (click)="checkIfChatRoomExists(friend)">
               {{ friend.firstName }}
             </mat-option>

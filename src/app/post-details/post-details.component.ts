@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {PostService} from "../post.service";
 import {Router} from "@angular/router";
 import {AdminServiceService} from "../admin-service.service";
@@ -73,10 +73,6 @@ export class PostDetailsComponent implements OnInit {
     }
   }
 
-  parseDate(dateString: string): Date {
-    const parsedDate = new Date(dateString);
-    return isNaN(parsedDate.getTime()) ? new Date() : parsedDate;
-  }
 
   deletePost(post: any): void {
     if (this.admin) {
@@ -150,15 +146,56 @@ export class PostDetailsComponent implements OnInit {
     this.router.navigate(["/user-details"])
   }
 
-  // async loadPostDetails(): Promise<void> {
-  //   this.post = this.postService.post;
-  //
-  //   try {
-  //     await this.postService.loadPostComments(this.post.email);
-  //   } catch (error) {
-  //     console.error('Error loading post comments:', error);
-  //   }
-  // }
+  showCommentPostForm: boolean = false;
+  commentContent: string = '';
+
+  toggleCreatePostForm(): void {
+    this.showCommentPostForm = !this.showCommentPostForm;
+  }
+
+  submitComment() {
+    if (!this.commentContent) {
+      return;
+    }
+    const email = localStorage.getItem('email');
+
+    if (!email) {
+      console.error('submitComment no email.');
+      return;
+    }
+
+    const commentData = {
+      id: this.generateRandomId(),
+      email: email,
+      commentAt: new Date().toISOString(),
+      comment: this.commentContent,
+      likes: [],
+    };
+
+    this.postService.addComment(commentData, this.post.id)
+      .then(
+        commentToAdd => {
+          this.post.comments.push(commentToAdd);
+          console.log("Correctly added to array!");
+        }, error => {
+          console.error(error);
+        }
+      )
+
+  }
+
+  generateRandomId(): string {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const idLength = 15;
+    let randomId = '';
+
+    for (let i = 0; i < idLength; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      randomId += characters.charAt(randomIndex);
+    }
+
+    return randomId;
+  }
 
   protected readonly localStorage = localStorage;
 }
