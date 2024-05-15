@@ -19,7 +19,7 @@ export class PerfilComponent implements OnInit {
     this.loadUserPosts();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getUserDetails();
     this.loadUserPosts();
     this.getCategories();
@@ -31,7 +31,7 @@ export class PerfilComponent implements OnInit {
     return isNaN(parsedDate.getTime()) ? new Date() : parsedDate;
   }
 
-  getUserDetails() {
+  getUserDetails(): void {
     const email = localStorage.getItem('email');
     const idToken = localStorage.getItem('idToken');
 
@@ -75,7 +75,7 @@ export class PerfilComponent implements OnInit {
     return randomId;
   }
 
-  submitPost() {
+  submitPost(): void {
     if (!this.postContent) {
       return;
     }
@@ -115,7 +115,7 @@ export class PerfilComponent implements OnInit {
     );
   }
 
-  loadUserPosts() {
+  loadUserPosts(): void {
     const token = localStorage.getItem('idToken');
     const email = localStorage.getItem('email');
 
@@ -160,18 +160,15 @@ export class PerfilComponent implements OnInit {
 
   imgUrl: any = "";
 
-  onSelectFile(event) {
+  onSelectFile(event): void {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
 
-      reader.readAsDataURL(event.target.files[0]); // read file as data url
-
-      reader.onload = (event) => { // called once readAsDataURL is completed
-        // this.imgUrl = event.target.result;
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = (event) => {
         const base64String = event.target.result as string;
-        const base64Data = base64String.split(',')[1]; // Extract base64 data portion
+        const base64Data = base64String.split(',')[1];
 
-        // Convert base64 to byte array
         const byteCharacters = atob(base64Data);
         const byteNumbers = new Array(byteCharacters.length);
         for (let i = 0; i < byteCharacters.length; i++) {
@@ -179,7 +176,6 @@ export class PerfilComponent implements OnInit {
         }
         const byteArray = new Uint8Array(byteNumbers);
 
-        // Send the byte array to the server
         this.userService.sendByteArrayToServer(byteArray)
           .then(
             newImgUrl => {

@@ -309,6 +309,13 @@ export class PostService {
   }
 
 
+  sendPostPhotosToServer(byteArrays: any[]): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const idToken = localStorage.getItem('idToken');
+    });
+  }
+
+
   generateRandomId(): string {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const idLength = 15;

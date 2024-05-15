@@ -24,26 +24,20 @@ export class AdminLoginComponent {
     console.log('Contraseña:', this.password);
 
     try {
-      // Inicia sesión con correo electrónico y contraseña usando AngularFireAuth
       const userCredential = await signInWithEmailAndPassword(this.auth, this.username, this.password);
 
-      // Si el inicio de sesión es exitoso, obtén el token de autenticación y el correo electrónico del usuario
       if (userCredential && userCredential.user) {
         console.log('Inicio de sesión exitoso');
         const token = await userCredential.user.getIdToken();
         const email = userCredential.user.email;
 
-        // Almacena el token y el correo electrónico en el localStorage
         localStorage.setItem("idToken", token);
         localStorage.setItem("email", email);
 
-        // Configura los encabezados para la solicitud HTTP
-        const headers = {
-          headers: new HttpHeaders({
-            'Content-Type': "application/json",
-            "idToken": token,
-          })
-        }
+        const headers = new HttpHeaders({
+          'Content-Type': 'application/json',
+          'idToken': token,
+        });
 
         // Realiza la solicitud HTTP al servidor
         this.http.post<any>("http://localhost:8080/api/admin/login",
@@ -51,7 +45,8 @@ export class AdminLoginComponent {
             email: this.username,
             password: this.password,
             firstName: ""
-          }, headers).subscribe(
+          },
+          {headers: headers}).subscribe(
           response => {
             if (response) {
               console.log("response: ", response);
