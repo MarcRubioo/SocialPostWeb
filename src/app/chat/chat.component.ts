@@ -84,6 +84,8 @@ export class ChatComponent implements OnInit {
       if (response && response.responseNo == 200) {
         console.log(response.data);
         this.userChats = response.data;
+        console.log("USER CHATS | ", this.userChats);
+        console.log("USER | ", this.user);
 
         // Sort the userChats array by lastMessageDate in descending order
         this.userChats.sort((a, b) => {
@@ -93,7 +95,7 @@ export class ChatComponent implements OnInit {
         });
 
         // this.currentChat = this.userChats[0];
-        console.clear();
+        // console.clear();
         console.log("this.userChats | ", this.userChats);
 
         this.subscribeRestChannels();
@@ -150,8 +152,6 @@ export class ChatComponent implements OnInit {
   }
 
   checkIfChatRoomExists(friend: any): void {
-    console.log("friend id sussy | " + friend.id);
-    return;
     let chat = {
       id: this.postService.generateRandomId(),
       users: [this.user.email, friend.email],
