@@ -85,14 +85,12 @@ export class ChatComponent implements OnInit {
         console.log(response.data);
         this.userChats = response.data;
 
-        // Sort the userChats array by lastMessageDate in descending order
         this.userChats.sort((a, b) => {
           const dateA = new Date(a.lastMessageDate).getTime();
           const dateB = new Date(b.lastMessageDate).getTime();
           return dateB - dateA;
         });
 
-        // this.currentChat = this.userChats[0];
         console.clear();
         console.log("this.userChats | ", this.userChats);
 
@@ -150,8 +148,6 @@ export class ChatComponent implements OnInit {
   }
 
   checkIfChatRoomExists(friend: any): void {
-    console.log("friend id sussy | " + friend.id);
-    return;
     let chat = {
       id: this.postService.generateRandomId(),
       users: [this.user.email, friend.email],
@@ -210,8 +206,13 @@ export class ChatComponent implements OnInit {
 
 
   getFriendImage(chat: any): string {
-    const friendEmail = chat.users[1] === localStorage.getItem('email') ? chat.users[0] : chat.users[1];
-    const friend = this.user.friends.find(friend => friend.email === friendEmail);
+    const friendEmail = (chat.users[1] == localStorage.getItem('email')) ? chat.users[0] : chat.users[1];
+    // console.log("email of friend |", friendEmail);
+    // this.user.friends.forEach(friend => {
+    //   console.log("Friend at for loop | ", friend);
+    // });
+    const friend = this.user.friends.find(friend => friend.email == friendEmail);
+    // console.log("Friend at getFriendImage | ", friend);
     return friend.img;
   }
 
