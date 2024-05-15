@@ -25,6 +25,7 @@ export class ChatComponent implements OnInit {
   messages: any[] = [];
   currentChat: any;
 
+
   filteredFriends: any[] = [];
 
   constructor(

@@ -1,5 +1,5 @@
 .global-container {
-  background: rgba(0, 0, 0, 0.15);
+  background: white;
 }
 
 .main-header {
@@ -24,7 +24,7 @@
 .chat-list {
   width: 40%;
   margin: 16px;
-  background: #c5cae9;
+  background:  #BAD3E8;
   /*background-color: rgba(0, 0, 0, 0.20);*/
   border-radius: 16px;
 }
@@ -32,7 +32,7 @@
 .messages {
   width: 60%;
   margin: 16px;
-  background: rgba(0, 0, 0, 0.35);
+  background: #BAD3E8;
   border-radius: 16px;
   padding: 24px;
 
@@ -102,7 +102,7 @@
 
 .chat-area {
   height: calc(100vh - 270px);
-  background: rgba(0, 0, 0, 0.20);
+  background: #ADCBE8;
   display: flex;
   flex-direction: column;
   overflow: auto;
@@ -166,3 +166,15 @@
   /*background: #1DA1F2;*/
   background: #c5cae9;
 }
+
+
+.imagen {
+  margin-left: 80px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.main-header {
+  margin-right: 500px;
+}
+
