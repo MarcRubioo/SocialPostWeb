@@ -8,7 +8,7 @@ import {Router} from "@angular/router";
 })
 export class AdminServiceService {
 
-  public admin: boolean;
+  public admin: boolean = true;
   public users: any[] = [];
   public categories: string[] = [];
 

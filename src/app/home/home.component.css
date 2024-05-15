@@ -48,17 +48,7 @@
   margin-left: 43%;
 }
 
-.IZQ button {
-  border: none;
-  background-color: transparent;
-  padding: 0;
-  font-weight: bold;
-  transition: background-color 0.3s;
-}
 
-.IZQ button:hover {
-  background-color: lightgray;
-}
 
 #titulo {
   text-align: center;

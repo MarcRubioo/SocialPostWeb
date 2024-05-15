@@ -1,21 +1,20 @@
-<div class="flex flex-row">
+<div class="flex flex-row min-h-screen">
   <div class="w-1/4 h-full">
     <app-menu></app-menu>
   </div>
 
 
-  <div class="flex flex-col w-1/2 border-x-2 border-gray-500 h-full">
-    <div id="titulo">
+  <div class="flex flex-col w-1/2 border-x-2 border-[#C5C5C5]">
+    <div class="text-center font-bold text-3xl p-4 border-b-2 border-[#C5C5C5]">
       <p>Lista De Categorías</p>
     </div>
 
-    <div *ngFor="let category of categories" class="category-container">
-      <div class="category">
-        <input type="text" placeholder="{{category}}" [(ngModel)]="editedValues[category]"/>
-        <!-- Conditionally render the "X" mark for admins -->
-        <div *ngIf="admin" class="edit-delete-icons">
-          <div class="edit-text" (click)="middleGroundEditCategory(category)">Editar</div>
-          <div class="delete-icon" (click)="deleteCategory(category)">X</div>
+    <div *ngFor="let category of categories">
+      <div class="flex justify-center py-8 gap-[100px]">
+        <input type="text" placeholder="{{category}}" [(ngModel)]="editedValues[category]" class="p-2 border-2 border-[#C5C5C5] rounded-md "/>
+        <div *ngIf="admin" class="flex gap-8 items-center">
+          <button class="bg-transparent rounded-2xl py-1 px-4 text-center text-[#1da1f2] cursor-pointer border-2 border-[#1da1f2] hover:bg-gray-100" (click)="middleGroundEditCategory(category)">Editar</button>
+          <button class="bg-[#1da1f2] border-2 border-white rounded-full text-white cursor-pointer px-2  text-xl  hover:bg-[#1da1f2]/50" (click)="deleteCategory(category)">x</button>
         </div>
       </div>
     </div>
@@ -24,10 +23,10 @@
 
   <div class="flex flex-col w-1/4 h-full p-8">
 
-    <div class="border-2 border-[#1da1f2] rounded-xl">
-      <div class="flex flex-col p-6 gap-3">
-        <input class="border-2 border-[#C5C5C5] rounded-md p-2" type="text" placeholder="Nueva categoría" [(ngModel)]="newCategory"/>
-        <button class="bg-[#1da1f2] text-white rounded-xl" (click)="createCategory(newCategory)">Crear</button>
+    <div class="border-4 border rounded-xl bg-[#1da1f2]">
+      <div class="flex flex-col p-6 gap-4">
+        <input class=" rounded-md p-4" type="text" placeholder="Nueva categoría..." [(ngModel)]="newCategory"/>
+        <button class="bg-white text-[#1da1f2] rounded-xl hover:bg-gray-100" (click)="createCategory(newCategory)">Crear</button>
       </div>
     </div>
 

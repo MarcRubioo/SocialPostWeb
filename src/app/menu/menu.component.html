@@ -28,20 +28,20 @@
 
   </div>
 
-  <div *ngIf="admin" class="flex flex-col items-center gap-8">
+  <div *ngIf="admin" class="flex flex-col mx-auto gap-8">
     <div class="flex mt-8 gap-3 cursor-pointer" routerLinkActive="active" routerLink="/home">
       <img src="assets/home.svg" width="30px" height="30px"/>
       <button class="hover:text-gray-500" >Posts</button>
     </div>
 
     <div class="flex gap-3 cursor-pointer " routerLinkActive="active" routerLink="/admin-categoriesListing">
-      <img src="assets/friends.svg" width="30px" height="30px"/>
+      <img src="assets/categoryIcon.svg" width="30px" height="30px"/>
       <button class="hover:text-gray-500">Categorias</button>
     </div>
 
     <div class="flex gap-3 cursor-pointer" routerLinkActive="active" routerLink="/admin-userListing">
       <img src="assets/profile.svg" width="30px" height="30px"/>
-      <button class="hover:text-gray-500">Amigos</button>
+      <button class="hover:text-gray-500">Usuarios</button>
     </div>
 
   </div>
