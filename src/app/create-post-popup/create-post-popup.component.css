@@ -1,0 +1,73 @@
+:host {
+  display: block;
+  padding: 20px;
+  background-color: white; /* Cambiar el fondo a un tono de azul */
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.post-textarea {
+  margin-bottom: 10px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 20px; /* Ajusta este valor para hacer los bordes más redondos */
+  border: 1px solid #ccc;
+  background-color: white; /* Cambiar el fondo a blanco */
+  color: black; /* Cambiar el color del texto a negro */
+}
+
+
+.post-button, .category-button {
+  width: 100%; /* Hacer que los botones ocupen el 100% del ancho del contenedor */
+  padding: 10px 20px; /* Aumentar el padding horizontal */
+  font-size: 16px;
+  border: none;
+  border-radius: 25px; /* Aumentar el radio del borde para hacerlo más redondeado */
+  background-color: #1da1f2; /* Color azul */
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Agregar transición de color de fondo */
+}
+
+.post-button:hover, .category-button:hover {
+  background-color: #C5E7EA; /* Cambiar el color de fondo al pasar el mouse */
+}
+
+.categories-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.category-row {
+  flex-basis: calc(50% - 5px); /* Dos botones por fila con un pequeño espacio entre ellos */
+  margin-bottom: 10px;
+}
+
+.category-button {
+  padding: 8px 16px; /* Ajustar el tamaño de los botones */
+  font-size: 14px; /* Reducir el tamaño de la fuente */
+  border-radius: 20px;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  border: 1px solid black;
+  width: 100%; /* Hacer que los botones ocupen todo el ancho del contenedor */
+}
+
+.category-button.selected {
+  background-color: #C5E7EA;
+}
+
+.post-textarea {
+  margin-bottom: 10px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+

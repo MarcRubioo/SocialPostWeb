@@ -1,0 +1,13 @@
+<div>
+  <form (submit)="submitPost()">
+    <textarea [(ngModel)]="postContent" name="postContent" placeholder="Escribe tu mensaje aquí" class="post-textarea"></textarea><br/>
+    <div class="categories-container">
+      <div class="category-row" *ngFor="let category of categories" (click)="toggleCategory(category)">
+        <button type="button" class="category-button" [ngClass]="{ 'selected': isSelected(category) }">
+          {{ category }}
+        </button>
+      </div>
+    </div><br/>
+    <button type="submit" class="post-button">Publicar</button>
+  </form>
+</div>
