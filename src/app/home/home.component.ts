@@ -37,7 +37,12 @@ export class HomeComponent implements OnInit {
       this.submitPost();
     });
 
+    await this.getPostUserDetails();
+  }
+
+  async getPostUserDetails(): Promise<void> {
     await this.getAllPosts().then(sortedPosts => {
+      this.postUserDetail = [];
       const postEmails = sortedPosts.map(post => post.email);
       const uniquePostEmails = Array.from(new Set(postEmails)); // Get unique post emails
 
@@ -61,13 +66,11 @@ export class HomeComponent implements OnInit {
 
   openCreatePostPopup(): void {
     const dialogRef = this.dialog.open(CreatePostPopupComponent, {
-      width: '500px', // Ancho del popup
-      // Otiones adicionales del popup
+      width: '500px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('El popup ha sido cerrado.');
-      // Aquí puedes realizar acciones después de que el popup ha sido cerrado, si es necesario
     });
   }
 
@@ -215,7 +218,10 @@ export class HomeComponent implements OnInit {
       this.selectedCategories.push(category);
     }
     console.log('Categorías seleccionadas:', this.selectedCategories);
-    this.getAllPosts(); // Llama a getAllPosts cada vez que cambia la selección de categorías
+    this.getAllPosts()
+      .then(sortedList => {
+        this.getPostUserDetails();
+      });
   }
 
 
