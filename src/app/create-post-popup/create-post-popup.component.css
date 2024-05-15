@@ -1,14 +1,22 @@
 :host {
   display: block;
   padding: 20px;
-  background-color: whitesmoke; /* Cambiar el fondo a un tono de azul */
-
+  background-color: white; /* Cambiar el fondo a un tono de azul */
 }
 
 form {
   display: flex;
   flex-direction: column;
+}
 
+.post-textarea {
+  margin-bottom: 10px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 20px; /* Ajusta este valor para hacer los bordes más redondos */
+  border: 1px solid #ccc;
+  background-color: white; /* Cambiar el fondo a blanco */
+  color: black; /* Cambiar el color del texto a negro */
 }
 
 
@@ -16,13 +24,12 @@ form {
   width: 100%; /* Hacer que los botones ocupen el 100% del ancho del contenedor */
   padding: 10px 20px; /* Aumentar el padding horizontal */
   font-size: 16px;
+  border: none;
   border-radius: 25px; /* Aumentar el radio del borde para hacerlo más redondeado */
   background-color: #1da1f2; /* Color azul */
   color: white;
   cursor: pointer;
   transition: background-color 0.3s; /* Agregar transición de color de fondo */
-  border: 2px solid #1da1f2; /* Ajustar el ancho del borde */
-  border-radius: 25px;
 }
 
 .post-button:hover, .category-button:hover {
@@ -60,10 +67,7 @@ form {
   padding: 10px;
   font-size: 16px;
   border-radius: 20px;
-  border: 2px solid #ccc; /* Ajustar el ancho del borde */
-  background-color: white;
-  color: black;
+  border: 1px solid #ccc;
 }
-
 
 

@@ -9,11 +9,6 @@
   flex-direction: row;
 }
 
-.descripcion {
-    margin-top: 15px;
-  margin-left: 5px;
-}
-
 #column1 {
   height: 100vh;
   width: 25%;
