@@ -166,3 +166,41 @@
   margin: 0 5px;
 }
 
+.create-comment-form {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.create-comment-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-comment-form textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  resize: vertical;
+  margin-bottom: 10px;
+}
+
+.create-comment-form button {
+  background-color: #1DA1F2;
+  color: white;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.create-comment-form button:hover {
+  background-color: #1DA1F2;
+}
+
+.create-comment-form button:active {
+  background-color: #1DA1F2;
+}
