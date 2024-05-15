@@ -1,7 +1,7 @@
 // home.component.ts
 
 import {Component, OnInit} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {AdminServiceService} from "../admin-service.service";
 import {PostService} from "../post.service";
 import {Router} from "@angular/router";
@@ -101,17 +101,24 @@ export class HomeComponent implements OnInit {
       'userEmail': email
     });
 
+    let params = new HttpParams();
+    params = params.set("category", this.selectedCategory);
+
     const postData = {
       id: this.generateRandomId(),
       email: email,
       createdAT: new Date().toISOString(),
       description: this.postContent,
-      images: [],
+      images: this.newPostImages,
       likes: [],
       comments: [],
     };
 
-    this.http.post<any>('http://127.0.0.1:8080/api/posts?category=' + this.selectedCategory, postData, {headers: headers}).subscribe(
+    this.http.post<any>('http://127.0.0.1:8080/api/posts?', postData,
+      {
+        headers: headers,
+        params: params
+      }).subscribe(
       response => {
         console.log('Publicación creada:', response);
         this.postContent = '';
