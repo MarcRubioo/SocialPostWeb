@@ -16,7 +16,6 @@ import { CreatePostPopupComponent } from '../create-post-popup/create-post-popup
 export class HomeComponent implements OnInit {
   posts: any[] = [];
   postUserDetail: any[] = [];
-  newPostImages: any[] = [];
 
   categories: string[] = [];
   selectedCategories: string[] = [];
@@ -123,12 +122,12 @@ export class HomeComponent implements OnInit {
       email: email,
       createdAT: new Date().toISOString(),
       description: this.postContent,
-      images: this.newPostImages,
+      images: [],
       likes: [],
       comments: [],
     };
 
-    this.http.post<any>('http://127.0.0.1:8080/api/posts?', postData,
+    this.http.post<any>('http://127.0.0.1:8080/api/posts', postData,
       {
         headers: headers,
         params: params
@@ -299,32 +298,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  onSelectFile(event): void {
-    var reader = new FileReader();
-    const files: File[] = event.target.files;
-    let finalBytes: any[] = [];
 
-    for (let i = 0; i < files.length; i++) {
-      reader.readAsDataURL(event.target.files[i]);
-      reader.onload = (event) => {
-        const base64String = event.target.result as string;
-        const base64Data = base64String.split(',')[1];
-
-        const byteCharacters = atob(base64Data);
-        const byteNumbers = new Array(byteCharacters.length);
-        for (let i = 0; i < byteCharacters.length; i++) {
-          byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
-        const byteArray = new Uint8Array(byteNumbers);
-        finalBytes.push(byteArray);
-        // return byteArray;
-      }
-    }
-
-    if (finalBytes.length > 0) {
-      this.newPostImages = finalBytes;
-    }
-  }
 
 }
 
