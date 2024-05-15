@@ -37,6 +37,9 @@ import {MatLineModule} from "@angular/material/core";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIcon, MatIconModule} from "@angular/material/icon";
 import { DateDisplayPipe } from './pipes/date-display.pipe';
+import { CreatePostPopupComponent } from './create-post-popup/create-post-popup.component';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 
 @NgModule({
@@ -56,10 +59,12 @@ import { DateDisplayPipe } from './pipes/date-display.pipe';
     MenuComponent,
     UserDetailsComponent,
     ChatComponent,
-    DateDisplayPipe
+    DateDisplayPipe,
+    CreatePostPopupComponent,
   ],
   imports: [
     BrowserModule,
+    MatDialogModule,
     AngularFireAuthModule,
     AppRoutingModule,
     FormsModule,
