@@ -81,6 +81,11 @@ export class HomeComponent implements OnInit {
     return isNaN(parsedDate.getTime()) ? new Date() : parsedDate;
   }
 
+  isSelected(category: string): boolean {
+    return this.selectedCategories.includes(category);
+  }
+
+
   generateRandomId(): string {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const idLength = 15;
