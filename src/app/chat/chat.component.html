@@ -1,6 +1,6 @@
 <div class="global-container">
   <div class="main-header flex items-center">
-    <div>
+    <div class="imagen">
       <img width="250px" height="200px" style="cursor: pointer" routerLinkActive="active" routerLink="/home" src="assets/logo.png" alt="Logo" class="logo">
     </div>
     <h1 class="mx-auto">Chat</h1>
@@ -10,7 +10,7 @@
   <div class="main-container">
     <div class="chat-list mat-elevation-z5">
       <div class="search-input">
-        <mat-form-field appearance="fill" color="accent" [floatLabel]="'auto'">
+        <mat-form-field appearance="outline" color="accent" [floatLabel]="'auto'">
           <input
             matInput
             placeholder="Search for friends..."
@@ -56,32 +56,31 @@
       </div>
       <mat-divider *ngIf="currentChat"></mat-divider>
 
-      <div class="chat-area" *ngIf="currentChat">
+      <div class="chat-area rounded-lg overflow-auto" *ngIf="currentChat">
         <ng-container *ngIf="user">
           <h1 *ngIf="messages.length <= 0" style="margin: 20px; text-align: center">Start a conversation 😊</h1>
           <div *ngFor="let message of messages; let i = index" class="chat-bubble-container"
                [ngClass]="{ 'sender': message.senderId === user.id }">
-            <div class="chat-bubble">
+            <div class="chat-bubble rounded-lg">
               {{ message.message }}
               <span class="chat-date">
-            {{ message.sentDate | dateDisplay }}
-          </span>
+          {{ message.sentDate | dateDisplay }}
+        </span>
             </div>
           </div>
           <div #endOfChat></div>
         </ng-container>
 
-      </div>
+
+    </div>
       <div class="input-area" *ngIf="currentChat">
         <mat-form-field appearance="outline" color="accent">
-          <input [formControl]="messageControl" matInput placeholder="Send message..." (keydown.enter)="sendMessage()">
-          <button mat-button matSuffix (click)="sendMessage()">
-            <mat-icon>send</mat-icon>
-          </button>
+            <input [formControl]="messageControl" matInput placeholder="Send message..." (keydown.enter)="sendMessage()">
+            <button mat-button matSuffix (click)="sendMessage()">
+              <mat-icon>send</mat-icon>
+            </button>
         </mat-form-field>
       </div>
-
-      <!--    <button *ngIf="currentChat" (click)="sendMessage()" style="background: white">Send Message</button>-->
     </div>
   </div>
 </div>
