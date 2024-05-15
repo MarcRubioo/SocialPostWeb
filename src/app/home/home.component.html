@@ -84,12 +84,12 @@
     <div id="categorias">
       <p>Categorías</p><br/>
       <div *ngFor="let category of categories">
-        <label>
-          <input type="checkbox" [value]="category" (change)="toggleCategory(category)">
+        <button type="button" class="category-button" [class.selected]="isSelected(category)" (click)="toggleCategory(category)">
           {{ category }}
-        </label>
+        </button>
       </div>
     </div>
+
 
   </div>
 </div>
