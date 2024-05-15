@@ -5,6 +5,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AdminServiceService} from "../admin-service.service";
 import {PostService} from "../post.service";
 import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
+import { CreatePostPopupComponent } from '../create-post-popup/create-post-popup.component';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +29,7 @@ export class HomeComponent implements OnInit {
 
 
   constructor(private http: HttpClient, private adminService: AdminServiceService,
-              private postService: PostService, private router: Router) {
+              private postService: PostService, private router: Router, public dialog: MatDialog) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -55,6 +57,18 @@ export class HomeComponent implements OnInit {
       }).catch(error => {
         console.log(error);
       });
+    });
+  }
+
+  openCreatePostPopup(): void {
+    const dialogRef = this.dialog.open(CreatePostPopupComponent, {
+      width: '500px', // Ancho del popup
+      // Otiones adicionales del popup
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('El popup ha sido cerrado.');
+      // Aquí puedes realizar acciones después de que el popup ha sido cerrado, si es necesario
     });
   }
 
