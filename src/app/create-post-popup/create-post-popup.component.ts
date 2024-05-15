@@ -91,7 +91,7 @@ export class CreatePostPopupComponent implements OnInit {
 
     this.http.get<any>('http://127.0.0.1:8080/api/categories', { headers: headers })
         .subscribe(
-            (response) => {
+            (response) => { 
               this.categories = response.data;
             },
             (error) => {

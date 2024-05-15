@@ -8,19 +8,6 @@
   <div id="column2">
     <div id="titulo">
     </div>
-    <div *ngIf="showCreatePostForm" id="create-post-form"><br/><br/>
-      <form (submit)="submitPost()">
-        <textarea [(ngModel)]="postContent" name="postContent" placeholder="Escribe tu mensaje aquí"
-                  class="post-textarea"></textarea>
-        <select [(ngModel)]="selectedCategory" name="categories" class="post-dropdown">
-          <option value="" disabled selected>Seleccionar Categoría</option>
-          <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
-        </select><br/><br/>
-        <button type="submit" class="post-button">Publicar</button>
-      </form>
-      <br/><br/>
-    </div>
-
 
     <div *ngFor="let post of posts; let i = index" class="post-container">
       <div class="post">
@@ -36,7 +23,8 @@
               </div>
               <p> {{ post.createdAT | dateDisplay }}</p>
             </div>
-            <p>{{ post.description }}</p>
+            <div class="descripcion">
+            <p>{{ post.description }}</p></div>
           </div>
 
 
