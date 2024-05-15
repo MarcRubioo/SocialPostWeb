@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {AdminServiceService} from "../admin-service.service";
 
 @Component({
   selector: 'app-menu',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class MenuComponent {
 
+  admin: boolean = this.adminService.admin
+
+  constructor(private adminService: AdminServiceService) {
+  }
+
 }
+

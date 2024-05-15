@@ -59,7 +59,7 @@ export class AdminLoginComponent {
               if (response.responseNo == 200) {
                 alert("Inicio de sesión correctamente realizado");
                 this.adminService.admin = true;
-                this.router.navigate(['/admin-dashboard']);
+                this.router.navigate(['/home']);
               }
             }
           },
