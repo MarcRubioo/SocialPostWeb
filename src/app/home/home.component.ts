@@ -14,6 +14,7 @@ import {Router} from "@angular/router";
 export class HomeComponent implements OnInit {
   posts: any[] = [];
   postUserDetail: any[] = [];
+  newPostImages: any[] = [];
 
   categories: string[] = [];
   selectedCategories: string[] = [];
@@ -144,7 +145,6 @@ export class HomeComponent implements OnInit {
       })).sort((a, b) => b.createdAT.getTime() - a.createdAT.getTime());
       this.posts = sortedPosts;
 
-      // Se completó la carga de los posts, ahora puedes inicializar los slides actuales
       sortedPosts.forEach((post, index) => {
         this.currentSlides[index] = 0;
       });
@@ -183,7 +183,7 @@ export class HomeComponent implements OnInit {
   }
 
 
-  toggleCategory(category: string) {
+  toggleCategory(category: string): void {
     if (this.selectedCategories.includes(category)) {
       this.selectedCategories = this.selectedCategories.filter(c => c !== category);
     } else {
@@ -194,7 +194,7 @@ export class HomeComponent implements OnInit {
   }
 
 
-  sendPost(post: any) {
+  sendPost(post: any): void {
     const token = localStorage.getItem('idToken');
 
     if (!token) {
@@ -208,7 +208,7 @@ export class HomeComponent implements OnInit {
   }
 
 
-  deletePost(post: any) {
+  deletePost(post: any): void {
     if (this.admin) {
       this.adminService.deletePost(post)
         .subscribe(idPostDeleted => {
@@ -258,7 +258,7 @@ export class HomeComponent implements OnInit {
 
   currentSlides: { [key: number]: number } = {};
 
-  prevSlide(postIndex: number) {
+  prevSlide(postIndex: number): void {
     const post = this.posts[postIndex];
     const totalSlides = post.images.length;
     if (this.currentSlides[postIndex] === 0) {
@@ -268,7 +268,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  nextSlide(postIndex: number) {
+  nextSlide(postIndex: number): void {
     const post = this.posts[postIndex];
     const totalSlides = post.images.length;
     if (this.currentSlides[postIndex] === totalSlides - 1) {
@@ -278,6 +278,32 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  onSelectFile(event): void {
+    var reader = new FileReader();
+    const files: File[] = event.target.files;
+    let finalBytes: any[] = [];
+
+    for (let i = 0; i < files.length; i++) {
+      reader.readAsDataURL(event.target.files[i]);
+      reader.onload = (event) => {
+        const base64String = event.target.result as string;
+        const base64Data = base64String.split(',')[1];
+
+        const byteCharacters = atob(base64Data);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        finalBytes.push(byteArray);
+        // return byteArray;
+      }
+    }
+
+    if (finalBytes.length > 0) {
+      this.newPostImages = finalBytes;
+    }
+  }
 
 }
 
