@@ -25,7 +25,6 @@ export class ChatComponent implements OnInit {
   messages: any[] = [];
   currentChat: any;
 
-
   filteredFriends: any[] = [];
 
   constructor(
@@ -85,8 +84,6 @@ export class ChatComponent implements OnInit {
       if (response && response.responseNo == 200) {
         console.log(response.data);
         this.userChats = response.data;
-        console.log("USER CHATS | ", this.userChats);
-        console.log("USER | ", this.user);
 
         // Sort the userChats array by lastMessageDate in descending order
         this.userChats.sort((a, b) => {
@@ -95,8 +92,7 @@ export class ChatComponent implements OnInit {
           return dateB - dateA;
         });
 
-        // this.currentChat = this.userChats[0];
-        // console.clear();
+        console.clear();
         console.log("this.userChats | ", this.userChats);
 
         this.subscribeRestChannels();
@@ -211,8 +207,8 @@ export class ChatComponent implements OnInit {
 
 
   getFriendImage(chat: any): string {
-    const friendEmail = chat.users[1] === localStorage.getItem('email') ? chat.users[0] : chat.users[1];
-    const friend = this.user.friends.find(friend => friend.email === friendEmail);
+    const friendEmail = (chat.users[1] == localStorage.getItem('email')) ? chat.users[0] : chat.users[1];
+    const friend = this.user.friends.find(friend => friend.email == friendEmail);
     return friend.img;
   }
 

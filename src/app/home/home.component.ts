@@ -1,7 +1,7 @@
 // home.component.ts
 
 import {Component, OnInit} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {AdminServiceService} from "../admin-service.service";
 import {PostService} from "../post.service";
 import {Router} from "@angular/router";
@@ -37,7 +37,12 @@ export class HomeComponent implements OnInit {
       this.submitPost();
     });
 
+    await this.getPostUserDetails();
+  }
+
+  async getPostUserDetails(): Promise<void> {
     await this.getAllPosts().then(sortedPosts => {
+      this.postUserDetail = [];
       const postEmails = sortedPosts.map(post => post.email);
       const uniquePostEmails = Array.from(new Set(postEmails)); // Get unique post emails
 
@@ -61,13 +66,11 @@ export class HomeComponent implements OnInit {
 
   openCreatePostPopup(): void {
     const dialogRef = this.dialog.open(CreatePostPopupComponent, {
-      width: '500px', // Ancho del popup
-      // Otiones adicionales del popup
+      width: '500px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('El popup ha sido cerrado.');
-      // Aquí puedes realizar acciones después de que el popup ha sido cerrado, si es necesario
     });
   }
 
@@ -119,6 +122,9 @@ export class HomeComponent implements OnInit {
       'userEmail': email
     });
 
+    let params = new HttpParams();
+    params = params.set("category", this.selectedCategory);
+
     const postData = {
       id: this.generateRandomId(),
       email: email,
@@ -129,7 +135,11 @@ export class HomeComponent implements OnInit {
       comments: [],
     };
 
-    this.http.post<any>('http://127.0.0.1:8080/api/posts?category=' + this.selectedCategory, postData, {headers: headers}).subscribe(
+    this.http.post<any>('http://127.0.0.1:8080/api/posts', postData,
+      {
+        headers: headers,
+        params: params
+      }).subscribe(
       response => {
         console.log('Publicación creada:', response);
         this.postContent = '';
@@ -163,7 +173,6 @@ export class HomeComponent implements OnInit {
       })).sort((a, b) => b.createdAT.getTime() - a.createdAT.getTime());
       this.posts = sortedPosts;
 
-      // Se completó la carga de los posts, ahora puedes inicializar los slides actuales
       sortedPosts.forEach((post, index) => {
         this.currentSlides[index] = 0;
       });
@@ -202,18 +211,21 @@ export class HomeComponent implements OnInit {
   }
 
 
-  toggleCategory(category: string) {
+  toggleCategory(category: string): void {
     if (this.selectedCategories.includes(category)) {
       this.selectedCategories = this.selectedCategories.filter(c => c !== category);
     } else {
       this.selectedCategories.push(category);
     }
     console.log('Categorías seleccionadas:', this.selectedCategories);
-    this.getAllPosts(); // Llama a getAllPosts cada vez que cambia la selección de categorías
+    this.getAllPosts()
+      .then(sortedList => {
+        this.getPostUserDetails();
+      });
   }
 
 
-  sendPost(post: any) {
+  sendPost(post: any): void {
     const token = localStorage.getItem('idToken');
 
     if (!token) {
@@ -227,7 +239,7 @@ export class HomeComponent implements OnInit {
   }
 
 
-  deletePost(post: any) {
+  deletePost(post: any): void {
     if (this.admin) {
       this.adminService.deletePost(post)
         .subscribe(idPostDeleted => {
@@ -277,7 +289,7 @@ export class HomeComponent implements OnInit {
 
   currentSlides: { [key: number]: number } = {};
 
-  prevSlide(postIndex: number) {
+  prevSlide(postIndex: number): void {
     const post = this.posts[postIndex];
     const totalSlides = post.images.length;
     if (this.currentSlides[postIndex] === 0) {
@@ -287,7 +299,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  nextSlide(postIndex: number) {
+  nextSlide(postIndex: number): void {
     const post = this.posts[postIndex];
     const totalSlides = post.images.length;
     if (this.currentSlides[postIndex] === totalSlides - 1) {
@@ -296,6 +308,7 @@ export class HomeComponent implements OnInit {
       this.currentSlides[postIndex]++;
     }
   }
+
 
 
 }

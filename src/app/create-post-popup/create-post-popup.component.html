@@ -1,6 +1,12 @@
 <div>
   <form (submit)="submitPost()">
-    <textarea [(ngModel)]="postContent" name="postContent" placeholder="Escribe tu mensaje aquí" class="post-textarea"></textarea><br/>
+    <textarea [(ngModel)]="postContent" name="postContent" placeholder="Escribe tu mensaje aquí" class="post-textarea"></textarea>
+    <div class="file-upload">
+      <label for="fileInput">
+        <img src="assets/attach_file.svg">
+      </label>
+      <input id="fileInput" type="file" multiple (change)="onSelectFile($event)">
+    </div>
     <div class="categories-container">
       <div class="category-row" *ngFor="let category of categories" (click)="toggleCategory(category)">
         <button type="button" class="category-button" [ngClass]="{ 'selected': isSelected(category) }">
