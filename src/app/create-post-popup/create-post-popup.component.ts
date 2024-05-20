@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { MatDialogRef } from '@angular/material/dialog';
+import {Component, OnInit} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-post-popup',
@@ -12,9 +12,11 @@ export class CreatePostPopupComponent implements OnInit {
   selectedCategories: string[] = [];
   categories: string[] = [];
   showCategories: boolean = false;
+  newPostImages: any[] = [];
 
 
-  constructor(private http: HttpClient, public dialogRef: MatDialogRef<CreatePostPopupComponent>) { }
+  constructor(private http: HttpClient, public dialogRef: MatDialogRef<CreatePostPopupComponent>) {
+  }
 
   ngOnInit(): void {
     this.getCategories();
@@ -49,30 +51,37 @@ export class CreatePostPopupComponent implements OnInit {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'idToken': token,
-      'userEmail': email
     });
+
 
     const postData = {
       id: this.generateRandomId(),
       email: email,
       createdAT: new Date().toISOString(),
       description: this.postContent,
-      images: [],
-      likes: [],
-      comments: [],
     };
 
-    this.http.post<any>('http://127.0.0.1:8080/api/posts?category=' + this.selectedCategories.join(','), postData, { headers: headers }).subscribe(
-        response => {
-          console.log('Publicación creada:', response);
-          this.postContent = '';
-          this.selectedCategories = []; // Limpiar las categorías seleccionadas después de enviar el post
-          this.dialogRef.close();
-          location.reload(); // Recargar la página después de enviar el post
-        },
-        error => {
-          console.error('Error al crear la publicación:', error);
-        }
+    let params = new HttpParams();
+    params = params.set("category", this.selectedCategories.join(","));
+
+    this.http.post<any>('http://127.0.0.1:8080/api/posts', {
+        post: postData,
+        postImages: this.newPostImages.map(image => Array.from(image)),
+      },
+      {
+        headers: headers,
+        params: params
+      }).subscribe(
+      response => {
+        console.log('Publicación creada:', response);
+        this.postContent = '';
+        this.selectedCategories = [];
+        this.dialogRef.close();
+        location.reload();
+      },
+      error => {
+        console.error('Error al crear la publicación:', error);
+      }
     );
   }
 
@@ -89,15 +98,18 @@ export class CreatePostPopupComponent implements OnInit {
       'idToken': token,
     });
 
-    this.http.get<any>('http://127.0.0.1:8080/api/categories', { headers: headers })
-        .subscribe(
-            (response) => {
-              this.categories = response.data;
-            },
-            (error) => {
-              console.error('Error al obtener las categorías:', error);
-            }
-        );
+    this.http.get<any>('http://127.0.0.1:8080/api/categories',
+      {
+        headers: headers
+      })
+      .subscribe(
+        (response) => {
+          this.categories = response.data;
+        },
+        (error) => {
+          console.error('Error al obtener las categorías:', error);
+        }
+      );
   }
 
   toggleCategory(category: string): void {
@@ -113,5 +125,48 @@ export class CreatePostPopupComponent implements OnInit {
   }
 
 
+  async onSelectFile(event): Promise<void> {
+    const files: File[] = event.target.files;
+    let finalBytes: any[] = [];
 
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const byteArray = await this.readFile(file);
+      finalBytes.push(byteArray);
+    }
+
+    if (finalBytes.length > 0) {
+      this.newPostImages = finalBytes;
+      console.log("array of arraybytes | ", this.newPostImages);
+    }
+  }
+
+  readFile(file: File): Promise<Uint8Array> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        const base64String = reader.result as string;
+        const base64Data = base64String.split(',')[1];
+        const byteCharacters = atob(base64Data);
+        const byteNumbers = new Array(byteCharacters.length);
+
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+
+        const byteArray = new Uint8Array(byteNumbers);
+        resolve(byteArray);
+      };
+
+      reader.onerror = (error) => {
+        reject(error);
+      };
+
+      reader.readAsDataURL(file);
+    });
+  }
+
+
+  protected readonly event = event;
 }

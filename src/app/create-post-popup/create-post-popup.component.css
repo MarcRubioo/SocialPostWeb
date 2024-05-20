@@ -71,3 +71,34 @@ form {
 }
 
 
+.file-upload {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  margin-bottom: 15px;
+}
+
+.file-upload img {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.file-upload input[type='file'] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 25px;
+  height: 25px;
+  opacity: 0;
+  cursor: pointer;
+}
+
+#fileInput {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+

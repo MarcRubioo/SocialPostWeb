@@ -181,6 +181,7 @@ export class PostDetailsComponent implements OnInit {
               .then(
                 user => {
                   this.commentsDetails.push(user);
+                  this.showCommentPostForm = !this.showCommentPostForm;
                 }
               )
           });

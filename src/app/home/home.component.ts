@@ -1,7 +1,7 @@
 // home.component.ts
 
 import {Component, OnInit} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {AdminServiceService} from "../admin-service.service";
 import {PostService} from "../post.service";
 import {Router} from "@angular/router";
@@ -16,7 +16,6 @@ import { CreatePostPopupComponent } from '../create-post-popup/create-post-popup
 export class HomeComponent implements OnInit {
   posts: any[] = [];
   postUserDetail: any[] = [];
-  newPostImages: any[] = [];
 
   categories: string[] = [];
   selectedCategories: string[] = [];
@@ -38,7 +37,12 @@ export class HomeComponent implements OnInit {
       this.submitPost();
     });
 
+    await this.getPostUserDetails();
+  }
+
+  async getPostUserDetails(): Promise<void> {
     await this.getAllPosts().then(sortedPosts => {
+      this.postUserDetail = [];
       const postEmails = sortedPosts.map(post => post.email);
       const uniquePostEmails = Array.from(new Set(postEmails)); // Get unique post emails
 
@@ -62,13 +66,11 @@ export class HomeComponent implements OnInit {
 
   openCreatePostPopup(): void {
     const dialogRef = this.dialog.open(CreatePostPopupComponent, {
-      width: '500px', // Ancho del popup
-      // Otiones adicionales del popup
+      width: '500px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('El popup ha sido cerrado.');
-      // Aquí puedes realizar acciones después de que el popup ha sido cerrado, si es necesario
     });
   }
 
@@ -120,6 +122,9 @@ export class HomeComponent implements OnInit {
       'userEmail': email
     });
 
+    let params = new HttpParams();
+    params = params.set("category", this.selectedCategory);
+
     const postData = {
       id: this.generateRandomId(),
       email: email,
@@ -130,7 +135,11 @@ export class HomeComponent implements OnInit {
       comments: [],
     };
 
-    this.http.post<any>('http://127.0.0.1:8080/api/posts?category=' + this.selectedCategory, postData, {headers: headers}).subscribe(
+    this.http.post<any>('http://127.0.0.1:8080/api/posts', postData,
+      {
+        headers: headers,
+        params: params
+      }).subscribe(
       response => {
         console.log('Publicación creada:', response);
         this.postContent = '';
@@ -209,7 +218,10 @@ export class HomeComponent implements OnInit {
       this.selectedCategories.push(category);
     }
     console.log('Categorías seleccionadas:', this.selectedCategories);
-    this.getAllPosts(); // Llama a getAllPosts cada vez que cambia la selección de categorías
+    this.getAllPosts()
+      .then(sortedList => {
+        this.getPostUserDetails();
+      });
   }
 
 
@@ -297,32 +309,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  onSelectFile(event): void {
-    var reader = new FileReader();
-    const files: File[] = event.target.files;
-    let finalBytes: any[] = [];
 
-    for (let i = 0; i < files.length; i++) {
-      reader.readAsDataURL(event.target.files[i]);
-      reader.onload = (event) => {
-        const base64String = event.target.result as string;
-        const base64Data = base64String.split(',')[1];
-
-        const byteCharacters = atob(base64Data);
-        const byteNumbers = new Array(byteCharacters.length);
-        for (let i = 0; i < byteCharacters.length; i++) {
-          byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
-        const byteArray = new Uint8Array(byteNumbers);
-        finalBytes.push(byteArray);
-        // return byteArray;
-      }
-    }
-
-    if (finalBytes.length > 0) {
-      this.newPostImages = finalBytes;
-    }
-  }
 
 }
 
