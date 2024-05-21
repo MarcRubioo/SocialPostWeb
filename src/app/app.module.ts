@@ -39,6 +39,8 @@ import {MatIcon, MatIconModule} from "@angular/material/icon";
 import { DateDisplayPipe } from './pipes/date-display.pipe';
 import { CreatePostPopupComponent } from './create-post-popup/create-post-popup.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { CalendarComponent } from './calendar/calendar.component';
 
 
 
@@ -61,6 +63,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     ChatComponent,
     DateDisplayPipe,
     CreatePostPopupComponent,
+    CalendarComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +72,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    FullCalendarModule,
     provideFirebaseApp(() => initializeApp(enviroment.firebase)),
     provideAuth(() => getAuth()),
     NgOptimizedImage,

@@ -1,0 +1,27 @@
+/* calendar.component.css */
+.full-calendar {
+  max-width: 400px;
+  height: auto;
+  margin: auto;
+  margin-top: 30px;
+}
+
+.fc .fc-toolbar {
+  font-size: 0.8em;
+}
+
+.fc .fc-button {
+  background: none;
+  border: none;
+  color: black;
+  font-size: 1.2em;
+}
+
+.fc .fc-button:hover {
+  background: none;
+  color: black;
+}
+
+.fc .fc-daygrid-event {
+  font-size: 0.8em;
+}
