@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   posts: any[] = [];
   postUserDetail: any[] = [];
 
+
   categories: string[] = [];
   selectedCategories: string[] = [];
 
