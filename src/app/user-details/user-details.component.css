@@ -77,13 +77,7 @@
   user-select: none;
 }
 
-.user-container {
-  position: relative;
-  margin-bottom: 70px;
-  padding: 15px;
-  border: 1px solid #1DA1F2;
-  border-radius: 10px;
-}
+
 
 .posts-container {
   margin-bottom: 20px;
@@ -201,5 +195,44 @@
 
 p-toast {
   z-index: 9999; /* Or any high value */
+}
+
+
+#infouser {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#container-post {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+.hoverable {
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.20);
+  border-radius: 50%;
+}
+
+.hoverable .hover-text {
+  display: none;
+  text-align: center;
+}
+
+.hoverable:hover .hover-text {
+  display: flex;
+  /*color: white;*/
+}
+
+.background {
+  display: none;
+}
+
+.hoverable:hover .background {
+  display: block;
+}
+
+
+#fileInput{
+  display: none;
 }
 

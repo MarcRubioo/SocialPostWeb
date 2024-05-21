@@ -331,19 +331,19 @@
   border-radius: 50%;
 }
 
-.category-button {
-  display: inline-block;
-  margin-right: 8px;
-  margin-bottom: 8px;
-  padding: 8px 16px;
-  font-size: 16px;
-  border-radius: 20px;
-  background-color: white;
-  color: black;
-  cursor: pointer;
-  border: 1px solid black;
-}
 
 .category-button.selected {
   background-color: #C5E7EA;
+}
+
+.custom-button{
+  background-color: lightgrey;
+}
+
+.custom-button:hover {
+  background-color: rgba(29, 161, 242, 0.6);
+}
+
+.custom-button.selected{
+  background-color: #1DA1F2;
 }
