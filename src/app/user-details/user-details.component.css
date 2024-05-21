@@ -6,6 +6,7 @@
 #column1 {
   height: 100vh;
   width: 25%;
+
 }
 
 #column2 {
@@ -92,6 +93,7 @@
   border-radius: 10px;
   background-color: #fff;
   position: relative;
+
 }
 
 .user-friends {

@@ -35,11 +35,11 @@
             <ng-container
               *ngIf="befriended && user.email !== localStorage.getItem('email')">
               <img src="assets/friend_already_added_drawable.svg" alt="Already Befriended"
-                   style="height: 24px; width: 24px; cursor: pointer" (click)="deleteFriend(user)" />
+                   style="height: 30px; width: 24px; margin-top: -28px; margin-left: -35px; cursor: pointer" (click)="deleteFriend(user)" />
             </ng-container>
             <ng-container
               *ngIf="!befriended && user.email !== localStorage.getItem('email')">
-              <img src="assets/add_friend_drawable.svg" alt="Add Friend" style="height: 24px; width: 24px; cursor: pointer"
+              <img src="assets/add_friend_drawable.svg" alt="Add Friend" style="height: 30px; width: 24px; margin-top: -28px; margin-left: -35px; cursor: pointer"
                    (click)="addFriend(user)"/>
             </ng-container>
           </div>
@@ -72,7 +72,7 @@
           <div *ngFor="let image of post.images; let i = index">
             <img src="{{image}}" alt='Post Image ${i}'>
           </div>
-        </ng-container>
+        </ng-container><br/><br/>
 
         <div class="actions">
           <p>
