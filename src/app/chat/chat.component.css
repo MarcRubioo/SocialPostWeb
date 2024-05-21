@@ -25,7 +25,7 @@
 
 .search-input {
   margin: 24px;
-  background-color: black
+  background-color: #CAD8E0;
 }
 
 .search-input > mat-form-field {
@@ -157,15 +157,15 @@
   margin-bottom: 10px;
 }
 
-.main-header {
-  margin-right: 500px;
+.title h1 {
+  margin-left: 500px;
 }
 
 
 .chat-list {
   width: 40%;
   margin: 16px;
-  background:  white;
+  background:  #CAD8E0;
   /*background-color: rgba(0, 0, 0, 0.20);*/
   border-radius: 16px;
 }
@@ -173,7 +173,7 @@
 
 .chat-area {
   height: calc(100vh - 270px);
-  background: white;
+  background: #EAF8FA;
   display: flex;
   flex-direction: column;
   overflow: auto;
@@ -182,10 +182,9 @@
 .messages {
   width: 60%;
   margin: 16px;
-  background: #1DA1F2 ;
+  background: #CAD8E0 ;
   border-radius: 16px;
   padding: 24px;
 
 }
-
 

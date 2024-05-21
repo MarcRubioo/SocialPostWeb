@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {UserService} from "../user.service";
-
+import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Auth } from '@angular/fire/auth';
+import { AdminServiceService } from '../admin-service.service';
+import { UserService } from "../user.service";
 
 @Component({
   selector: 'app-perfil',
@@ -13,17 +15,20 @@ export class PerfilComponent implements OnInit {
   userDetails: any;
   userPosts: any[];
   categories: string[] = [];
-  selectedCategory: string; // Variable para almacenar la categoría seleccionada
+  selectedCategory: string;
 
-  constructor(private http: HttpClient, private userService: UserService) {
-    this.loadUserPosts();
-  }
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private auth: Auth,
+    private adminService: AdminServiceService,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.getUserDetails();
     this.loadUserPosts();
     this.getCategories();
-
   }
 
   parseDate(dateString: string): Date {
@@ -134,7 +139,16 @@ export class PerfilComponent implements OnInit {
     );
   }
 
-  getCategories() {
+  logout(): void {
+    // Limpiar token y email del localStorage
+    localStorage.removeItem('idToken');
+    localStorage.removeItem('email');
+
+    // Redirigir al componente de login
+    this.router.navigate(['/login']);
+  }
+
+  getCategories(): void {
     const token = localStorage.getItem('idToken');
 
     if (!token) {
@@ -185,5 +199,4 @@ export class PerfilComponent implements OnInit {
       }
     }
   }
-
 }

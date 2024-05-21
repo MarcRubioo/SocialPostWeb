@@ -51,11 +51,16 @@
 }
 
 .fc .fc-daygrid-day.fc-day-today {
-  background-color: #cbd5e0;
+  background-color: #a0c4ff; /* Azul claro */
 }
 
 .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
-  color: #4a5568;
+  color: #1a202c; /* Color del texto para el día actual */
+}
+
+.fc-daygrid-day.fc-day-today {
+  background-color: #87CEFA !important; /* Azul claro */
+  border: 1px solid #4a5568; /* Borde azul oscuro */
 }
 
 .fc-prev-button, .fc-next-button {
