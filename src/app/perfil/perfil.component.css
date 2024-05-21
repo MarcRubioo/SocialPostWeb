@@ -59,3 +59,23 @@
 #fileInput{
   display: none;
 }
+
+
+.logout-button {
+  background-color: #ff4b5c;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.logout-button:hover {
+  background-color: #ff2a3b;
+}
+
+.CS {
+  margin-top: 400px;
+  margin-left: 200px;
+}
