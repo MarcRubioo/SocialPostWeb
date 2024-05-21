@@ -24,13 +24,18 @@
         <p class="post-description">{{ post.description }}</p> <br/>
 
         <ng-container *ngIf="post.images.length > 0">
-          <div class="post-image-container">
-            <ng-container *ngFor="let image of post.images">
-              <img [src]="image" alt="Post Image" class="post-image">
-            </ng-container>
+          <div class="carousel-container">
+            <div class="carousel">
+              <div class="carousel-inner" [style.transform]="'translateX(-' + currentIndex * 100 + '%)'">
+                <div *ngFor="let image of post.images" class="carousel-item">
+                  <img [src]="image" alt="Post Image" class="post-image">
+                </div>
+              </div>
+            </div>
+            <button class="carousel-control prev" (click)="prevImage()">❮</button>
+            <button class="carousel-control next" (click)="nextImage()">❯</button>
           </div>
         </ng-container><br/>
-
 
         <div class="actions">
           <div class="flex gap-1">
@@ -40,38 +45,29 @@
             <ng-container *ngIf="!post.likes.includes(localStorage.getItem('email'));">
               <img src="assets/heart_empty.svg" alt="Empty Heart" style="height: 24px; width: 24px" (click)="addLikeToPost(post)"/>
             </ng-container>
-            <p>
-              {{ post.likes.length }}
-            </p>
+            <p>{{ post.likes.length }}</p>
           </div>
 
           <div class="flex gap-1">
             <img src="assets/comments.svg" alt="Comments" style="height: 24px; width: 24px; cursor: pointer" (click)="toggleCreatePostForm()">
-            <p>
-              {{ post.comments.length }}
-            </p>
+            <p>{{ post.comments.length }}</p>
           </div>
-
         </div>
       </div>
     </div>
 
     <div class="flex items-center justify-center w-full h-auto p-5 border-t-2 border-gray-400">
-      <p class="text-2xl text-black font-bold">Commentarios</p>
+      <p class="text-2xl text-black font-bold">Comentarios</p>
     </div>
     <div *ngIf="comments.length === 0" class="flex items-center justify-center w-full h-auto p-5 mt-[80px]">
-      <p class="text-md text-[#1DA1F2] ">No hay comentarios disponibles...</p>
+      <p class="text-md text-[#1DA1F2]">No hay comentarios disponibles...</p>
     </div>
     <div *ngIf="showCommentPostForm" class="create-comment-form">
       <form (submit)="submitComment()">
-        <textarea [(ngModel)]="commentContent" name="commentContent" placeholder="Escribe tu mensaje aquí"
-                  class="comment-textarea"></textarea>
-        <button type="submit" class="comment-button">Comment</button>
+        <textarea [(ngModel)]="commentContent" name="commentContent" placeholder="Escribe tu mensaje aquí" class="comment-textarea"></textarea>
+        <button type="submit" class="comment-button">Comentar</button>
       </form>
     </div>
-
-
-
 
     <div *ngFor="let comment of comments; let i = index" class="comment-container">
       <div class="comment">
@@ -93,13 +89,10 @@
             <ng-container *ngIf="!comment.likes.includes(localStorage.getItem('email'));">
               <img src="assets/heart_empty.svg" alt="Empty Heart" style="height: 24px; width: 24px" (click)="addLikeToComment(post, comment, i)"/>
             </ng-container>
-            <p>
-              {{ comment.likes.length }}
-            </p>
+            <p>{{ comment.likes.length }}</p>
           </div>
         </div>
       </div>
     </div>
   </div>
-
 </div>

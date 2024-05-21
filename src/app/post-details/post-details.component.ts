@@ -17,10 +17,11 @@ export class PostDetailsComponent implements OnInit {
   commentsDetails: any[] = [];
   user: any;
   admin: boolean = this.adminService.admin;
+  currentIndex: number = 0; // For carousel
 
   constructor(private postService: PostService, private router: Router,
               private adminService: AdminServiceService, private userService: UserService,
-              ) {
+  ) {
     console.log("Post received | ", this.post);
 
     this.comments = this.post.comments;
@@ -72,7 +73,6 @@ export class PostDetailsComponent implements OnInit {
         });
     }
   }
-
 
   deletePost(post: any): void {
     if (this.admin) {
@@ -140,7 +140,6 @@ export class PostDetailsComponent implements OnInit {
       )
   }
 
-
   goToUserDetails(user: any): void {
     this.userService.user = user;
     this.router.navigate(["/user-details"])
@@ -190,7 +189,6 @@ export class PostDetailsComponent implements OnInit {
           console.error(error);
         }
       )
-
   }
 
   generateRandomId(): string {
@@ -207,4 +205,12 @@ export class PostDetailsComponent implements OnInit {
   }
 
   protected readonly localStorage = localStorage;
+
+  prevImage(): void {
+    this.currentIndex = (this.currentIndex > 0) ? this.currentIndex - 1 : this.post.images.length - 1;
+  }
+
+  nextImage(): void {
+    this.currentIndex = (this.currentIndex < this.post.images.length - 1) ? this.currentIndex + 1 : 0;
+  }
 }
