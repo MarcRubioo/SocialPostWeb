@@ -152,6 +152,7 @@ export class PostDetailsComponent implements OnInit {
     this.showCommentPostForm = !this.showCommentPostForm;
   }
 
+
   submitComment() {
     if (!this.commentContent) {
       return;
@@ -169,7 +170,9 @@ export class PostDetailsComponent implements OnInit {
       commentAt: new Date().toISOString(),
       comment: this.commentContent,
       likes: [],
+
     };
+
 
     this.postService.addComment(commentData, this.post.id)
       .then(
@@ -180,7 +183,8 @@ export class PostDetailsComponent implements OnInit {
               .then(
                 user => {
                   this.commentsDetails.push(user);
-                  this.showCommentPostForm = !this.showCommentPostForm;
+                  this.showCommentPostForm = false;
+                  this.commentContent = '';
                 }
               )
           });
