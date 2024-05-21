@@ -1,29 +1,25 @@
-<div class="centered-container">
-  <div class="logo">
+<div class="flex flex-col items-center w-full h-screen gap-[50px]">
+  <div class="flex items-center justify-center h-[150px] w-[250px]">
     <img src="assets/logo.png" alt="Logo" class="logo">
   </div>
 
-  <div class="movil">
-    <img src="assets/movil.png" alt="Movil" class="movil">
+  <div class="flex gap-[100px] justify-center items-center">
+    <div class="formulari p-4 h-auto w-auto">
+      <h2>Admin Login</h2>
+      <form (ngSubmit)="onSubmit()" #formulario="ngForm">
+        <div class="mt-3">
+          <input type="text" id="username" name="username" [(ngModel)]="username" placeholder="Gmail" required class="w-full h-[50px] p-2 border-2 border-gray-300 rounded-md">
+        </div>
+        <div class="relative mt-4">
+          <input type="password" id="password" name="password" [(ngModel)]="password" placeholder="Contraseña" required class="w-full h-[50px] p-2 border-2 border-gray-300 pr-10 rounded-md">
+          <button type="button" (click)="togglePasswordVisibility()" class="absolute inset-y-0 right-0 flex items-center pr-3">👁️‍🗨️</button>
+        </div>
+        <button type="submit" [ngClass]="{ 'enabled': formulario.valid && username && password }" [disabled]="!formulario.valid" [ngStyle]="{ 'background-color': (formulario.valid && username && password) ? '' : 'grey' }" class="mt-4 bg-blue-500 text-white py-2 px-4 rounded w-full h-[50px] hover:bg-[#3681F7]/60">Siguiente</button>
+      </form>
+    </div>
+
+    <div class="h-[500px] w-[250px]">
+      <img src="assets/movil.png" alt="Movil" class="movil h-full w-full object-cover">
+    </div>
   </div>
-
-  <div class="formulari">
-    <h2>Admin Login</h2>
-    <form (ngSubmit)="onSubmit()" #formulario="ngForm">
-      <div>
-        <input type="text" id="username" name="username" [(ngModel)]="username" placeholder="Gmail" required>
-      </div>
-      <div class="password-container">
-        <input type="password" id="password" name="password" [(ngModel)]="password" placeholder="Contraseña" required>
-        <button type="button" id="lupa" (click)="togglePasswordVisibility()">👁️‍🗨️</button>
-      </div>
-
-      <button type="submit" [ngClass]="{ 'enabled': formulario.valid && username && password }" [disabled]="!formulario.valid" [ngStyle]="{ 'background-color': (formulario.valid && username && password) ? '' : 'grey' }">Siguiente</button>
-    </form>
-
-  </div>
-
 </div>
-
-
-

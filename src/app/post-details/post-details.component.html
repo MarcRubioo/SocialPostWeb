@@ -17,14 +17,12 @@
             <div class="rounded-full overflow-hidden h-14 w-14">
               <img class="object-cover h-full w-full cursor-pointer" src="{{user.img}}" (click)="goToUserDetails(user)"/>
             </div>
-            <p>{{user.firstName}}</p>
             <p>{{ post.email }}</p>
           </div>
           <p> {{ post.createdAT | dateDisplay }}</p>
         </div>
         <p class="post-description">{{ post.description }}</p> <br/>
 
-        <!-- Renderizar imágenes si existen -->
         <ng-container *ngIf="post.images.length > 0">
           <div class="post-image-container">
             <ng-container *ngFor="let image of post.images">
@@ -35,30 +33,44 @@
 
 
         <div class="actions">
-          <p>
+          <div class="flex gap-1">
             <ng-container *ngIf="post.likes.includes(localStorage.getItem('email'))">
               <img src="assets/heart_filled.svg" alt="Filled Heart" style="height: 24px; width: 24px" (click)="deleteLikeToPost(post)"/>
             </ng-container>
             <ng-container *ngIf="!post.likes.includes(localStorage.getItem('email'));">
               <img src="assets/heart_empty.svg" alt="Empty Heart" style="height: 24px; width: 24px" (click)="addLikeToPost(post)"/>
             </ng-container>
-            {{ post.likes.length }}
-          </p>
-          <p>
+            <p>
+              {{ post.likes.length }}
+            </p>
+          </div>
+
+          <div class="flex gap-1">
             <img src="assets/comments.svg" alt="Comments" style="height: 24px; width: 24px; cursor: pointer" (click)="toggleCreatePostForm()">
-            {{ post.comments.length }}
-          </p>
+            <p>
+              {{ post.comments.length }}
+            </p>
+          </div>
+
         </div>
       </div>
     </div>
 
-    <div *ngIf="showCommentPostForm" class="create-comment-form"><br><br>
+    <div class="flex items-center justify-center w-full h-auto p-5 border-t-2 border-gray-400">
+      <p class="text-2xl text-black font-bold">Commentarios</p>
+    </div>
+    <div *ngIf="comments.length === 0" class="flex items-center justify-center w-full h-auto p-5 mt-[80px]">
+      <p class="text-md text-[#1DA1F2] ">No hay comentarios disponibles...</p>
+    </div>
+    <div *ngIf="showCommentPostForm" class="create-comment-form">
       <form (submit)="submitComment()">
         <textarea [(ngModel)]="commentContent" name="commentContent" placeholder="Escribe tu mensaje aquí"
                   class="comment-textarea"></textarea>
         <button type="submit" class="comment-button">Comment</button>
       </form>
-    </div><br/>
+    </div>
+
+
 
 
     <div *ngFor="let comment of comments; let i = index" class="comment-container">
@@ -68,29 +80,26 @@
         <div class="user-details">
           <img src="{{ commentsDetails[i].img }}" alt="Comment User Image"/>
           <div>
-            <p>{{ commentsDetails[i].firstName }}</p>
             <p>{{ comment.email }}</p>
           </div>
         </div>
         <p class="comment-time">{{ comment.commentAt | dateDisplay }}</p>
         <p class="comment-text">{{ comment.comment }}</p>
         <div class="actions">
-          <p>
+          <div class="flex gap-1">
             <ng-container *ngIf="comment.likes.includes(localStorage.getItem('email'));">
               <img src="assets/heart_filled.svg" alt="Filled Heart" style="height: 24px; width: 24px" (click)="deleteLikeToComment(post, comment, i)"/>
             </ng-container>
             <ng-container *ngIf="!comment.likes.includes(localStorage.getItem('email'));">
               <img src="assets/heart_empty.svg" alt="Empty Heart" style="height: 24px; width: 24px" (click)="addLikeToComment(post, comment, i)"/>
             </ng-container>
-            {{ comment.likes.length }}
-          </p>
+            <p>
+              {{ comment.likes.length }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-
-  <div id="column3">
-
-  </div>
 </div>

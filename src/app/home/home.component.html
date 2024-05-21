@@ -1,7 +1,7 @@
 <div id="columnas">
   <div id="column1">
     <app-menu></app-menu>
-    <button class="create-post-button" (click)="openCreatePostPopup()">POST</button>
+    <button *ngIf="!admin" class="create-post-button" (click)="toggleCreatePostForm()">POST</button>
 
   </div>
 
@@ -24,7 +24,11 @@
 
     <div *ngFor="let post of posts; let i = index" class="post-container">
       <div class="post">
-        <div *ngIf="admin" class="delete-icon" (click)="deletePost(post)">X</div>
+
+        <div class="flex justify-end">
+          <button *ngIf="admin" class="bg-transparent rounded-2xl py-1 px-4 text-center text-red-500 cursor-pointer border-2 border-red-500 hover:bg-gray-100" (click)="deletePost(post)">Eliminar</button>
+        </div>
+
         <div class="flex flex-col p-5 gap-5">
           <div class="clickable-post-container" (click)="sendPost(post)">
             <div class="flex flex-row justify-between">
@@ -56,13 +60,13 @@
 
           <div class="flex justify-center gap-[140px]">
             <div class="flex gap-3">
-              <p>
                 <ng-container *ngIf="post.likes.includes(localStorage.getItem('email'))">
                   <img src="assets/heart_filled.svg" alt="Filled Heart" style="height: 24px; width: 24px" (click)="deleteLikeToPost(post, i)"/>
                 </ng-container>
                 <ng-container *ngIf="!post.likes.includes(localStorage.getItem('email'));">
                   <img src="assets/heart_empty.svg" alt="Empty Heart" style="height: 24px; width: 24px" (click)="addLikeToPost(post, i)"/>
                 </ng-container>
+              <p>
                 {{ post.likes.length }}
               </p>
             </div>
@@ -78,18 +82,19 @@
   </div>
 
 
-  <div id="column3">
-
-
-    <div id="categorias">
-      <p>Categorías</p><br/>
-      <div *ngFor="let category of categories">
-        <button type="button" class="category-button" [class.selected]="isSelected(category)" (click)="toggleCategory(category)">
+  <div id="column3" class="flex  justify-center">
+    <div class="flex flex-col w-full h-auto p-5 ml-5">
+      <p class="text-2xl font-bold text-black">Categorías</p>
+      <br />
+      <div class="flex flex-row flex-wrap gap-2">
+        <button *ngFor="let category of categories"
+                type="button"
+                class="custom-button text-white border-2 border-transparent rounded-3xl px-4 py-2 "
+                [class.selected]="isSelected(category)"
+                (click)="toggleCategory(category)">
           {{ category }}
         </button>
       </div>
     </div>
-
-
   </div>
 </div>

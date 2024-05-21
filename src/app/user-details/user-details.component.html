@@ -8,51 +8,66 @@
       <p>User Profile</p>
     </div>
 
-    <div class="user-container">
-      <div id="main-user-container" class="user">
-        <div class="user-details">
-          <div class="rounded-full overflow-hidden h-24 w-24 flex items-center justify-center">
-            <img class="object-cover h-full w-full" src="{{user.img}}">
+    <div id="infouser" class="user-container rounded-xl p-5">
+      <div class="flex flex-col gap-7">
+        <div class="flex flex-row justify-between">
+          <div class="flex flex-row gap-5 items-center" id="test">
+            <div class="rounded-full overflow-hidden h-24 w-24 flex items-center justify-center">
+              <img class="object-cover h-full w-full" src="{{user.img}}">
+            </div>
+            <p>{{user.firstName}}</p>
+            <br>
+            <p>{{user.email}}</p>
           </div>
-          <div>
-            <p>{{ user.firstName }}</p>
-            <p>{{ user.email }}</p>
-            <div class="follow-counts">
-              <p><b>{{ user.followers.length }} followers</b></p>
-              <p><b>{{ user.following.length }} following</b></p>
+          <div class="flex flex-row gap-5 items-center">
+            <div class="flex flex-col gap-3 items-center">
+              <p class="font-bold">{{user.followers.length}}</p>
+              <p class="text-sm">Seguidores</p>
+            </div>
+            <div class="flex flex-col gap-3 items-center">
+              <p class="font-bold">{{user.following.length}}</p>
+              <p class="text-sm">Seguiendo</p>
             </div>
           </div>
-          <div class="user-friend-action">
-            <ng-container
-              *ngIf="followed && user.email !== localStorage.getItem('email')">
-              <a class="twitter-follow-button" data-show-count="true" data-size="large" (click)="unfollowUser(user)">Unfollow</a>
-            </ng-container>
-            <ng-container
-              *ngIf="!followed && user.email !== localStorage.getItem('email')">
-              <a class="twitter-follow-button" data-show-count="true" data-size="large" (click)="followUser(user)">Follow</a>
-            </ng-container>
-
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="flex gap-4">
+            <div class="flex gap-3">
+              <img src="assets/friends.svg"/>
+              <p class="text-sm">{{user.friends.length}}</p>
+            </div>
             <ng-container
               *ngIf="befriended && user.email !== localStorage.getItem('email')">
               <img src="assets/friend_already_added_drawable.svg" alt="Already Befriended"
-                   style="height: 30px; width: 24px; margin-top: -28px; margin-left: -35px; cursor: pointer" (click)="deleteFriend(user)" />
+                   style="height: 24px; width: 24px; cursor: pointer" (click)="deleteFriend(user)" />
             </ng-container>
             <ng-container
               *ngIf="!befriended && user.email !== localStorage.getItem('email')">
-              <img src="assets/add_friend_drawable.svg" alt="Add Friend" style="height: 30px; width: 24px; margin-top: -28px; margin-left: -35px; cursor: pointer"
+              <img src="assets/add_friend_drawable.svg" alt="Add Friend" style="height: 24px; width: 24px; cursor: pointer"
                    (click)="addFriend(user)"/>
             </ng-container>
           </div>
-          <br>
-          <p class="user-friends">Friends <b>{{ user.friends.length }}</b></p>
+
+          <div class="flex gap-2">
+            <ng-container
+              *ngIf="followed && user.email !== localStorage.getItem('email')">
+              <button class="bg-[#1DA1F2] border-2 text-white py-1 px-2 rounded-2xl hover:bg-blue-400" data-show-count="true" data-size="large" (click)="unfollowUser(user)">Unfollow</button>
+            </ng-container>
+            <ng-container
+              *ngIf="!followed && user.email !== localStorage.getItem('email')">
+              <button class="bg-[#1DA1F2] border-2 text-white py-1 px-2 rounded-2xl hover:bg-blue-400" data-show-count="true" data-size="large" (click)="followUser(user)">Follow</button>
+            </ng-container>
+          </div>
         </div>
-        <p class="user-description">Description of user</p>
       </div>
     </div>
 
 
-    <h2 style="text-align: center; margin-bottom: 13px">User Posts</h2>
-    <div *ngFor="let post of posts; let i = index" class="posts-container" (click)="sendPost(post)">
+
+    <div class="flex justify-center mt-10">
+      <p class="items-center text-2xl text-black font-bold">Posts User</p>
+    </div>
+    <div *ngFor="let post of posts; let i = index" class="posts-container mt-10" (click)="sendPost(post)">
       <div class="post">
         <!-- Conditionally render the "X" mark for admins -->
         <div *ngIf="admin" class="delete-icon" (click)="deletePost(post)">X</div>
@@ -72,7 +87,7 @@
           <div *ngFor="let image of post.images; let i = index">
             <img src="{{image}}" alt='Post Image ${i}'>
           </div>
-        </ng-container><br/><br/>
+        </ng-container>
 
         <div class="actions">
           <p>
@@ -98,16 +113,16 @@
 
 
   <div id="column3">
-    <app-calendar></app-calendar>
+<!--    <p-toast-->
+<!--      position="top-right"-->
+<!--      key="error-bc"-->
+<!--    ></p-toast>-->
 
-    <p-toast
-      position="top-right"
-      key="error-bc"
-    ></p-toast>
+<!--    <p-toast-->
+<!--      position="top-right"-->
+<!--      key="success-bc"-->
+<!--    ></p-toast>-->
 
-    <p-toast
-      position="top-right"
-        key="success-bc"
-    ></p-toast>
+
   </div>
 </div>
