@@ -10,7 +10,6 @@
 
     <div class="post-container">
       <div id="mainPostDetails" class="post">
-        <!-- Conditionally render the "X" mark for admins -->
         <div *ngIf="admin" class="delete-icon" (click)="deletePost(post)">X</div>
         <div class="flex flex-row justify-between">
           <div class="flex gap-3 items-center">
@@ -62,7 +61,7 @@
     <div *ngIf="comments.length === 0" class="flex items-center justify-center w-full h-auto p-5 mt-[80px]">
       <p class="text-md text-[#1DA1F2]">No hay comentarios disponibles...</p>
     </div>
-    <div *ngIf="showCommentPostForm" class="create-comment-form">
+    <div *ngIf="showCommentPostForm" class="create-comment-form animate__animated animate__fadeInUp">
       <form (submit)="submitComment()">
         <textarea [(ngModel)]="commentContent" name="commentContent" placeholder="Escribe tu mensaje aquí" class="comment-textarea"></textarea>
         <button type="submit" class="comment-button">Comentar</button>
@@ -71,7 +70,6 @@
 
     <div *ngFor="let comment of comments; let i = index" class="comment-container">
       <div class="comment">
-        <!-- Conditionally render the "X" mark for admins -->
         <div *ngIf="admin" class="delete-icon" (click)="deleteComment(comment, post)">X</div>
         <div class="user-details">
           <img src="{{ commentsDetails[i].img }}" alt="Comment User Image"/>
