@@ -17,10 +17,11 @@ export class CalendarComponent implements OnInit {
       locale: 'es',
       firstDay: 1,
       headerToolbar: {
-        left: 'prev,next',
+        left: '',
         center: 'title',
         right: ''
-      }
+      },
+      slotLabelFormat: 'prev,next'
     };
   }
 }
