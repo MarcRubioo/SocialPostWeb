@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {MatDialogRef} from '@angular/material/dialog';
+import { PostService } from '../post.service';
+
 
 @Component({
   selector: 'app-create-post-popup',
@@ -15,8 +17,11 @@ export class CreatePostPopupComponent implements OnInit {
   newPostImages: any[] = [];
 
 
-  constructor(private http: HttpClient, public dialogRef: MatDialogRef<CreatePostPopupComponent>) {
-  }
+  constructor(
+    private http: HttpClient,
+    private postService: PostService,
+    public dialogRef: MatDialogRef<CreatePostPopupComponent>
+  ) { }
 
   ngOnInit(): void {
     this.getCategories();
