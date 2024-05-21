@@ -83,7 +83,16 @@ export class ChatComponent implements OnInit {
       const response = JSON.parse(message.body);
       if (response && response.responseNo == 200) {
         console.log(response.data);
-        this.userChats = response.data;
+
+        for (let i = 0; i < response.data.length; i++) {
+          for (let userEmail of response.data[i].users) {
+            if (this.user.friends.some(friend => friend.email === userEmail)) {
+              this.userChats.push(response.data[i]);
+              break;
+            }
+          }
+        }
+
 
         // Sort the userChats array by lastMessageDate in descending order
         this.userChats.sort((a, b) => {
@@ -221,7 +230,7 @@ export class ChatComponent implements OnInit {
   scrollToBottom(): void {
     setTimeout(() => {
       if (this.endOfChat) {
-        this.endOfChat.nativeElement.scrollIntoView({ behavior: "smooth" })
+        this.endOfChat.nativeElement.scrollIntoView({behavior: "smooth"})
       }
     }, 100);
   }
