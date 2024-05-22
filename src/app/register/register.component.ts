@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import {Router} from "@angular/router";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { Router } from "@angular/router";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -42,20 +43,36 @@ export class RegisterComponent {
         if (response) {
           console.log(response)
           if (response.responseNo == 200) {
-            localStorage.setItem("idToken", response.data[0].id);
-            localStorage.setItem("email", this.email);
-            alert("Registro realizado");
-            this.router.navigate(['/login']);
+            Swal.fire({
+              icon: 'success',
+              title: 'Registro realizado',
+              text: '¡Bienvenido!',
+              confirmButtonText: 'Aceptar',
+              customClass: {
+                confirmButton: 'swal-confirm-button'
+              }
+            }).then(() => {
+              localStorage.setItem("idToken", response.data[0].id);
+              localStorage.setItem("email", this.email);
+              this.router.navigate(['/login']);
+            });
           }
         }
       },
       error => {
-        console.log(error)
-        alert("Problema al registrar");
+        console.log(error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Problema al registrar',
+          text: 'Por favor, inténtelo de nuevo.',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            confirmButton: 'swal-confirm-button'
+          }
+        });
       }
     );
   }
-
 
   togglePasswordVisibility(): void {
     this.hidePassword = !this.hidePassword;

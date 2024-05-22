@@ -1,8 +1,8 @@
-import {Component} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Auth, signInWithEmailAndPassword} from "@angular/fire/auth";
-import {Router} from "@angular/router";
-import {AdminServiceService} from "../admin-service.service";
+import { Component } from '@angular/core';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Auth, signInWithEmailAndPassword } from "@angular/fire/auth";
+import { Router } from "@angular/router";
+import { AdminServiceService } from "../admin-service.service";
 
 @Component({
   selector: 'app-admin-login',
@@ -46,7 +46,7 @@ export class AdminLoginComponent {
             password: this.password,
             firstName: ""
           },
-          {headers: headers}).subscribe(
+          { headers: headers }).subscribe(
           response => {
             if (response) {
               console.log("response: ", response);

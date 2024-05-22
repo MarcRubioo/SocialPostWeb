@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AdminServiceService} from "../admin-service.service";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-categories-listing',
@@ -47,12 +48,21 @@ export class AdminCategoriesListingComponent implements OnInit {
           if (index !== -1) {
             this.categories.splice(index, 1);
             console.log("Category was deleted from the array!");
+
+            // Mostrar el popup de confirmación
+            Swal.fire({
+              icon: 'success',
+              title: 'Se ha eliminado correctamente la categoría',
+              text: category,
+              confirmButtonText: 'Aceptar'
+            });
           } else {
             console.log("Category not found in the array");
           }
         });
     }
   }
+
 
   createCategory(category: string) {
     if (this.admin) {

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {AdminServiceService} from "../admin-service.service";
-import {Router} from "@angular/router";
+import { HttpClient } from "@angular/common/http";
+import { AdminServiceService } from "../admin-service.service";
+import { Router } from "@angular/router";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-users-list',
@@ -10,7 +11,7 @@ import {Router} from "@angular/router";
 })
 export class AdminUsersListComponent {
 
-  users: any[] = []
+  users: any[] = [];
   admin: boolean = this.adminService.admin;
 
   constructor(private http: HttpClient, private adminService: AdminServiceService, private router: Router) {
@@ -19,13 +20,11 @@ export class AdminUsersListComponent {
     }
   }
 
-
   getAllUsers() {
     this.users = [];
     this.adminService.adminGetAllUsers();
     this.users = this.adminService.users;
   }
-
 
   deleteUser(user: any) {
     if (this.admin) {
@@ -41,12 +40,21 @@ export class AdminUsersListComponent {
           if (index !== -1) {
             this.users.splice(index, 1);
             console.log("User deleted from the array");
+
+            Swal.fire({
+              icon: 'success',
+              title: 'Se ha eliminado correctamente el usuario',
+              text: `Usuario: ${user.firstName} - Email: ${user.email}`,
+              confirmButtonText: 'Aceptar',
+              customClass: {
+                confirmButton: 'swal-confirm-button'
+              }
+            });
           } else {
             console.log("User not found in the array");
           }
         });
     }
   }
-
 
 }
