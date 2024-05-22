@@ -31,8 +31,8 @@
                 </div>
               </div>
             </div>
-            <button class="carousel-control prev" (click)="prevImage()">❮</button>
-            <button class="carousel-control next" (click)="nextImage()">❯</button>
+            <button class="carousel-control prev" *ngIf="post.images.length > 1" (click)="prevImage()">❮</button>
+            <button class="carousel-control next" *ngIf="post.images.length > 1" (click)="nextImage()">❯</button>
           </div>
         </ng-container><br/>
 

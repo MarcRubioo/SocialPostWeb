@@ -37,7 +37,7 @@ export class AdminServiceService {
       .pipe(
         map(response => {
           if (response.responseNo == 200) {
-            window.alert("Post eliminated correctly");
+            // window.alert("Post eliminated correctly");
             return post.id;
           }
           return "";
@@ -72,7 +72,7 @@ export class AdminServiceService {
       .pipe(
         map(response => {
           if (response.responseNo == 200) {
-            window.alert("User eliminated correctly");
+            // window.alert("User eliminated correctly");
             return user.id;
           }
           return "";
@@ -104,7 +104,7 @@ export class AdminServiceService {
       .pipe(
         map(response => {
           if (response.responseNo == 200) {
-            window.alert("Category eliminated correctly");
+            // window.alert("Category eliminated correctly");
             return category;
           }
           return "";

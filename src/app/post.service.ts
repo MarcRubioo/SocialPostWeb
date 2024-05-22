@@ -75,7 +75,7 @@ export class PostService {
         .pipe(
           map(response => {
             if (response && response.responseNo == 200) {
-              window.alert("Comment eliminated correctly");
+              // window.alert("Comment eliminated correctly");
               return comment.id;
             }
             return "";
