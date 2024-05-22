@@ -1,12 +1,13 @@
 // home.component.ts
 
-import {Component, OnInit} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {AdminServiceService} from "../admin-service.service";
-import {PostService} from "../post.service";
-import {Router} from "@angular/router";
-import {MatDialog} from "@angular/material/dialog";
+import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { AdminServiceService } from "../admin-service.service";
+import { PostService } from "../post.service";
+import { Router } from "@angular/router";
+import { MatDialog } from "@angular/material/dialog";
 import { CreatePostPopupComponent } from '../create-post-popup/create-post-popup.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,6 @@ export class HomeComponent implements OnInit {
   posts: any[] = [];
   postUserDetail: any[] = [];
 
-
   categories: string[] = [];
   selectedCategories: string[] = [];
 
@@ -25,8 +25,7 @@ export class HomeComponent implements OnInit {
   selectedCategory: string = '';
   postContent: string = '';
 
-  admin: boolean = this.adminService.admin
-
+  admin: boolean = this.adminService.admin;
 
   constructor(private http: HttpClient, private adminService: AdminServiceService,
               private postService: PostService, private router: Router, public dialog: MatDialog) {
@@ -75,7 +74,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-
   toggleCreatePostForm(): void {
     this.showCreatePostForm = !this.showCreatePostForm;
   }
@@ -88,7 +86,6 @@ export class HomeComponent implements OnInit {
   isSelected(category: string): boolean {
     return this.selectedCategories.includes(category);
   }
-
 
   generateRandomId(): string {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -144,12 +141,24 @@ export class HomeComponent implements OnInit {
       response => {
         console.log('Publicación creada:', response);
         this.postContent = '';
+        Swal.fire({
+          icon: 'success',
+          title: '¡Publicación creada!',
+          showConfirmButton: false,
+          timer: 1500
+        });
       },
       error => {
         console.error('Error al crear la publicación:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Hubo un error al crear la publicación.',
+        });
       }
     );
   }
+
 
   // Función para obtener todos los posts desde el servidor
   async getAllPosts(): Promise<any[]> {
@@ -165,7 +174,7 @@ export class HomeComponent implements OnInit {
     });
 
     try {
-      const response = await this.http.get<any>('http://127.0.0.1:8080/api/allposts', {headers: headers}).toPromise();
+      const response = await this.http.get<any>('http://127.0.0.1:8080/api/allposts', { headers: headers }).toPromise();
       const sortedPosts = response.data.filter(post => {
         return this.selectedCategories.every(category => post.categories.includes(category));
       }).map(post => ({
@@ -200,7 +209,7 @@ export class HomeComponent implements OnInit {
       'idToken': token,
     });
 
-    this.http.get<any>('http://127.0.0.1:8080/api/categories', {headers: headers})
+    this.http.get<any>('http://127.0.0.1:8080/api/categories', { headers: headers })
       .subscribe(
         (response) => {
           this.categories = response.data;
@@ -210,7 +219,6 @@ export class HomeComponent implements OnInit {
         }
       );
   }
-
 
   toggleCategory(category: string): void {
     if (this.selectedCategories.includes(category)) {
@@ -225,7 +233,6 @@ export class HomeComponent implements OnInit {
       });
   }
 
-
   sendPost(post: any): void {
     const token = localStorage.getItem('idToken');
 
@@ -239,24 +246,40 @@ export class HomeComponent implements OnInit {
     this.router.navigate(["/post-details"])
   }
 
-
   deletePost(post: any): void {
     if (this.admin) {
-      this.adminService.deletePost(post)
-        .subscribe(idPostDeleted => {
-          if (idPostDeleted == "") {
-            console.error("post id was empty!");
-            return;
-          }
-          console.log("idPost | ", idPostDeleted);
-          const index = this.posts.findIndex(p => p.id === idPostDeleted);
-          if (index !== -1) {
-            this.posts.splice(index, 1);
-            console.log("Post deleted from the array");
-          } else {
-            console.log("Post not found in the array");
-          }
-        });
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: "No podrás revertir esto!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, bórralo!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.adminService.deletePost(post)
+            .subscribe(idPostDeleted => {
+              if (idPostDeleted == "") {
+                console.error("post id was empty!");
+                return;
+              }
+              console.log("idPost | ", idPostDeleted);
+              const index = this.posts.findIndex(p => p.id === idPostDeleted);
+              if (index !== -1) {
+                this.posts.splice(index, 1);
+                console.log("Post deleted from the array");
+              } else {
+                console.log("Post not found in the array");
+              }
+              Swal.fire(
+                'Borrado!',
+                'El post ha sido borrado.',
+                'success'
+              )
+            });
+        }
+      })
     }
   }
 
@@ -309,9 +332,5 @@ export class HomeComponent implements OnInit {
       this.currentSlides[postIndex]++;
     }
   }
-
-
-
 }
-
 

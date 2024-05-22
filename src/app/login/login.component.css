@@ -20,6 +20,13 @@
   font-size: 30px;
 }
 
+.swal2-popup .swal2-confirm.swal-confirm-button {
+  background-color: #1DA1F2 !important;
+  color: white !important;
+  border: none !important;
+}
+
+
 
 
 

@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
-import {Router} from "@angular/router";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Auth, signInWithEmailAndPassword} from '@angular/fire/auth';
-import {AdminServiceService} from "../admin-service.service";
+import { Component } from '@angular/core';
+import { Router } from "@angular/router";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
+import Swal from 'sweetalert2';
+import { AdminServiceService } from "../admin-service.service";
 
 @Component({
   selector: 'app-login',
@@ -57,21 +58,50 @@ export class LoginComponent {
                 console.log("response: ", response);
                 // Redirige al usuario a la página de inicio si el inicio de sesión es correcto
                 if (response.responseNo == 200) {
-                  alert("Inicio de sesión correctamente realizado");
-                  this.adminService.admin = false;
-                  this.router.navigate(['/home']);
+                  // Mostrar SweetAlert2
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Inicio de sesión exitoso',
+                    text: '¡Bienvenido!',
+                    confirmButtonText: 'Aceptar',
+                    customClass: {
+                      confirmButton: 'swal-confirm-button'
+                    }
+                  }).then(() => {
+                    // Redirige al usuario a la página de inicio
+                    this.adminService.admin = false;
+                    this.router.navigate(['/home']);
+                  });
                 }
               }
             },
             error => {
               console.error('Error al iniciar sesión:', error);
-              alert("Problema al iniciar sesión. Verifique sus credenciales.");
+              // Mostrar SweetAlert2 en caso de error
+              Swal.fire({
+                icon: 'error',
+                title: 'Error al iniciar sesión',
+                text: 'Por favor, verifique sus credenciales.',
+                confirmButtonText: 'Aceptar',
+                customClass: {
+                  confirmButton: 'swal-confirm-button'
+                }
+              });
             }
           );
       }
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
-      alert("Problema al iniciar sesión. Verifique sus credenciales.");
+      // Mostrar SweetAlert2 en caso de error
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al iniciar sesión',
+        text: 'Por favor, verifique sus credenciales.',
+        confirmButtonText: 'Aceptar',
+        customClass: {
+          confirmButton: 'swal-confirm-button'
+        }
+      });
     }
   }
 

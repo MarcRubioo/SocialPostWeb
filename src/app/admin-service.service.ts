@@ -1,7 +1,6 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {catchError, map, Observable, of} from 'rxjs';
-import {Router} from "@angular/router";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, map, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -33,11 +32,12 @@ export class AdminServiceService {
       'idToken': token,
     });
 
-    return this.http.delete<any>(`http://localhost:8080/api/admin/deletePost/${post.id}`, {headers: headers})
+    return this.http.delete<any>(`http://localhost:8080/api/admin/deletePost/${post.id}`, { headers: headers })
       .pipe(
         map(response => {
           if (response.responseNo == 200) {
-            window.alert("Post eliminated correctly");
+            // Reemplazar window.alert con console.log
+            console.log("Post eliminated correctly");
             return post.id;
           }
           return "";
@@ -48,7 +48,6 @@ export class AdminServiceService {
         })
       );
   }
-
 
   deleteUser(user: any): Observable<string> {
     console.log("user at adminService | ", user);
@@ -66,13 +65,12 @@ export class AdminServiceService {
       'idToken': token,
     });
 
-    return this.http.delete<any>(`http://localhost:8080/api/admin/deleteUser/${user.id}`, {
-      headers: headers
-    })
+    return this.http.delete<any>(`http://localhost:8080/api/admin/deleteUser/${user.id}`, { headers: headers })
       .pipe(
         map(response => {
           if (response.responseNo == 200) {
-            window.alert("User eliminated correctly");
+            // Reemplazar window.alert con console.log
+            console.log("User eliminated correctly");
             return user.id;
           }
           return "";
@@ -83,7 +81,6 @@ export class AdminServiceService {
         })
       );
   }
-
 
   deleteCategory(category: string): Observable<string> {
     const token = localStorage.getItem('idToken');
@@ -98,13 +95,12 @@ export class AdminServiceService {
       'idToken': token,
     });
 
-    return this.http.delete<any>(`http://localhost:8080/api/admin/deleteCategory/${category}`, {
-      headers: headers
-    })
+    return this.http.delete<any>(`http://localhost:8080/api/admin/deleteCategory/${category}`, { headers: headers })
       .pipe(
         map(response => {
           if (response.responseNo == 200) {
-            window.alert("Category eliminated correctly");
+            // Reemplazar window.alert con console.log
+            console.log("Category eliminated correctly");
             return category;
           }
           return "";
@@ -115,7 +111,6 @@ export class AdminServiceService {
         })
       );
   }
-
 
   adminGetAllUsers() {
     this.users = [];
@@ -130,18 +125,18 @@ export class AdminServiceService {
       'idToken': token,
     });
 
-    this.http.get<any>("http://localhost:8080/api/admin/getUsers", {headers: headers}).subscribe(
+    this.http.get<any>("http://localhost:8080/api/admin/getUsers", { headers: headers }).subscribe(
       response => {
         if (response.data) {
           console.log(response);
           response.data.forEach((user) => {
             this.users.push(user);
-          })
+          });
           console.log(this.users);
           console.log("gotten all users correctly");
         }
       }
-    )
+    );
   }
 
   adminGetAllCategories(): Promise<any> {
@@ -158,7 +153,7 @@ export class AdminServiceService {
         'idToken': token,
       });
 
-      this.http.get<any>("http://localhost:8080/api/admin/getAllCategories", {headers: headers})
+      this.http.get<any>("http://localhost:8080/api/admin/getAllCategories", { headers: headers })
         .subscribe(response => {
           if (response && response.responseNo == 200) {
             console.log(response);
@@ -173,7 +168,6 @@ export class AdminServiceService {
     });
   }
 
-
   createCategory(category: string): Promise<any> {
     return new Promise((resolve, reject) => {
       const token = localStorage.getItem('idToken');
@@ -187,7 +181,7 @@ export class AdminServiceService {
         'idToken': token,
       });
 
-      this.http.post<any>("http://localhost:8080/api/admin/insertCategory", category, {headers: headers})
+      this.http.post<any>("http://localhost:8080/api/admin/insertCategory", category, { headers: headers })
         .subscribe(response => {
             if (response && response.responseNo == 200) {
               console.log(response);
@@ -202,10 +196,9 @@ export class AdminServiceService {
           },
           error => {
             reject(error);
-          })
-    })
+          });
+    });
   }
-
 
   updateCategory(category: string, newValue: string) {
     const token = localStorage.getItem('idToken');
@@ -221,8 +214,7 @@ export class AdminServiceService {
 
     console.log("Category | " + category + " | New Value | " + newValue);
 
-
-    this.http.put<any>(`http://localhost:8080/api/admin/updateCategory/${category}`, newValue, {headers: headers})
+    this.http.put<any>(`http://localhost:8080/api/admin/updateCategory/${category}`, newValue, { headers: headers })
       .subscribe(response => {
         if (response && response.responseNo == 200) {
           console.log(response);
@@ -232,8 +224,6 @@ export class AdminServiceService {
         } else {
           console.error(response);
         }
-      })
+      });
   }
-
-
 }
